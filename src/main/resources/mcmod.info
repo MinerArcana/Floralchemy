@@ -1,0 +1,20 @@
+[
+  {
+    "modid": "floralchemy",
+    "name": "Floralchemy",
+    "description": "Assorted Additional Flowers for Botania",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "SkySom"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "base"
+    ]
+  }
+]
