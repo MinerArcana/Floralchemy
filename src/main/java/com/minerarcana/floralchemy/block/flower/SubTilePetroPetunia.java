@@ -69,6 +69,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
                                         this.burnTime = fuelInfo.get().getFirst();
                                         this.powerPerTick = fuelInfo.get().getSecond();
                                         fluidHandler.drain(1000, true);
+                                        sync();
                                     }
                                 }
                             }
@@ -87,7 +88,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     @Override
     public boolean receiveClientEvent(int event, int param) {
         if(event == START_BURN_EVENT) {
-            //TODO particles on burn
+
             return true;
         } else {
             return super.receiveClientEvent(event, param);
@@ -96,7 +97,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
 
     @Override
     public int getMaxMana() {
-        return 900;
+        return 9000;
     }
 
     @Override

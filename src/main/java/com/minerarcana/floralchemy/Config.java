@@ -15,12 +15,14 @@ public class Config {
     private static final Map<String, Tuple<Integer, Integer>> FUEL_DEFAULTS = Maps.newHashMap();
 
     static {
-        FUEL_DEFAULTS.put("oil", new Tuple<>(20, 30));
-        FUEL_DEFAULTS.put("water", new Tuple<>(5, 10));
+        FUEL_DEFAULTS.put("oil", new Tuple<>(100, 50));
+        FUEL_DEFAULTS.put("fuel", new Tuple<>(750, 50));
+        FUEL_DEFAULTS.put("diesel", new Tuple<>(350, 50));
+        FUEL_DEFAULTS.put("biodiesel", new Tuple<>(250, 50));
     }
 
     public static void initConfig(File configFile) {
-        BaseFileUtils.createFile(configFile);
+        BaseFileUtils.createFile(configFile.getParentFile());
         Configuration configuration = new Configuration(configFile);
 
         Property generateDefaults = configuration.get("general","generateDefaults",
