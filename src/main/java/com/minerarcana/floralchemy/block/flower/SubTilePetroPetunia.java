@@ -1,11 +1,13 @@
 package com.minerarcana.floralchemy.block.flower;
 
+import java.awt.Color;
+import java.util.Optional;
+
 import com.minerarcana.floralchemy.LexiconPages;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
+
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Tuple;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,9 +19,6 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.subtile.RadiusDescriptor;
 import vazkii.botania.api.subtile.RadiusDescriptor.Square;
 import vazkii.botania.api.subtile.SubTileGenerating;
-
-import java.awt.*;
-import java.util.Optional;
 
 public class SubTilePetroPetunia extends SubTileGenerating {
     public static final String NAME = "petro_petunia";

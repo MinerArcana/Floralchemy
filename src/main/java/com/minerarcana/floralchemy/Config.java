@@ -1,15 +1,14 @@
 package com.minerarcana.floralchemy;
 
+import java.io.File;
+import java.util.Map;
+
 import com.google.common.collect.Maps;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
-import net.minecraft.util.Tuple;
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
-import java.io.File;
-import java.util.Map;
+import net.minecraft.util.Tuple;
+import net.minecraftforge.common.config.*;
 
 public class Config {
     private static final Map<String, Tuple<Integer, Integer>> FUEL_DEFAULTS = Maps.newHashMap();
