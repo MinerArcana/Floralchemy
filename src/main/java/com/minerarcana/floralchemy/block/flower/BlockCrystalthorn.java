@@ -12,18 +12,28 @@ import com.teamacronymcoders.base.util.ColourHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.IResource;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrystalthorn extends BlockBase implements IHasBlockColor {
 	
 	ResourceLocation crystalName;
 
 	public BlockCrystalthorn(ResourceLocation crystalName) {
-		super(Material.PLANTS, "crystalthorn_" + crystalName.getPath());
+		super(Material.PLANTS, "crystalthorn_" + crystalName.getPath().substring(15, crystalName.getPath().length() - 4));
 		this.crystalName = crystalName;
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public BlockRenderLayer getRenderLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
@@ -37,7 +47,7 @@ public class BlockCrystalthorn extends BlockBase implements IHasBlockColor {
 
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		IResource resource = ClientHelper.getResource(new ResourceLocation("minecraft:textures/items/gold_ingot.png"));
+		IResource resource = ClientHelper.getResource(crystalName);
 		int color = Color.PINK.getRGB();
 		if(resource != null) {
 			InputStream stream = resource.getInputStream();

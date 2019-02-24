@@ -9,11 +9,10 @@ import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import vazkii.botania.api.BotaniaAPI;
 
@@ -68,11 +67,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     
     @Override
     public void registerBlocks(BlockRegistry registry) {
-    	ItemStack crystal = new ItemStack(Items.GOLD_INGOT);
-		if(!crystal.isEmpty()) {
-			FMLLog.bigWarning("wasnt empty");
-			registry.register(new BlockCrystalthorn(Item.REGISTRY.getNameForObject(crystal.getItem())));
-		}
+		registry.register(new BlockCrystalthorn(new ResourceLocation("minecraft:textures/items/gold_ingot.png")));
+		registry.register(new BlockCrystalthorn(new ResourceLocation("minecraft:textures/items/apple.png")));
     }
 
     @Override
