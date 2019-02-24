@@ -2,14 +2,18 @@ package com.minerarcana.floralchemy;
 
 import java.io.File;
 
+import com.minerarcana.floralchemy.block.flower.BlockCrystalthorn;
 import com.minerarcana.floralchemy.block.flower.SubTilePetroPetunia;
 import com.minerarcana.floralchemy.proxy.IProxy;
 import com.teamacronymcoders.base.BaseModFoundation;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import vazkii.botania.api.BotaniaAPI;
 
@@ -24,7 +28,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public static final String MOD_ID = "floralchemy";
     public static final String MOD_NAME = "Floralchemy";
     public static final String VERSION = "@VERSION@";
-    public static final String DEPENDS = "required-after:botania;required-after:base@[0.0.0,);";
+    public static final String DEPENDS = "required-after:botania;required-after:base@[0.0.0,);after:thaumcraft";
 
     @SidedProxy(clientSide = "com.minerarcana.floralchemy.proxy.ClientProxy",
             serverSide = "com.minerarcana.floralchemy.ServerProxy")
@@ -60,6 +64,15 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+    }
+    
+    @Override
+    public void registerBlocks(BlockRegistry registry) {
+    	ItemStack crystal = new ItemStack(Items.GOLD_INGOT);
+		if(!crystal.isEmpty()) {
+			FMLLog.bigWarning("wasnt empty");
+			registry.register(new BlockCrystalthorn(Item.REGISTRY.getNameForObject(crystal.getItem())));
+		}
     }
 
     @Override

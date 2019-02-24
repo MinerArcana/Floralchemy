@@ -12,12 +12,14 @@ import net.minecraftforge.common.config.*;
 
 public class Config {
     private static final Map<String, Tuple<Integer, Integer>> FUEL_DEFAULTS = Maps.newHashMap();
+    private static final Map<String, Integer> CRYSTAL_DEFAULTS = Maps.newHashMap();
 
     static {
         FUEL_DEFAULTS.put("oil", new Tuple<>(100, 50));
         FUEL_DEFAULTS.put("fuel", new Tuple<>(750, 50));
         FUEL_DEFAULTS.put("diesel", new Tuple<>(350, 50));
         FUEL_DEFAULTS.put("biodiesel", new Tuple<>(250, 50));
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_aer", 0);
     }
 
     public static void initConfig(File configFile) {
@@ -33,7 +35,10 @@ public class Config {
                 configuration.getInt("burnTime", category, entry.getValue().getFirst(), 1, 10000, "Amount of Ticks this Fluid will burn");
                 configuration.getInt("powerPreTick", category, entry.getValue().getSecond(), 1, 10000, "Amount of Mana produced each Tick");
             }
-
+            for(Map.Entry<String, Integer> entry : CRYSTAL_DEFAULTS.entrySet()) {
+            	String category = "crystals." + entry.getKey();
+            	configuration.getInt("metadata", category, entry.getValue(), 0, Integer.MAX_VALUE, "Metadata of the crystal item");
+            }
             generateDefaults.set(false);
         }
 
@@ -44,6 +49,12 @@ public class Config {
             int burnTime = fuelEntry.get("burnTime").getInt(1);
             int powerPreTick = fuelEntry.get("powerPreTick").getInt(1);
             FloralchemyAPI.getFluidFuelRegistry().putFuel(fluidName, burnTime, powerPreTick);
+        }
+        
+        ConfigCategory crystals = configuration.getCategory("crystals");
+        
+        for(ConfigCategory crystalEntry : crystals.getChildren()) {
+        	FloralchemyAPI.getCrystalRegistry().putCrystal(crystalEntry.getName(), crystalEntry.get("metadata").getInt(0));
         }
 
         if(configuration.hasChanged()) {
