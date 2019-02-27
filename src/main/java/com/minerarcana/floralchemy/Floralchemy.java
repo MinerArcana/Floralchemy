@@ -1,19 +1,26 @@
 package com.minerarcana.floralchemy;
 
 import java.io.File;
+import java.util.Map;
 
+import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.minerarcana.floralchemy.block.flower.BlockCrystalthorn;
 import com.minerarcana.floralchemy.block.flower.SubTilePetroPetunia;
 import com.minerarcana.floralchemy.proxy.IProxy;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import vazkii.botania.api.BotaniaAPI;
 
 @Mod(
@@ -22,6 +29,7 @@ import vazkii.botania.api.BotaniaAPI;
         version = Floralchemy.VERSION,
         dependencies = Floralchemy.DEPENDS
 )
+@EventBusSubscriber
 public class Floralchemy extends BaseModFoundation<Floralchemy> {
 
     public static final String MOD_ID = "floralchemy";
@@ -40,8 +48,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @Override
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg")); //TODO is this ok? 
         super.preInit(event);
-        Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg"));
     }
 
     @Override
@@ -67,8 +75,17 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     
     @Override
     public void registerBlocks(BlockRegistry registry) {
-		registry.register(new BlockCrystalthorn(new ResourceLocation("minecraft:textures/items/gold_ingot.png")));
-		registry.register(new BlockCrystalthorn(new ResourceLocation("minecraft:textures/items/apple.png")));
+		for(Map.Entry<String, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
+			registry.register(new BlockCrystalthorn(new ResourceLocation(entry.getKey()), entry.getValue()));
+		}
+    }
+    
+    @SubscribeEvent
+    public static void onModelRegistry(ModelRegistryEvent event) {
+    	//TODO
+    	for(Map.Entry<String, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
+    		ModelLoader.setCustomStateMapper(Block.getBlockFromName(MOD_ID + ":" + "crystalthorn_" + new ResourceLocation(entry.getKey()).getPath()), new StateMapperCrystalthorn());
+    	}
     }
 
     @Override

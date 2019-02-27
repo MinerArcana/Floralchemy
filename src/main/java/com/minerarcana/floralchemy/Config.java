@@ -20,6 +20,11 @@ public class Config {
         FUEL_DEFAULTS.put("diesel", new Tuple<>(350, 50));
         FUEL_DEFAULTS.put("biodiesel", new Tuple<>(250, 50));
         CRYSTAL_DEFAULTS.put("thaumcraft:crystal_aer", 0);
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_ordo", 0);
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_perditio", 0);
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_vitium", 0);
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_aqua", 0);
+        CRYSTAL_DEFAULTS.put("thaumcraft:crystal_terra", 0);
     }
 
     public static void initConfig(File configFile) {
