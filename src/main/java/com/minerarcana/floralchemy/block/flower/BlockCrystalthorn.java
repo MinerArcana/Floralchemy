@@ -2,7 +2,7 @@ package com.minerarcana.floralchemy.block.flower;
 
 import javax.annotation.Nullable;
 
-import com.teamacronymcoders.base.blocks.BlockBase;
+import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 
 import net.minecraft.block.material.Material;
@@ -11,14 +11,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalthorn extends BlockBase implements IHasBlockColor {
+public class BlockCrystalthorn extends BlockBaseNoModel implements IHasBlockColor {
 
 	protected static final AxisAlignedBB BUSH_AABB = new AxisAlignedBB(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
 	
@@ -52,18 +54,6 @@ public class BlockCrystalthorn extends BlockBase implements IHasBlockColor {
 		Item crystalItem = Item.getByNameOrId(crystalName.toString());
 		//TODO Make server-safe
 		return Minecraft.getMinecraft().getItemColors().colorMultiplier(new ItemStack(crystalItem), crystalMetadata);
-
-//			IResource resource = ClientHelper.getResource(crystalName);
-//			if(resource != null) {
-//			InputStream stream = resource.getInputStream();
-//			color = ColourHelper.getColour(stream);
-//			try {
-//				stream.close();
-//			}
-//			catch(IOException e) {
-//				e.printStackTrace();
-//			}
-//			}
 	}
 	
 	@Override

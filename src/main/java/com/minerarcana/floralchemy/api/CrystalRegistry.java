@@ -4,22 +4,24 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.util.ResourceLocation;
+
 public class CrystalRegistry {
-    private Map<String, Integer> crystals;
+    private Map<ResourceLocation, Integer> crystals;
 
     public CrystalRegistry() {
         crystals = Maps.newHashMap();
     }
 
-    public void putCrystal(String registryName, int metadata) {
+    public void putCrystal(ResourceLocation registryName, int metadata) {
         crystals.put(registryName, metadata);
     }
     
-    public void putCrystal(String registryName) {
+    public void putCrystal(ResourceLocation registryName) {
         crystals.put(registryName, 0);
     }
     
-    public Map<String, Integer> getCrystals() {
+    public Map<ResourceLocation, Integer> getCrystals() {
         return crystals;
     }
 

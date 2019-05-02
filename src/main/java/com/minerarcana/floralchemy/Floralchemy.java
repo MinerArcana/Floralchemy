@@ -11,7 +11,9 @@ import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -19,7 +21,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import vazkii.botania.api.BotaniaAPI;
 
@@ -75,16 +79,18 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     
     @Override
     public void registerBlocks(BlockRegistry registry) {
-		for(Map.Entry<String, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
-			registry.register(new BlockCrystalthorn(new ResourceLocation(entry.getKey()), entry.getValue()));
+		for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
+			registry.register(new BlockCrystalthorn(entry.getKey(), entry.getValue()));
 		}
     }
     
     @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
     	//TODO
-    	for(Map.Entry<String, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
-    		ModelLoader.setCustomStateMapper(Block.getBlockFromName(MOD_ID + ":" + "crystalthorn_" + new ResourceLocation(entry.getKey()).getPath()), new StateMapperCrystalthorn());
+    	for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
+    		Block block = Block.getBlockFromName(MOD_ID + ":" + "crystalthorn_" + entry.getKey().getPath());
+    		ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
+    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "inventory"));
     	}
     }
 

@@ -4,14 +4,16 @@
     "normal": [{
       "model": "floralchemy:cross_tinted",
       "textures": {
-        "cross": "minecraft:blocks/tallgrass"
+        "cross2": "floralchemy:blocks/crystalthorn_base",
+        "cross": "floralchemy:blocks/crystalthorn_crystals"
       }
     }],
     "inventory": [{
       "model": "builtin/generated",
       "transform": "forge:default-item",
       "textures": {
-        "layer0": "minecraft:blocks/tallgrass"
+        "layer0": "floralchemy:blocks/crystalthorn_base",
+        "layer1": "floralchemy:blocks/crystalthorn_crystals"
       }
     }]
   }

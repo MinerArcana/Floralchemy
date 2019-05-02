@@ -7,8 +7,11 @@ import com.google.common.collect.Maps;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.common.config.*;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class Config {
     private static final Map<String, Tuple<Integer, Integer>> FUEL_DEFAULTS = Maps.newHashMap();
@@ -59,7 +62,7 @@ public class Config {
         ConfigCategory crystals = configuration.getCategory("crystals");
         
         for(ConfigCategory crystalEntry : crystals.getChildren()) {
-        	FloralchemyAPI.getCrystalRegistry().putCrystal(crystalEntry.getName(), crystalEntry.get("metadata").getInt(0));
+        	FloralchemyAPI.getCrystalRegistry().putCrystal(new ResourceLocation(crystalEntry.getName()), crystalEntry.get("metadata").getInt(0));
         }
 
         if(configuration.hasChanged()) {
