@@ -2,42 +2,72 @@ package com.minerarcana.floralchemy.block.flower;
 
 import javax.annotation.Nullable;
 
-import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasItemBlock;
+import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalthorn extends BlockBaseNoModel implements IHasBlockColor {
+public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
-	protected static final AxisAlignedBB BUSH_AABB = new AxisAlignedBB(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
-	
+	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
 	private final ResourceLocation crystalName;
 	private final int crystalMetadata;
-
+	private ItemBlock itemBlock;
+	
 	public BlockCrystalthorn(ResourceLocation crystalName, int crystalMetadata) {
-		super(Material.PLANTS, "crystalthorn_" + crystalName.getPath());
+		super(Material.PLANTS);
+		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
+		this.setTranslationKey("crystalthorn_" + crystalName.getPath());
 		this.crystalName = crystalName;
 		this.crystalMetadata = crystalMetadata;
 	}
+	
+	@Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(AGE, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return state.getValue(AGE);
+    }
+	
+    double[] AABB = { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
+    
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return FULL_BLOCK_AABB.shrink(1 - AABB[state.getValue(AGE)]);
+    }
+	
+	@Override
+	protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {AGE});
+    }
 	
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
@@ -54,20 +84,10 @@ public class BlockCrystalthorn extends BlockBaseNoModel implements IHasBlockColo
     }
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+		return false;
     }
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
 
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
@@ -75,23 +95,30 @@ public class BlockCrystalthorn extends BlockBaseNoModel implements IHasBlockColo
 		//TODO Make server-safe
 		return Minecraft.getMinecraft().getItemColors().colorMultiplier(new ItemStack(crystalItem), 0);
 	}
+
+	@Override
+	public Block getBlock() {
+		return this;
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return itemBlock == null ? new ItemBlockGeneric<BlockCrystalthorn>(this) : itemBlock;
+	}
 	
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BUSH_AABB;
-    }
+	public static class ItemBlockCrystalthorn extends ItemBlockGeneric<BlockCrystalthorn> implements IHasItemColor {
 
-	@Override
-    @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
-        return NULL_AABB;
-    }
+		public ItemBlockCrystalthorn(BlockCrystalthorn block) {
+			super(block);
+		}
 
-	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-    {
-        return BlockFaceShape.UNDEFINED;
-    }
+		@Override
+		public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+			if(tintIndex == 0) {
+				return this.getActualBlock().colorMultiplier(null, null, null, tintIndex);
+			}
+			return 0;
+		}
+		
+	}
 }

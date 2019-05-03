@@ -77,16 +77,16 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         super.postInit(event);
     }
     
-    @Override
+	@Override
     public void registerBlocks(BlockRegistry registry) {
 		for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
-			registry.register(new BlockCrystalthorn(entry.getKey(), entry.getValue()));
+			Block block = new BlockCrystalthorn(entry.getKey(), entry.getValue());
+			registry.register(block);
 		}
     }
     
     @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
-    	//TODO
     	for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
     		Block block = Block.getBlockFromName(MOD_ID + ":" + "crystalthorn_" + entry.getKey().getPath());
     		ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
