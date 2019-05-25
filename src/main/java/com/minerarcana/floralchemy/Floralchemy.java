@@ -11,20 +11,13 @@ import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.event.*;
 import vazkii.botania.api.BotaniaAPI;
 
 @Mod(
@@ -42,7 +35,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public static final String DEPENDS = "required-after:botania;required-after:base@[0.0.0,);after:thaumcraft";
 
     @SidedProxy(clientSide = "com.minerarcana.floralchemy.proxy.ClientProxy",
-            serverSide = "com.minerarcana.floralchemy.ServerProxy")
+            serverSide = "com.minerarcana.floralchemy.proxy.ServerProxy")
     public static IProxy proxy;
 
     public Floralchemy() {
@@ -83,15 +76,6 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 			Block block = new BlockCrystalthorn(entry.getKey(), entry.getValue());
 			registry.register(block);
 		}
-    }
-    
-    @SubscribeEvent
-    public static void onModelRegistry(ModelRegistryEvent event) {
-    	for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
-    		Block block = Block.getBlockFromName(MOD_ID + ":" + "crystalthorn_" + entry.getKey().getPath());
-    		ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
-    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "inventory"));
-    	}
     }
 
     @Override

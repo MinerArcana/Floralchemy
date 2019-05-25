@@ -24,6 +24,8 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
@@ -108,10 +110,10 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
 		Item crystalItem = Item.getByNameOrId(crystalName.toString());
-		//TODO Make server-safe
 		return Minecraft.getMinecraft().getItemColors().colorMultiplier(new ItemStack(crystalItem), 0);
 	}
 
