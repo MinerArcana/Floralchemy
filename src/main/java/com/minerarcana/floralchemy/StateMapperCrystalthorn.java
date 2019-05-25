@@ -18,7 +18,10 @@ public class StateMapperCrystalthorn implements IStateMapper {
 		Map<IBlockState, ModelResourceLocation> map = Maps.newHashMap();
 		map.put(blockIn.getDefaultState(), new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "normal"));
 		for(Integer age : BlockCrystalthorn.AGE.getAllowedValues()) {
-			map.put(blockIn.getDefaultState().withProperty(BlockCrystalthorn.AGE, age), new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "age=" + age));
+			if(age == BlockCrystalthorn.maxAge) {
+				map.put(blockIn.getDefaultState().withProperty(BlockCrystalthorn.AGE, age).withProperty(BlockCrystalthorn.BERRIES, true), new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "age=" + age + ",berries=true"));
+			}
+			map.put(blockIn.getDefaultState().withProperty(BlockCrystalthorn.AGE, age).withProperty(BlockCrystalthorn.BERRIES, false), new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "age=" + age + ",berries=false"));
 		}
 		return map;
 	}

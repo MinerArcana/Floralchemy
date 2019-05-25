@@ -6,7 +6,7 @@
         "top": "floralchemy:blocks/crystalthorn_base",
         "bottom": "floralchemy:blocks/crystalthorn_base",
         "side": "floralchemy:blocks/crystalthorn_base",
-        "overlay": "floralchemy:blocks/crystalthorn_crystals"
+        "overlay": "minecraft:items/seeds_melon"
       }
   },
   "variants": {
@@ -56,6 +56,14 @@
     		}
     	},
     	"7": {}
+    },
+    "berries": {
+    	"true": { 
+	    	"textures": { 
+	    		"overlay": "floralchemy:blocks/crystalthorn_crystals"
+	    	}
+    	},
+    	"false": {}
     }
   }
 }

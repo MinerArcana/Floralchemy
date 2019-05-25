@@ -1,5 +1,7 @@
 package com.minerarcana.floralchemy.block.flower;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
@@ -10,83 +12,100 @@ import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.properties.*;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+	public static final int maxAge = 7;
+	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, maxAge);
+	public static final PropertyBool BERRIES = PropertyBool.create("berries");
 	private final ResourceLocation crystalName;
 	private final int crystalMetadata;
 	private ItemBlock itemBlock;
 	
 	public BlockCrystalthorn(ResourceLocation crystalName, int crystalMetadata) {
 		super(Material.PLANTS);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0).withProperty(BERRIES, false));
 		this.setTranslationKey("crystalthorn_" + crystalName.getPath());
+		this.setTickRandomly(true);
 		this.crystalName = crystalName;
 		this.crystalMetadata = crystalMetadata;
 	}
 	
 	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if(state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
+			ItemStack stack = new ItemStack(Item.getByNameOrId(crystalName.toString()), 1, crystalMetadata);
+			if(!stack.isEmpty()) {
+				EntityItem item = new EntityItem(worldIn, pos.getX(), pos.getZ(), pos.getZ(), stack);
+				worldIn.spawnEntity(item);
+				playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+    {
+		if(random.nextBoolean()) {
+			if(state.getValue(AGE) < maxAge) {
+				worldIn.setBlockState(pos, state.withProperty(AGE, state.getValue(AGE)+1));
+				return;
+			}
+			if(!state.getValue(BERRIES) && random.nextInt(10) == 0) {
+				worldIn.setBlockState(pos, state.withProperty(BERRIES, true));
+			}
+		}
+    }
+	
+	@Override
     public IBlockState getStateFromMeta(int meta)
     {
+		if(meta == maxAge + 1) {
+			return this.getDefaultState().withProperty(BERRIES, true).withProperty(AGE, maxAge);
+		}
         return this.getDefaultState().withProperty(AGE, meta);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return state.getValue(AGE);
+        return state.getValue(BERRIES) ? state.getValue(AGE) : state.getValue(AGE) + 1;
     }
 	
-    double[] AABB = { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
-    
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return FULL_BLOCK_AABB.shrink(1 - AABB[state.getValue(AGE)]);
-    }
+//    double[] AABB = { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
+//    
+//	@Override
+//	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+//    {
+//		double shrink = 1 - AABB[state.getValue(AGE)];
+//        return FULL_BLOCK_AABB.shrink(shrink).offset(0, 0.05 * state.getValue(AGE), 0);
+//    }
 	
 	@Override
 	protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {AGE});
-    }
-	
-	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
-		ItemStack stack = new ItemStack(Item.getByNameOrId(crystalName.toString()), 1 + fortune, crystalMetadata);
-		drops.add(stack);
+        return new BlockStateContainer(this, new IProperty[] {AGE, BERRIES});
     }
 	
 	@Override
 	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
-    {
+	{
 		player.attackEntityFrom(DamageSource.CACTUS, 3F);
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
-    }
-	
-	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-    {
-		return false;
     }
 
 	@Override
