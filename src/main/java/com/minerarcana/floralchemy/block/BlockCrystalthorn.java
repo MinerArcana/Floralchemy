@@ -1,4 +1,4 @@
-package com.minerarcana.floralchemy.block.flower;
+package com.minerarcana.floralchemy.block;
 
 import java.util.Random;
 

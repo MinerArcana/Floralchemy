@@ -3,7 +3,7 @@ package com.minerarcana.floralchemy;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.minerarcana.floralchemy.block.flower.BlockCrystalthorn;
+import com.minerarcana.floralchemy.block.BlockCrystalthorn;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

@@ -1,4 +1,4 @@
-package com.minerarcana.floralchemy.block.flower;
+package com.minerarcana.floralchemy.botania;
 
 import java.awt.Color;
 import java.util.Optional;

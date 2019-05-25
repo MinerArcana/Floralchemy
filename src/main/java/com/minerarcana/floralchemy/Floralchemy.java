@@ -4,8 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-import com.minerarcana.floralchemy.block.flower.BlockCrystalthorn;
-import com.minerarcana.floralchemy.block.flower.SubTilePetroPetunia;
+import com.minerarcana.floralchemy.block.BlockCrystalthorn;
 import com.minerarcana.floralchemy.proxy.IProxy;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
@@ -14,11 +13,9 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
-import vazkii.botania.api.BotaniaAPI;
 
 @Mod(
         modid = Floralchemy.MOD_ID,
@@ -32,11 +29,14 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public static final String MOD_ID = "floralchemy";
     public static final String MOD_NAME = "Floralchemy";
     public static final String VERSION = "@VERSION@";
-    public static final String DEPENDS = "required-after:botania;required-after:base@[0.0.0,);after:thaumcraft";
+    public static final String DEPENDS = "required-after:base@[0.0.0,);after:thaumcraft; after:botania";
 
     @SidedProxy(clientSide = "com.minerarcana.floralchemy.proxy.ClientProxy",
             serverSide = "com.minerarcana.floralchemy.proxy.ServerProxy")
     public static IProxy proxy;
+    
+    @Instance("floralchemy")
+	public static Floralchemy instance;
 
     public Floralchemy() {
         super(MOD_ID, MOD_NAME, VERSION, CreativeTabs.MISC);
@@ -45,23 +45,15 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @Override
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg")); //TODO is this ok? 
+    	//Forced earlier so it is available to the crystalthorn. Bit jank...
+    	Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg"));
         super.preInit(event);
-    }
-
-    @Override
-    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
-        BotaniaAPI.registerSubTile(SubTilePetroPetunia.NAME, SubTilePetroPetunia.class);
-        BotaniaAPI.addSubTileToCreativeMenu(SubTilePetroPetunia.NAME);
-        proxy.registerModels();
     }
 
     @Override
     @EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        BotaniaRecipes.init();
-        LexiconPages.init();
     }
 
     @Override
