@@ -16,7 +16,6 @@ import net.minecraft.block.properties.*;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
@@ -51,9 +50,10 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 		if(state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
 			ItemStack stack = new ItemStack(Item.getByNameOrId(crystalName.toString()), 1, crystalMetadata);
 			if(!stack.isEmpty()) {
-				EntityItem item = new EntityItem(worldIn, pos.getX(), pos.getZ(), pos.getZ(), stack);
-				worldIn.spawnEntity(item);
-				playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
+				if(playerIn.addItemStackToInventory(stack)) {
+					playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
+					worldIn.setBlockState(pos, state.withProperty(BERRIES, false));
+				}
 			}
 		}
 		return false;
