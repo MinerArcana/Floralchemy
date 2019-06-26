@@ -1,0 +1,18 @@
+{
+  "pools": [{
+    "name": "main",
+    "rolls": 1,
+    "entries": [
+      {
+        "type": "item",
+        "name": "minecraft:apple",
+        "functions": [{ "function": "floralchemy:crystalthorn" }],
+        "weight": 80
+      },
+      {
+        "type": "empty",
+        "weight": 20
+      }
+    ]
+  }]
+}
