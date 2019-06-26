@@ -1,7 +1,6 @@
 package com.minerarcana.floralchemy;
 
 import java.io.File;
-import java.util.Map;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.minerarcana.floralchemy.block.BlockCrystalthorn;
@@ -12,6 +11,7 @@ import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryTable;
 import net.minecraft.world.storage.loot.LootPool;
@@ -29,7 +29,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import vazkii.botania.common.lib.LibMisc;
 
 @Mod(
         modid = Floralchemy.MOD_ID,
@@ -80,9 +79,9 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     
 	@Override
     public void registerBlocks(BlockRegistry registry) {
-		for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
-			Block block = new BlockCrystalthorn(entry.getKey(), entry.getValue());
-			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getKey().getPath()), block);
+		for(Tuple<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
+			Block block = new BlockCrystalthorn(entry);
+			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()), block);
 		}
     }
 	
@@ -108,7 +107,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 	}
 
 	private static LootEntryTable getInjectEntry(String name, int weight) {
-		return new LootEntryTable(new ResourceLocation(LibMisc.MOD_ID, "inject/" + name), weight, 0, new LootCondition[0], "floralchemy_inject_entry");
+		return new LootEntryTable(new ResourceLocation(Floralchemy.MOD_ID, "inject/" + name), weight, 0, new LootCondition[0], "floralchemy_inject_entry");
 	}
 
     @Override

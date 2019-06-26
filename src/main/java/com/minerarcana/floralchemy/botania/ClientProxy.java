@@ -5,7 +5,9 @@ import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import vazkii.botania.api.BotaniaAPIClient;
 
 public class ClientProxy implements IModuleProxy {

@@ -2,7 +2,9 @@ package com.minerarcana.floralchemy.botania;
 
 import java.util.List;
 
-import com.minerarcana.floralchemy.*;
+import com.minerarcana.floralchemy.BotaniaRecipes;
+import com.minerarcana.floralchemy.Floralchemy;
+import com.minerarcana.floralchemy.LexiconPages;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;

@@ -1,27 +1,28 @@
 package com.minerarcana.floralchemy.api;
 
-import java.util.Map;
+import java.util.ArrayList;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 
 public class CrystalRegistry {
-    private Map<ResourceLocation, Integer> crystals;
+    private ArrayList<Tuple<ResourceLocation, Integer>> crystals;
 
     public CrystalRegistry() {
-        crystals = Maps.newHashMap();
+        crystals = Lists.newArrayList();
     }
 
     public void putCrystal(ResourceLocation registryName, int metadata) {
-        crystals.put(registryName, metadata);
+        crystals.add(new Tuple<ResourceLocation, Integer>(registryName, metadata));
     }
     
     public void putCrystal(ResourceLocation registryName) {
-        crystals.put(registryName, 0);
+    	this.putCrystal(registryName, 0);
     }
     
-    public Map<ResourceLocation, Integer> getCrystals() {
+    public ArrayList<Tuple<ResourceLocation, Integer>> getCrystals() {
         return crystals;
     }
 
