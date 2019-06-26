@@ -82,7 +82,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public void registerBlocks(BlockRegistry registry) {
 		for(Map.Entry<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals().entrySet()) {
 			Block block = new BlockCrystalthorn(entry.getKey(), entry.getValue());
-			registry.register(block);
+			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getKey().getPath()), block);
 		}
     }
 	
