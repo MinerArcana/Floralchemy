@@ -1,15 +1,17 @@
 package com.minerarcana.floralchemy.block;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.minerarcana.floralchemy.Floralchemy;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
-import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
+import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
+import com.teamacronymcoders.base.util.ColourHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -20,6 +22,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -34,11 +37,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock, IHasBlockStateMapper {
+public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
 	public static final int maxAge = 7;
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, maxAge);
@@ -46,7 +51,8 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.3, 0, 0.3, 0.7, 0.4, 0.7),
 			new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.5, 0.8), new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8),
 			new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8), new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9),
-			new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9), new AxisAlignedBB(0, 0, 0, 1, 1, 1), new AxisAlignedBB(0, 0, 0, 1, 1, 1) };
+			new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9), new AxisAlignedBB(0, 0, 0, 1, 1, 1),
+			new AxisAlignedBB(0, 0, 0, 1, 1, 1) };
 	private Tuple<ResourceLocation, Integer> crystal;
 	private ItemBlock itemBlock;
 
@@ -59,11 +65,11 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	}
 
 	@SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-    {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond()).getDisplayName());
-    }
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		tooltip.add(new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond())
+				.getDisplayName());
+	}
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
@@ -126,18 +132,29 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		return Minecraft.getMinecraft().getItemColors().colorMultiplier(new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond()), 0);
+		ItemStack cStack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond());
+		int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(
+				cStack, 0);
+		if (tintColor == -1) {
+			//TODO This is very failure prone, need a better way. 
+			IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(), "textures/items/" + crystal.getFirst().getPath() + ".png"));
+			if (resource != null) {
+				InputStream stream = resource.getInputStream();
+				tintColor = ColourHelper.getColour(stream);
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return tintColor;
 	}
 
 	@Override
 	public Block getBlock() {
 		return this;
 	}
-	
-	@Override
-	public ResourceLocation getResourceLocation(IBlockState blockState) {
-        return new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn");
-    }
 
 	@Override
 	public ItemBlock getItemBlock() {

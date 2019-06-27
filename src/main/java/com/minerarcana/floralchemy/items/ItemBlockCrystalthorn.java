@@ -19,4 +19,10 @@ public class ItemBlockCrystalthorn extends ItemBlockGeneric<BlockCrystalthorn> i
 		}
 		return 0;
 	}
+	
+	@Override
+	public int getMetadata(int damage)
+    {
+        return 0;
+    }
 }
