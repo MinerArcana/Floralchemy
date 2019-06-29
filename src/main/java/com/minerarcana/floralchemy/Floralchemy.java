@@ -95,6 +95,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 			switch (file) {
 				case "end_city_treasure":
 				case "stronghold_library": 
+				case "stronghold_crossing":
+				case "stronghold_corridor": 	
 					evt.getTable().addPool(getInjectPool(file)); break;
 				default: break;
 			}
