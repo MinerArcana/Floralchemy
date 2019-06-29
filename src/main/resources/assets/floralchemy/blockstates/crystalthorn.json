@@ -6,7 +6,8 @@
         "top": "floralchemy:blocks/crystalthorn_base",
         "bottom": "floralchemy:blocks/crystalthorn_base",
         "side": "floralchemy:blocks/crystalthorn_base",
-        "overlay": "minecraft:items/seeds_melon"
+        "overlay": "minecraft:items/seeds_melon",
+        "particle": "floralchemy:blocks/crystalthorn_base"
       }
   },
   "variants": {
