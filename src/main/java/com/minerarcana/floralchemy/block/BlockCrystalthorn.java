@@ -24,6 +24,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -127,6 +128,11 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 			@Nullable TileEntity te, ItemStack stack) {
 		player.attackEntityFrom(DamageSource.CACTUS, 3F);
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
+	}
+	
+	@Override
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+		entityIn.attackEntityFrom(DamageSource.CACTUS, 1F);
 	}
 
 	@SideOnly(Side.CLIENT)
