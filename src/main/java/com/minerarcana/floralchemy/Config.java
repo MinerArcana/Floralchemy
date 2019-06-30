@@ -38,7 +38,7 @@ public class Config {
         if (generateDefaults.getBoolean()) {
             for (Map.Entry<String, Tuple<Integer, Integer>> entry : FUEL_DEFAULTS.entrySet()) {
                 String category = "fuelValues." + entry.getKey();
-                configuration.getInt("burnTime", category, entry.getValue().getFirst(), 1, 10000, "Amount of Ticks this Fluid will burn");
+                configuration.getInt("burnTime", category, entry.getValue().getFirst(), 1, 10000, "Number of ticks this fluid will burn for");
                 configuration.getInt("powerPreTick", category, entry.getValue().getSecond(), 1, 10000, "Amount of Mana produced each Tick");
             }
             for(Map.Entry<String, Integer> entry : CRYSTAL_DEFAULTS.entrySet()) {
