@@ -38,8 +38,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -56,6 +54,7 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 			new AxisAlignedBB(0, 0, 0, 1, 1, 1) };
 	private Tuple<ResourceLocation, Integer> crystal;
 	private ItemBlock itemBlock;
+	private ItemStack cachedCrystalStack = ItemStack.EMPTY;
 
 	public BlockCrystalthorn(Tuple<ResourceLocation, Integer> entry) {
 		super(Material.PLANTS);
@@ -68,15 +67,14 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond())
-				.getDisplayName());
+		tooltip.add(this.getCrystalStack().getDisplayName());
 	}
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
-			ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond());
+			ItemStack stack = this.getCrystalStack();
 			if (!stack.isEmpty()) {
 				if (playerIn.addItemStackToInventory(stack)) {
 					playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
@@ -138,7 +136,7 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		ItemStack cStack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond());
+		ItemStack cStack = this.getCrystalStack();
 		int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(
 				cStack, 0);
 		if (tintColor == -1) {
@@ -165,5 +163,12 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	@Override
 	public ItemBlock getItemBlock() {
 		return itemBlock == null ? new ItemBlockGeneric<BlockCrystalthorn>(this) : itemBlock;
+	}
+
+	public ItemStack getCrystalStack() {
+		if(cachedCrystalStack.isEmpty()) {
+			cachedCrystalStack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond());
+		}
+		return cachedCrystalStack;
 	}
 }
