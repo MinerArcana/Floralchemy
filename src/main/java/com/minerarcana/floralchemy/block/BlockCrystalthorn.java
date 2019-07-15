@@ -2,8 +2,7 @@ package com.minerarcana.floralchemy.block;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
@@ -16,9 +15,7 @@ import com.teamacronymcoders.base.util.ColourHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.properties.*;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -29,11 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -55,6 +48,7 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	private Tuple<ResourceLocation, Integer> crystal;
 	private ItemBlock itemBlock;
 	private ItemStack cachedCrystalStack = ItemStack.EMPTY;
+	private Optional<Integer> cachedColor = Optional.empty();
 
 	public BlockCrystalthorn(Tuple<ResourceLocation, Integer> entry) {
 		super(Material.PLANTS);
@@ -136,23 +130,29 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 	@SideOnly(Side.CLIENT)
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		ItemStack cStack = this.getCrystalStack();
-		int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(
-				cStack, 0);
-		if (tintColor == -1) {
-			//TODO This is very failure prone, need a better way. 
-			IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(), "textures/items/" + crystal.getFirst().getPath() + ".png"));
-			if (resource != null) {
-				InputStream stream = resource.getInputStream();
-				tintColor = ColourHelper.getColour(stream);
-				try {
-					stream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+		if(cachedColor.isPresent()) {
+			return cachedColor.get();
+		}
+		else {
+			ItemStack cStack = this.getCrystalStack();
+			int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(
+					cStack, 0);
+			if (tintColor == -1) {
+				//TODO This is very failure prone, need a better way. 
+				IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(), "textures/items/" + crystal.getFirst().getPath() + ".png"));
+				if (resource != null) {
+					InputStream stream = resource.getInputStream();
+					tintColor = ColourHelper.getColour(stream);
+					try {
+						stream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			cachedColor = Optional.of(tintColor);
+			return tintColor;
 		}
-		return tintColor;
 	}
 
 	@Override
