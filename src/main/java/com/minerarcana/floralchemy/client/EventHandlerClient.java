@@ -1,7 +1,6 @@
-package com.minerarcana.floralchemy.proxy;
+package com.minerarcana.floralchemy.client;
 
 import com.minerarcana.floralchemy.Floralchemy;
-import com.minerarcana.floralchemy.StateMapperCrystalthorn;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 
 import net.minecraft.block.Block;
@@ -16,18 +15,20 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 
 @EventBusSubscriber(value = Side.CLIENT, modid = Floralchemy.MOD_ID)
-public class ClientProxy implements IProxy {
+public class EventHandlerClient
+{
 	@SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
-        for(Tuple<ResourceLocation, Integer> crystal : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
+		for(Tuple<ResourceLocation, Integer> crystal : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
         	ResourceLocation crystalthorn = new ResourceLocation(Floralchemy.MOD_ID + ":" + "crystalthorn_" + crystal.getFirst().getPath());
         	Block block = ForgeRegistries.BLOCKS.getValue(crystalthorn);
-    		if(block == null) {
-    			Floralchemy.instance.getLogger().warning("Failed to load model for crystalthorn " + crystalthorn.getPath());
-    			return;
+    		if(block != null) {
+    			ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
+        		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(crystalthorn), 0, new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "inventory"));
     		}
-    		ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
-    		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(crystalthorn), 0, new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "inventory"));
-    	}
+    		else {
+    			Floralchemy.instance.getLogger().warning("Failed to load model for crystalthorn " + crystalthorn.getPath());
+    		}
+		}
     }
 }

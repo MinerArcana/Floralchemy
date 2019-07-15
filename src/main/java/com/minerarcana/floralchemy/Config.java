@@ -9,9 +9,7 @@ import com.teamacronymcoders.base.util.files.BaseFileUtils;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import net.minecraftforge.common.config.*;
 
 public class Config {
     private static final Map<String, Tuple<Integer, Integer>> FUEL_DEFAULTS = Maps.newHashMap();
@@ -29,7 +27,7 @@ public class Config {
     }
 
     public static void initConfig(File configFile) {
-        BaseFileUtils.createFile(configFile.getParentFile());
+        BaseFileUtils.createFile(configFile);
         Configuration configuration = new Configuration(configFile);
 
         Property generateDefaults = configuration.get("general","generateDefaults",
@@ -43,7 +41,7 @@ public class Config {
             }
             for(Map.Entry<String, Integer> entry : CRYSTAL_DEFAULTS.entrySet()) {
             	String category = "crystals." + entry.getKey();
-            	configuration.getInt("metadata", category, entry.getValue(), 0, Integer.MAX_VALUE, "Metadata of the crystal item");
+            	configuration.getInt("metadata", category, entry.getValue(), 0, Short.MAX_VALUE, "Metadata of the crystal item");
             }
             generateDefaults.set(false);
         }

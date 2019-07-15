@@ -20,13 +20,11 @@ public class ClientProxy implements IModuleProxy {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 }

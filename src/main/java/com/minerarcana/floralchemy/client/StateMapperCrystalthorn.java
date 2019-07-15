@@ -1,8 +1,9 @@
-package com.minerarcana.floralchemy;
+package com.minerarcana.floralchemy.client;
 
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.block.BlockCrystalthorn;
 
 import net.minecraft.block.Block;
@@ -12,7 +13,6 @@ import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.util.ResourceLocation;
 
 public class StateMapperCrystalthorn implements IStateMapper {
-
 	@Override
 	public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block blockIn) {
 		Map<IBlockState, ModelResourceLocation> map = Maps.newHashMap();
@@ -25,5 +25,4 @@ public class StateMapperCrystalthorn implements IStateMapper {
 		}
 		return map;
 	}
-
 }

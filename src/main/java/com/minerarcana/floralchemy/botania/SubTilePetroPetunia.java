@@ -3,7 +3,6 @@ package com.minerarcana.floralchemy.botania;
 import java.awt.Color;
 import java.util.Optional;
 
-import com.minerarcana.floralchemy.LexiconPages;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 
 import net.minecraft.nbt.NBTTagCompound;

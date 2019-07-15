@@ -1,12 +1,11 @@
-package com.minerarcana.floralchemy;
+package com.minerarcana.floralchemy.loot;
 
 import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.google.gson.*;
+import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 
 import net.minecraft.item.ItemStack;
@@ -31,7 +30,7 @@ public class LootFunctionCrystalthorn extends LootFunction {
 	}
 
 	public static class Serializer extends LootFunction.Serializer<LootFunctionCrystalthorn> {
-		protected Serializer() {
+		public Serializer() {
 			super(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), LootFunctionCrystalthorn.class);
 		}
 

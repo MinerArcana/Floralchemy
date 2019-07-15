@@ -1,6 +1,4 @@
-package com.minerarcana.floralchemy;
-
-import com.minerarcana.floralchemy.botania.SubTilePetroPetunia;
+package com.minerarcana.floralchemy.botania;
 
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
