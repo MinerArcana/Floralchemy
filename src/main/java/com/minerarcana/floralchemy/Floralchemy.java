@@ -6,6 +6,8 @@ import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.minerarcana.floralchemy.block.BlockCrystalthorn;
 import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
+import com.minerarcana.floralchemy.village.VillageHedgedField;
+import com.minerarcana.floralchemy.village.VillageHedgedFieldHandler;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
@@ -13,11 +15,13 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 @Mod(
         modid = Floralchemy.MOD_ID,
@@ -54,6 +58,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         super.init(event);
         LootFunctionManager.registerFunction(new LootFunctionCrystalthorn.Serializer());
         LootTableList.register(new ResourceLocation(MOD_ID, "inject/end_city_treasure"));
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedFieldHandler());
+        MapGenStructureIO.registerStructureComponent(VillageHedgedField.class, "hedgedField");
     }
 
     @Override
