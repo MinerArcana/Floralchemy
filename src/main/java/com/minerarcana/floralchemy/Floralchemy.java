@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.minerarcana.floralchemy.block.BlockCrystalthorn;
+import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
@@ -67,6 +68,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 			Block block = new BlockCrystalthorn(entry);
 			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()), block);
 		}
+		registry.register(new BlockHedge("hedge", false));
     }
 
     @Override
