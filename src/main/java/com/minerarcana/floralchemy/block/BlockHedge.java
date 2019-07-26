@@ -2,8 +2,10 @@ package com.minerarcana.floralchemy.block;
 
 import java.util.Random;
 
+import com.minerarcana.floralchemy.FloraObjectHolder;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
@@ -12,9 +14,11 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -118,5 +122,22 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
     @Override
     public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
         return world != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(world, pos) : ColorizerFoliage.getFoliageColorBasic();
+    }
+    
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if(!worldIn.isRemote) {
+            if(ItemStackUtils.doItemsMatch(playerIn.getHeldItem(hand), Items.DYE) && playerIn.getHeldItem(hand).getItemDamage() == EnumDyeColor.WHITE.getDyeDamage()) {
+                BlockPos toGrow = pos.offset(facing);
+                if(worldIn.isAirBlock(toGrow)) {
+                    worldIn.setBlockState(toGrow, FloraObjectHolder.hedge.getDefaultState());
+                    playerIn.getHeldItem(hand).shrink(1);
+                    worldIn.playEvent(2005, toGrow, 0);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
