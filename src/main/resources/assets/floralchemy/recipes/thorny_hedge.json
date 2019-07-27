@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HC",
+    "CH"
+  ],
+   "key": {
+    "H": {
+      "item": "floralchemy:hedge",
+      "data": 0
+    },
+    "C": {
+      "item": "minecraft:cactus"
+    }
+  },
+  "result": {
+    "item": "floralchemy:thorny_hedge",
+    "data": 0,
+    "count": 4
+  }
+}
