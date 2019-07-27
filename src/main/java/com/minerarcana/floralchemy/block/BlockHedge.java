@@ -3,6 +3,7 @@ package com.minerarcana.floralchemy.block;
 import java.util.Random;
 
 import com.minerarcana.floralchemy.FloraObjectHolder;
+import com.minerarcana.floralchemy.Floralchemy;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.util.ItemStackUtils;
@@ -19,17 +20,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHedge extends BlockBase implements IHasBlockColor {
 
-    final boolean isThorns;
+    final boolean isThorny;
 
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
@@ -44,13 +48,28 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
         setTickRandomly(true);
         setCreativeTab(CreativeTabs.DECORATIONS);
         setHardness(0.2F);
-        this.isThorns = isThorns;
+        this.isThorny = isThorns;
+    }
+    
+    @Override
+    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+    {
+        if(world instanceof WorldServer) {
+            WorldServer serverWorld = (WorldServer) world;
+            String location = isThorny ? "block/thorny_hedge" : "block/hedge";
+            LootTable table = serverWorld.getLootTableManager().getLootTableFromLocation(new ResourceLocation(Floralchemy.MOD_ID, location));
+            LootContext ctx = new LootContext.Builder(serverWorld).withLuck(fortune).build();
+            drops.addAll(table.generateLootForPools(serverWorld.rand, ctx));
+        }
+        else {
+            super.getDrops(drops, world, pos, state, fortune);
+        }
     }
     
     @Override
     public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
-        if(isThorns) {
+        if(isThorny) {
             entityIn.attackEntityFrom(DamageSource.CACTUS, 3.0F);
         }
     }

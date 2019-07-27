@@ -56,8 +56,12 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
+        //Loot
         LootFunctionManager.registerFunction(new LootFunctionCrystalthorn.Serializer());
         LootTableList.register(new ResourceLocation(MOD_ID, "inject/end_city_treasure"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "block/hedge"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "block/thorny_hedge"));
+        //Vilages
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedFieldHandler());
         MapGenStructureIO.registerStructureComponent(VillageHedgedField.class, "hedgedField");
     }
