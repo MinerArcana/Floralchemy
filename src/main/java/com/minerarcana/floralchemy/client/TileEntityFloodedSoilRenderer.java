@@ -19,9 +19,9 @@ public class TileEntityFloodedSoilRenderer extends TileEntitySpecialRenderer<Til
 		FluidStack liquid = tank.getFluid();
 
 		if(liquid != null) {
-			float height = ((float) liquid.amount) / (float) tank.getCapacity();
+			//float height = ((float) liquid.amount) / (float) tank.getCapacity();
 			float d = RenderingUtils.FLUID_OFFSET;
-			RenderingUtils.renderFluidCuboid(liquid, tile.getPos(), x, y, z, d, d, d, 1d - d, height - d, 1d - d);
+			RenderingUtils.renderFluidCuboid(liquid, tile.getPos(), x, y, z, d, d, d, 1d - d, 1d - d, 1d - d);
 		}
 	}
 }
