@@ -18,7 +18,8 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.*;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
@@ -43,7 +44,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     }
 
     @Override
-    @EventHandler
+    @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         // Forced earlier so it is available to the crystalthorn. Bit jank...
         Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg"));
@@ -52,7 +53,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     }
 
     @Override
-    @EventHandler
+    @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
         // Loot
@@ -66,7 +67,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     }
 
     @Override
-    @EventHandler
+    @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
     }
@@ -81,6 +82,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         registry.register(new BlockHedge("hedge", false));
         registry.register(new BlockHedge("thorny_hedge", true));
         registry.register(new BlockFloodedSoil());
+        registry.register(new BlockLeakyCauldron());
     }
 
     @Override

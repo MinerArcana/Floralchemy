@@ -34,18 +34,21 @@ public class BlockFloodedSoil extends BlockTEBase<TileEntityFloodedSoil> {
             getTileEntity(worldIn, pos).ifPresent(tile -> {
                 if(tile.tank.getFluidAmount() >= 200) {
                     for(EnumFacing facing : EnumFacing.VALUES) {
-                        BlockPos adjacent = pos.offset(facing);
-                        IBlockState old = worldIn.getBlockState(adjacent);
-                        if(old.getBlock() == this) {
-                            IFluidHandler otherTank = worldIn.getTileEntity(adjacent)
-                                    .getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                            FluidStack test = FluidUtil.tryFluidTransfer(otherTank, tile.tank, 100, false);
-                            if(test != null && test.amount == 100) {
-                                FluidUtil.tryFluidTransfer(otherTank, tile.tank, 100, true);
-                                worldIn.markAndNotifyBlock(adjacent, worldIn.getChunk(adjacent), old,
-                                        worldIn.getBlockState(adjacent), 3);
-                                worldIn.getTileEntity(adjacent).markDirty();
-                                break;
+                        if(!EnumFacing.UP.equals(facing)) {
+                            BlockPos adjacent = pos.offset(facing);
+                            IBlockState old = worldIn.getBlockState(adjacent);
+                            if(old.getBlock() == this) {
+                                IFluidHandler otherTank = worldIn.getTileEntity(adjacent)
+                                        .getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+                                FluidStack test = FluidUtil.tryFluidTransfer(otherTank, tile.tank, 100, false);
+                                if(test != null && test.amount == 100) {
+                                    FluidUtil.tryFluidTransfer(otherTank, tile.tank, 100, true);
+                                    worldIn.markAndNotifyBlock(adjacent, worldIn.getChunk(adjacent), old,
+                                            worldIn.getBlockState(adjacent), 3);
+                                    worldIn.getTileEntity(adjacent).markDirty();
+                                    tile.markDirty();
+                                    break;
+                                }
                             }
                         }
                     }
