@@ -15,20 +15,23 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 
 @EventBusSubscriber(value = Side.CLIENT, modid = Floralchemy.MOD_ID)
-public class EventHandlerClient
-{
-	@SubscribeEvent
+public class EventHandlerClient {
+    @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
-		for(Tuple<ResourceLocation, Integer> crystal : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
-        	ResourceLocation crystalthorn = new ResourceLocation(Floralchemy.MOD_ID + ":" + "crystalthorn_" + crystal.getFirst().getPath());
-        	Block block = ForgeRegistries.BLOCKS.getValue(crystalthorn);
-    		if(block != null) {
-    			ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
-        		ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(crystalthorn), 0, new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), "inventory"));
-    		}
-    		else {
-    			Floralchemy.instance.getLogger().warning("Failed to load model for crystalthorn " + crystalthorn.getPath());
-    		}
-		}
+        for(Tuple<ResourceLocation, Integer> crystal : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
+            ResourceLocation crystalthorn = new ResourceLocation(
+                    Floralchemy.MOD_ID + ":" + "crystalthorn_" + crystal.getFirst().getPath());
+            Block block = ForgeRegistries.BLOCKS.getValue(crystalthorn);
+            if(block != null) {
+                ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());
+                ModelLoader.setCustomModelResourceLocation(ForgeRegistries.ITEMS.getValue(crystalthorn), 0,
+                        new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"),
+                                "inventory"));
+            }
+            else {
+                Floralchemy.instance.getLogger()
+                        .warning("Failed to load model for crystalthorn " + crystalthorn.getPath());
+            }
+        }
     }
 }
