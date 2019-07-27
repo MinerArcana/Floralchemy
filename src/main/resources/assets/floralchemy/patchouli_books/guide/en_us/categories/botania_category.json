@@ -1,5 +1,6 @@
 {
 	"name": "Botania Flowers",
 	"description": "Something witty goes here. For more information on the plants in this section, please see the relevant entries in the Lexica Botania. Information is only replicated here for the sake of completeness.",
-	"icon": "floralchemy:textures/blocks/flower_func_petro_petunia.png"
+	"icon": "floralchemy:textures/blocks/flower_func_petro_petunia.png",
+    "flag": "mod:botania"
 }
