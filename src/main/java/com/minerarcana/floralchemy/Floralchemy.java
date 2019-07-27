@@ -6,8 +6,8 @@ import com.minerarcana.floralchemy.api.FloralchemyAPI;
 import com.minerarcana.floralchemy.block.BlockCrystalthorn;
 import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
-import com.minerarcana.floralchemy.village.VillageHedgedField;
-import com.minerarcana.floralchemy.village.VillageHedgedFieldHandler;
+import com.minerarcana.floralchemy.village.VillageHedgeHouse;
+import com.minerarcana.floralchemy.village.VillageHedgedHouseHandler;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
@@ -62,8 +62,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         LootTableList.register(new ResourceLocation(MOD_ID, "block/hedge"));
         LootTableList.register(new ResourceLocation(MOD_ID, "block/thorny_hedge"));
         //Vilages
-        VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedFieldHandler());
-        MapGenStructureIO.registerStructureComponent(VillageHedgedField.class, "hedgedField");
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedHouseHandler());
+        MapGenStructureIO.registerStructureComponent(VillageHedgeHouse.class, "hedge_house");
     }
 
     @Override
