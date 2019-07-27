@@ -75,6 +75,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()), block);
 		}
 		registry.register(new BlockHedge("hedge", false));
+		registry.register(new BlockHedge("thorny_hedge", true));
     }
 
     @Override

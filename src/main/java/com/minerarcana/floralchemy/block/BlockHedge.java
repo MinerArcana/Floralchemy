@@ -14,11 +14,13 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -44,6 +46,14 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
         setHardness(0.2F);
         this.isThorns = isThorns;
     }
+    
+    @Override
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
+    {
+        if(isThorns) {
+            entityIn.attackEntityFrom(DamageSource.CACTUS, 3.0F);
+        }
+    }
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -65,6 +75,12 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
                 worldIn.setBlockToAir(pos);
             }
         }
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+    {
+        return FULL_BLOCK_AABB.shrink(0.05F);
     }
 
     @Override
