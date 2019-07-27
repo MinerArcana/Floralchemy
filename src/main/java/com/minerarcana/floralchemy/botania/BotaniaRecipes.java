@@ -9,6 +9,7 @@ public class BotaniaRecipes {
 
     public static void init() {
         recipePetroPetunia = BotaniaAPI.registerPetalRecipe(ItemBlockSpecialFlower.ofType(SubTilePetroPetunia.NAME),
-                "redstoneRoot", "runeWaterB", "runeFireB", "petalOrange", "petalBlack", "petalBrown", "elvenDragonstone");
+                "redstoneRoot", "runeWaterB", "runeFireB", "petalOrange", "petalBlack", "petalBrown",
+                "elvenDragonstone");
     }
 }

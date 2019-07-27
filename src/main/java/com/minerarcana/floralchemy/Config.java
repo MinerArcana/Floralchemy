@@ -30,35 +30,39 @@ public class Config {
         BaseFileUtils.createFile(configFile);
         Configuration configuration = new Configuration(configFile);
 
-        Property generateDefaults = configuration.get("general","generateDefaults",
-                true, "Regenerate Default Fuel Values");
+        Property generateDefaults = configuration.get("general", "generateDefaults", true,
+                "Regenerate Default Fuel Values");
 
-        if (generateDefaults.getBoolean()) {
-            for (Map.Entry<String, Tuple<Integer, Integer>> entry : FUEL_DEFAULTS.entrySet()) {
+        if(generateDefaults.getBoolean()) {
+            for(Map.Entry<String, Tuple<Integer, Integer>> entry : FUEL_DEFAULTS.entrySet()) {
                 String category = "fuelValues." + entry.getKey();
-                configuration.getInt("burnTime", category, entry.getValue().getFirst(), 1, 10000, "Number of ticks this fluid will burn for");
-                configuration.getInt("powerPreTick", category, entry.getValue().getSecond(), 1, 10000, "Amount of Mana produced each Tick");
+                configuration.getInt("burnTime", category, entry.getValue().getFirst(), 1, 10000,
+                        "Number of ticks this fluid will burn for");
+                configuration.getInt("powerPreTick", category, entry.getValue().getSecond(), 1, 10000,
+                        "Amount of Mana produced each Tick");
             }
             for(Map.Entry<String, Integer> entry : CRYSTAL_DEFAULTS.entrySet()) {
-            	String category = "crystals." + entry.getKey();
-            	configuration.getInt("metadata", category, entry.getValue(), 0, Short.MAX_VALUE, "Metadata of the crystal item");
+                String category = "crystals." + entry.getKey();
+                configuration.getInt("metadata", category, entry.getValue(), 0, Short.MAX_VALUE,
+                        "Metadata of the crystal item");
             }
             generateDefaults.set(false);
         }
 
         ConfigCategory fuelValues = configuration.getCategory("fuelValues");
 
-        for (ConfigCategory fuelEntry: fuelValues.getChildren()) {
+        for(ConfigCategory fuelEntry : fuelValues.getChildren()) {
             String fluidName = fuelEntry.getName();
             int burnTime = fuelEntry.get("burnTime").getInt(1);
             int powerPreTick = fuelEntry.get("powerPreTick").getInt(1);
             FloralchemyAPI.getFluidFuelRegistry().putFuel(fluidName, burnTime, powerPreTick);
         }
-        
+
         ConfigCategory crystals = configuration.getCategory("crystals");
-        
+
         for(ConfigCategory crystalEntry : crystals.getChildren()) {
-        	FloralchemyAPI.getCrystalRegistry().putCrystal(new ResourceLocation(crystalEntry.getName()), crystalEntry.get("metadata").getInt(0));
+            FloralchemyAPI.getCrystalRegistry().putCrystal(new ResourceLocation(crystalEntry.getName()),
+                    crystalEntry.get("metadata").getInt(0));
         }
 
         if(configuration.hasChanged()) {

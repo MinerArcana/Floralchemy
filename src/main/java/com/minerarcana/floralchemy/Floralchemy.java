@@ -23,12 +23,7 @@ import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
-@Mod(
-        modid = Floralchemy.MOD_ID,
-        name = Floralchemy.MOD_NAME,
-        version = Floralchemy.VERSION,
-        dependencies = Floralchemy.DEPENDS
-)
+@Mod(modid = Floralchemy.MOD_ID, name = Floralchemy.MOD_NAME, version = Floralchemy.VERSION, dependencies = Floralchemy.DEPENDS)
 @EventBusSubscriber
 public class Floralchemy extends BaseModFoundation<Floralchemy> {
 
@@ -36,9 +31,9 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public static final String MOD_NAME = "Floralchemy";
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDS = "required-after:base@[0.0.0,);after:thaumcraft; after:botania";
-    
+
     @Instance("floralchemy")
-	public static Floralchemy instance;
+    public static Floralchemy instance;
 
     public Floralchemy() {
         super(MOD_ID, MOD_NAME, VERSION, CreativeTabs.MISC);
@@ -47,8 +42,8 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @Override
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	//Forced earlier so it is available to the crystalthorn. Bit jank...
-    	Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg"));
+        // Forced earlier so it is available to the crystalthorn. Bit jank...
+        Config.initConfig(new File(event.getModConfigurationDirectory(), "acronym/floralchemy.cfg"));
         super.preInit(event);
     }
 
@@ -56,12 +51,12 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        //Loot
+        // Loot
         LootFunctionManager.registerFunction(new LootFunctionCrystalthorn.Serializer());
         LootTableList.register(new ResourceLocation(MOD_ID, "inject/end_city_treasure"));
         LootTableList.register(new ResourceLocation(MOD_ID, "block/hedge"));
         LootTableList.register(new ResourceLocation(MOD_ID, "block/thorny_hedge"));
-        //Vilages
+        // Vilages
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedHouseHandler());
         MapGenStructureIO.registerStructureComponent(VillageHedgeHouse.class, "hedge_house");
     }
@@ -71,15 +66,16 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
     }
-    
-	@Override
+
+    @Override
     public void registerBlocks(BlockRegistry registry) {
-		for(Tuple<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
-			Block block = new BlockCrystalthorn(entry);
-			registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()), block);
-		}
-		registry.register(new BlockHedge("hedge", false));
-		registry.register(new BlockHedge("thorny_hedge", true));
+        for(Tuple<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
+            Block block = new BlockCrystalthorn(entry);
+            registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()),
+                    block);
+        }
+        registry.register(new BlockHedge("hedge", false));
+        registry.register(new BlockHedge("thorny_hedge", true));
     }
 
     @Override

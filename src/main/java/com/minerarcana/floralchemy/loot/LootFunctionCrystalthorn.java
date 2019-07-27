@@ -18,30 +18,37 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class LootFunctionCrystalthorn extends LootFunction {
 
-	protected LootFunctionCrystalthorn(LootCondition[] conditionsIn) {
-		super(conditionsIn);
-	}
+    protected LootFunctionCrystalthorn(LootCondition[] conditionsIn) {
+        super(conditionsIn);
+    }
 
-	@Nonnull
-	@Override
-	public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, @Nonnull LootContext context) {
-		Tuple<ResourceLocation, Integer> crystal = FloralchemyAPI.getCrystalRegistry().getCrystals().get(rand.nextInt(FloralchemyAPI.getCrystalRegistry().getCrystals().size()));
-		return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + crystal.getFirst().getPath())), rand.nextInt(4), crystal.getSecond());
-	}
+    @Nonnull
+    @Override
+    public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, @Nonnull LootContext context) {
+        Tuple<ResourceLocation, Integer> crystal = FloralchemyAPI.getCrystalRegistry().getCrystals()
+                .get(rand.nextInt(FloralchemyAPI.getCrystalRegistry().getCrystals().size()));
+        return new ItemStack(
+                ForgeRegistries.ITEMS.getValue(
+                        new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + crystal.getFirst().getPath())),
+                rand.nextInt(4), crystal.getSecond());
+    }
 
-	public static class Serializer extends LootFunction.Serializer<LootFunctionCrystalthorn> {
-		public Serializer() {
-			super(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), LootFunctionCrystalthorn.class);
-		}
+    public static class Serializer extends LootFunction.Serializer<LootFunctionCrystalthorn> {
+        public Serializer() {
+            super(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn"), LootFunctionCrystalthorn.class);
+        }
 
-		@Override
-		public void serialize(@Nonnull JsonObject object, @Nonnull LootFunctionCrystalthorn functionClazz, @Nonnull JsonSerializationContext serializationContext) {}
+        @Override
+        public void serialize(@Nonnull JsonObject object, @Nonnull LootFunctionCrystalthorn functionClazz,
+                @Nonnull JsonSerializationContext serializationContext) {
+        }
 
-		@Nonnull
-		@Override
-		public LootFunctionCrystalthorn deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext deserializationContext, @Nonnull LootCondition[] conditionsIn) {
-			return new LootFunctionCrystalthorn(conditionsIn);
-		}
-	}
+        @Nonnull
+        @Override
+        public LootFunctionCrystalthorn deserialize(@Nonnull JsonObject object,
+                @Nonnull JsonDeserializationContext deserializationContext, @Nonnull LootCondition[] conditionsIn) {
+            return new LootFunctionCrystalthorn(conditionsIn);
+        }
+    }
 
 }

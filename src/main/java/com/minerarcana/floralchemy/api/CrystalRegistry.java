@@ -17,17 +17,18 @@ public class CrystalRegistry {
     }
 
     public void putCrystal(ResourceLocation registryName, int metadata) {
-    	if(ForgeRegistries.ITEMS.getValue(registryName) == null) {
-    		Floralchemy.instance.getLogger().warning(registryName.toString() + " not found for crystalthorn registration. Blocking.");
-    		return;
-    	}
+        if(ForgeRegistries.ITEMS.getValue(registryName) == null) {
+            Floralchemy.instance.getLogger()
+                    .warning(registryName.toString() + " not found for crystalthorn registration. Blocking.");
+            return;
+        }
         crystals.add(new Tuple<ResourceLocation, Integer>(registryName, metadata));
     }
-    
+
     public void putCrystal(ResourceLocation registryName) {
-    	this.putCrystal(registryName, 0);
+        this.putCrystal(registryName, 0);
     }
-    
+
     public ArrayList<Tuple<ResourceLocation, Integer>> getCrystals() {
         return crystals;
     }

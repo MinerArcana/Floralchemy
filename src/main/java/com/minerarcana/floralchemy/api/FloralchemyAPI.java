@@ -7,8 +7,8 @@ public class FloralchemyAPI {
     public static FluidFuelRegistry getFluidFuelRegistry() {
         return fluidFuelRegistry;
     }
-    
+
     public static CrystalRegistry getCrystalRegistry() {
-    	return crystalRegistry;
+        return crystalRegistry;
     }
 }

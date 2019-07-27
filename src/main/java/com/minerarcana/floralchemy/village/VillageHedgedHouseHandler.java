@@ -12,7 +12,7 @@ public class VillageHedgedHouseHandler implements IVillageCreationHandler {
 
     @Override
     public PieceWeight getVillagePieceWeight(Random random, int size) {
-        return new PieceWeight(this.getComponentClass(), 3, 2);
+        return new PieceWeight(getComponentClass(), 3, 2);
     }
 
     @Override
@@ -23,7 +23,8 @@ public class VillageHedgedHouseHandler implements IVillageCreationHandler {
     @Override
     public Village buildComponent(PieceWeight villagePiece, Start startPiece, List<StructureComponent> pieces,
             Random random, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int type) {
-        return VillageHedgeHouse.buildComponent(villagePiece, startPiece, pieces, random, structureMinX, structureMinY, structureMinZ, facing, type);
+        return VillageHedgeHouse.buildComponent(villagePiece, startPiece, pieces, random, structureMinX, structureMinY,
+                structureMinZ, facing, type);
     }
 
 }

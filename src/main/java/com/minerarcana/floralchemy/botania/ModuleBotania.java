@@ -14,35 +14,35 @@ import vazkii.botania.api.BotaniaAPI;
 
 @Module(value = Floralchemy.MOD_ID)
 public class ModuleBotania extends ModuleBase {
-	
-	@Override
-	public String getClientProxyPath() {
-		return "com.minerarcana.floralchemy.botania.ClientProxy";
-	}
 
-	@Override
-	public List<IDependency> getDependencies(List<IDependency> dependencies) {
-		dependencies.add(new ModDependency("botania"));
-		return dependencies;
-	}
-	
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-	    super.preInit(event);
-	    BotaniaAPI.registerSubTile(SubTilePetroPetunia.NAME, SubTilePetroPetunia.class);
-	    BotaniaAPI.addSubTileToCreativeMenu(SubTilePetroPetunia.NAME);
-	}
-	
-	@Override
-	public void init(FMLInitializationEvent event) {
-	    super.init(event);
-	    BotaniaRecipes.init();
-	    LexiconPages.init();
-	}
-	
-	@Override
-	public String getName() {
-		return "Botania";
-	}
+    @Override
+    public String getClientProxyPath() {
+        return "com.minerarcana.floralchemy.botania.ClientProxy";
+    }
+
+    @Override
+    public List<IDependency> getDependencies(List<IDependency> dependencies) {
+        dependencies.add(new ModDependency("botania"));
+        return dependencies;
+    }
+
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+        BotaniaAPI.registerSubTile(SubTilePetroPetunia.NAME, SubTilePetroPetunia.class);
+        BotaniaAPI.addSubTileToCreativeMenu(SubTilePetroPetunia.NAME);
+    }
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
+        BotaniaRecipes.init();
+        LexiconPages.init();
+    }
+
+    @Override
+    public String getName() {
+        return "Botania";
+    }
 
 }

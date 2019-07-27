@@ -5,26 +5,25 @@ import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import vazkii.botania.api.BotaniaAPIClient;
 
 public class ClientProxy implements IModuleProxy {
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
         BotaniaAPIClient.registerSubtileModel(SubTilePetroPetunia.NAME,
                 new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, SubTilePetroPetunia.NAME), "normal"),
-                new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, SubTilePetroPetunia.NAME), "inventory"));
-	}
+                new ModelResourceLocation(new ResourceLocation(Floralchemy.MOD_ID, SubTilePetroPetunia.NAME),
+                        "inventory"));
+    }
 
-	@Override
-	public void init(FMLInitializationEvent event) {
-		
-	}
+    @Override
+    public void init(FMLInitializationEvent event) {
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		
-	}
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+
+    }
 }

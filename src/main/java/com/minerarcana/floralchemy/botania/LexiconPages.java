@@ -11,8 +11,7 @@ public class LexiconPages {
 
     public static void init() {
         petroPetunia = new BasicLexiconEntry(SubTilePetroPetunia.NAME, BotaniaAPI.categoryGenerationFlowers);
-        petroPetunia.setLexiconPages(new PageText("0"),
-                new PagePetalRecipe<>("1", BotaniaRecipes.recipePetroPetunia));
+        petroPetunia.setLexiconPages(new PageText("0"), new PagePetalRecipe<>("1", BotaniaRecipes.recipePetroPetunia));
         petroPetunia.setKnowledgeType(BotaniaAPI.elvenKnowledge);
     }
 }

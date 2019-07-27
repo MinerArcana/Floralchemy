@@ -26,7 +26,7 @@ public class VillageHedgeHouse extends StructureVillagePieces.Village {
             EnumFacing facing) {
         super(start, type);
         this.boundingBox = boundingBox;
-        this.setCoordBaseMode(facing);
+        setCoordBaseMode(facing);
     }
 
     @Override
