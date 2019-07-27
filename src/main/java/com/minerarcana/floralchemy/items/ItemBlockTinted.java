@@ -12,35 +12,35 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemBlockTinted<BLOCK extends Block & IHasBlockColor> extends ItemBlockGeneric<BLOCK> implements IHasItemColor, IHasItemMeshDefinition {
+public class ItemBlockTinted<BLOCK extends Block & IHasBlockColor> extends ItemBlockGeneric<BLOCK>
+        implements IHasItemColor, IHasItemMeshDefinition {
 
-	public ItemBlockTinted(BLOCK block) {
-		super(block);
-	}
+    public ItemBlockTinted(BLOCK block) {
+        super(block);
+    }
 
-	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if (tintIndex == 0) {
-			return this.getActualBlock().colorMultiplier(null, null, null, tintIndex);
-		}
-		return 0;
-	}
-	
-	@Override
-	public int getMetadata(int damage)
-    {
+    @Override
+    public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+        if(tintIndex == 0) {
+            return getActualBlock().colorMultiplier(null, null, null, tintIndex);
+        }
         return 0;
     }
-	
-	@Override
+
+    @Override
+    public int getMetadata(int damage) {
+        return 0;
+    }
+
+    @Override
     public ResourceLocation getResourceLocation(ItemStack itemStack) {
-        return this.getActualBlock().getRegistryName();
+        return getActualBlock().getRegistryName();
     }
 
     @Override
     public List<ResourceLocation> getAllVariants() {
         List<ResourceLocation> locs = new ArrayList<>();
-        this.getAllSubItems(new ArrayList<>()).forEach(stack -> locs.add(this.getResourceLocation(stack)));
+        getAllSubItems(new ArrayList<>()).forEach(stack -> locs.add(this.getResourceLocation(stack)));
         return locs;
     }
 }

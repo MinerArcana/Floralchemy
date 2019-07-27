@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockHedge extends BlockBase implements IHasBlockColor {
 
     private final boolean isThorny;
-    
+
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyBool SOUTH = PropertyBool.create("south");
@@ -48,17 +48,18 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
         setTickRandomly(true);
         setCreativeTab(CreativeTabs.DECORATIONS);
         setHardness(0.2F);
-        this.isThorny = isThorns;
-        this.setItemBlock(new ItemBlockTinted<BlockHedge>(this));
+        isThorny = isThorns;
+        setItemBlock(new ItemBlockTinted<BlockHedge>(this));
     }
-    
+
     @Override
-    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
-    {
+    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, net.minecraft.world.IBlockAccess world,
+            BlockPos pos, IBlockState state, int fortune) {
         if(world instanceof WorldServer) {
             WorldServer serverWorld = (WorldServer) world;
             String location = isThorny ? "block/thorny_hedge" : "block/hedge";
-            LootTable table = serverWorld.getLootTableManager().getLootTableFromLocation(new ResourceLocation(Floralchemy.MOD_ID, location));
+            LootTable table = serverWorld.getLootTableManager()
+                    .getLootTableFromLocation(new ResourceLocation(Floralchemy.MOD_ID, location));
             LootContext ctx = new LootContext.Builder(serverWorld).withLuck(fortune).build();
             drops.addAll(table.generateLootForPools(serverWorld.rand, ctx));
         }
@@ -66,10 +67,9 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
             super.getDrops(drops, world, pos, state, fortune);
         }
     }
-    
+
     @Override
-    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
-    {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if(isThorny) {
             entityIn.attackEntityFrom(DamageSource.CACTUS, 3.0F);
         }
@@ -87,7 +87,8 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
             for(EnumFacing facing : EnumFacing.VALUES) {
                 BlockPos adjacent = pos.offset(facing);
                 if(worldIn.getBlockState(adjacent).getBlock() == this
-                        || worldIn.getBlockState(adjacent).getMaterial() == Material.GRASS || worldIn.getBlockState(adjacent).getMaterial() == Material.GROUND) {
+                        || worldIn.getBlockState(adjacent).getMaterial() == Material.GRASS
+                        || worldIn.getBlockState(adjacent).getMaterial() == Material.GROUND) {
                     hasNeighbour = true;
                 }
             }
@@ -96,10 +97,9 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
             }
         }
     }
-    
+
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return FULL_BLOCK_AABB.shrink(0.05F);
     }
 
@@ -136,35 +136,38 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
         return Block.isExceptBlockForAttachWithPiston(block) || block == Blocks.BARRIER || block == Blocks.MELON_BLOCK
                 || block == Blocks.PUMPKIN || block == Blocks.LIT_PUMPKIN;
     }
-    
+
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-    
+
+    @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
-    
+
+    @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
-    {
-        return blockAccess.getBlockState(pos.offset(side)).getBlock() == this ? false : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
+            EnumFacing side) {
+        return blockAccess.getBlockState(pos.offset(side)).getBlock() == this ? false
+                : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 
     @Override
     public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        return world != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(world, pos) : ColorizerFoliage.getFoliageColorBasic();
+        return world != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(world, pos)
+                : ColorizerFoliage.getFoliageColorBasic();
     }
-    
+
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+            EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
-            if(ItemStackUtils.doItemsMatch(playerIn.getHeldItem(hand), Items.DYE) && playerIn.getHeldItem(hand).getItemDamage() == EnumDyeColor.WHITE.getDyeDamage()) {
+            if(ItemStackUtils.doItemsMatch(playerIn.getHeldItem(hand), Items.DYE)
+                    && playerIn.getHeldItem(hand).getItemDamage() == EnumDyeColor.WHITE.getDyeDamage()) {
                 BlockPos toGrow = pos.offset(facing);
                 if(worldIn.isAirBlock(toGrow)) {
                     worldIn.setBlockState(toGrow, state);

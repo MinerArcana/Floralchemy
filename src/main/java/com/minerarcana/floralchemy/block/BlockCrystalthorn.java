@@ -37,138 +37,141 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
-	public static final int maxAge = 7;
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, maxAge);
-	public static final PropertyBool BERRIES = PropertyBool.create("berries");
-	private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.3, 0, 0.3, 0.7, 0.4, 0.7),
-			new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.5, 0.8), new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8),
-			new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8), new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9),
-			new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9), new AxisAlignedBB(0, 0, 0, 1, 1, 1),
-			new AxisAlignedBB(0, 0, 0, 1, 1, 1) };
-	private Tuple<ResourceLocation, Integer> crystal;
-	private ItemBlock itemBlock;
-	private ItemStack cachedCrystalStack = ItemStack.EMPTY;
-	private Optional<Integer> cachedColor = Optional.empty();
+    public static final int maxAge = 7;
+    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, maxAge);
+    public static final PropertyBool BERRIES = PropertyBool.create("berries");
+    private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.3, 0, 0.3, 0.7, 0.4, 0.7),
+            new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.5, 0.8), new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8),
+            new AxisAlignedBB(0.2, 0, 0.2, 0.8, 0.6, 0.8), new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9),
+            new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.6, 0.9), new AxisAlignedBB(0, 0, 0, 1, 1, 1),
+            new AxisAlignedBB(0, 0, 0, 1, 1, 1) };
+    private Tuple<ResourceLocation, Integer> crystal;
+    private ItemBlock itemBlock;
+    private ItemStack cachedCrystalStack = ItemStack.EMPTY;
+    private Optional<Integer> cachedColor = Optional.empty();
 
-	public BlockCrystalthorn(Tuple<ResourceLocation, Integer> entry) {
-		super(Material.PLANTS);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0).withProperty(BERRIES, false));
-		this.setTranslationKey("crystalthorn");
-		this.setTickRandomly(true);
-		this.crystal = entry;
-	}
+    public BlockCrystalthorn(Tuple<ResourceLocation, Integer> entry) {
+        super(Material.PLANTS);
+        setDefaultState(blockState.getBaseState().withProperty(AGE, 0).withProperty(BERRIES, false));
+        setTranslationKey("crystalthorn");
+        setTickRandomly(true);
+        crystal = entry;
+    }
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(this.getCrystalStack().getDisplayName());
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(getCrystalStack().getDisplayName());
+    }
 
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
-			ItemStack stack = this.getCrystalStack();
-			if (!stack.isEmpty()) {
-				if (playerIn.addItemStackToInventory(stack)) {
-					playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
-					worldIn.setBlockState(pos, state.withProperty(BERRIES, false));
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+            EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if(state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
+            ItemStack stack = getCrystalStack();
+            if(!stack.isEmpty()) {
+                if(playerIn.addItemStackToInventory(stack)) {
+                    playerIn.attackEntityFrom(DamageSource.CACTUS, 3F);
+                    worldIn.setBlockState(pos, state.withProperty(BERRIES, false));
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
-		if (random.nextBoolean()) {
-			if (state.getValue(AGE) < maxAge) {
-				worldIn.setBlockState(pos, state.withProperty(AGE, state.getValue(AGE) + 1));
-				return;
-			}
-			if (!state.getValue(BERRIES) && random.nextInt(10) == 0) {
-				worldIn.setBlockState(pos, state.withProperty(BERRIES, true));
-			}
-		}
-	}
+    @Override
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+        if(random.nextBoolean()) {
+            if(state.getValue(AGE) < maxAge) {
+                worldIn.setBlockState(pos, state.withProperty(AGE, state.getValue(AGE) + 1));
+                return;
+            }
+            if(!state.getValue(BERRIES) && random.nextInt(10) == 0) {
+                worldIn.setBlockState(pos, state.withProperty(BERRIES, true));
+            }
+        }
+    }
 
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		if (meta == maxAge + 1) {
-			return this.getDefaultState().withProperty(BERRIES, true).withProperty(AGE, maxAge);
-		}
-		return this.getDefaultState().withProperty(AGE, meta);
-	}
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        if(meta == maxAge + 1) {
+            return getDefaultState().withProperty(BERRIES, true).withProperty(AGE, maxAge);
+        }
+        return getDefaultState().withProperty(AGE, meta);
+    }
 
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(BERRIES) ? state.getValue(AGE) : state.getValue(AGE) + 1;
-	}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(BERRIES) ? state.getValue(AGE) : state.getValue(AGE) + 1;
+    }
 
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return AABB[state.getValue(AGE)];
-	}
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return AABB[state.getValue(AGE)];
+    }
 
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { AGE, BERRIES });
-	}
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] { AGE, BERRIES });
+    }
 
-	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state,
-			@Nullable TileEntity te, ItemStack stack) {
-		player.attackEntityFrom(DamageSource.CACTUS, 3F);
-		super.harvestBlock(worldIn, player, pos, state, te, stack);
-	}
-	
-	@Override
-	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		entityIn.attackEntityFrom(DamageSource.CACTUS, 1F);
-	}
+    @Override
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state,
+            @Nullable TileEntity te, ItemStack stack) {
+        player.attackEntityFrom(DamageSource.CACTUS, 3F);
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		if(cachedColor.isPresent()) {
-			return cachedColor.get();
-		}
-		else {
-			ItemStack cStack = this.getCrystalStack();
-			int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(
-					cStack, 0);
-			if (tintColor == -1) {
-				//TODO This is very failure prone, need a better way. 
-				IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(), "textures/items/" + crystal.getFirst().getPath() + ".png"));
-				if (resource != null) {
-					InputStream stream = resource.getInputStream();
-					tintColor = ColourHelper.getColour(stream);
-					try {
-						stream.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			cachedColor = Optional.of(tintColor);
-			return tintColor;
-		}
-	}
+    @Override
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        entityIn.attackEntityFrom(DamageSource.CACTUS, 1F);
+    }
 
-	@Override
-	public Block getBlock() {
-		return this;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
+        if(cachedColor.isPresent()) {
+            return cachedColor.get();
+        }
+        else {
+            ItemStack cStack = getCrystalStack();
+            int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(cStack, 0);
+            if(tintColor == -1) {
+                // TODO This is very failure prone, need a better way.
+                IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(),
+                        "textures/items/" + crystal.getFirst().getPath() + ".png"));
+                if(resource != null) {
+                    InputStream stream = resource.getInputStream();
+                    tintColor = ColourHelper.getColour(stream);
+                    try {
+                        stream.close();
+                    }
+                    catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            cachedColor = Optional.of(tintColor);
+            return tintColor;
+        }
+    }
 
-	@Override
-	public ItemBlock getItemBlock() {
-		return itemBlock == null ? new ItemBlockTinted<BlockCrystalthorn>(this) : itemBlock;
-	}
+    @Override
+    public Block getBlock() {
+        return this;
+    }
 
-	public ItemStack getCrystalStack() {
-		if(cachedCrystalStack.isEmpty()) {
-			cachedCrystalStack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1, crystal.getSecond());
-		}
-		return cachedCrystalStack;
-	}
+    @Override
+    public ItemBlock getItemBlock() {
+        return itemBlock == null ? new ItemBlockTinted<BlockCrystalthorn>(this) : itemBlock;
+    }
+
+    public ItemStack getCrystalStack() {
+        if(cachedCrystalStack.isEmpty()) {
+            cachedCrystalStack = new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1,
+                    crystal.getSecond());
+        }
+        return cachedCrystalStack;
+    }
 }
