@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.minerarcana.floralchemy.FloraObjectHolder;
 import com.minerarcana.floralchemy.Floralchemy;
+import com.minerarcana.floralchemy.items.ItemBlockTinted;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.util.ItemStackUtils;
@@ -33,8 +34,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHedge extends BlockBase implements IHasBlockColor {
 
-    final boolean isThorny;
-
+    private final boolean isThorny;
+    
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyBool SOUTH = PropertyBool.create("south");
@@ -49,6 +50,7 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
         setCreativeTab(CreativeTabs.DECORATIONS);
         setHardness(0.2F);
         this.isThorny = isThorns;
+        this.setItemBlock(new ItemBlockTinted<BlockHedge>(this));
     }
     
     @Override
