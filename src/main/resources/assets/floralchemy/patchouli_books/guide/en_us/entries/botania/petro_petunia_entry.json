@@ -1,0 +1,11 @@
+{
+    "name": "Petro Petunia",
+    "icon": "floralchemy:textures/blocks/flower_func_petro_petunia.png",
+    "category": "botania_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "The $(item)Petro Petunia$() is an intermediate generating flower. It draws combustible liquid fuels up through it's roots (which extend one block below and all around it) and burns them to generate mana"
+        }
+    ]
+}

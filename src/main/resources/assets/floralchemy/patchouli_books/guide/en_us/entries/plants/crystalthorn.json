@@ -1,0 +1,11 @@
+{
+    "name": "Crystalthorns",
+    "icon": "floralchemy:textures/blocks/crystalthorn_base.png",
+    "category": "plants_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Crystalthorns are found rarely in $(thing)Strongholds$() and $(thing)End Cities$(). They grow all kinds of crystals, from prismarine to emerald. The razor edges of the growths hurt when you pick them."
+        }
+    ]
+}
