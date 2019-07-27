@@ -34,7 +34,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 
     @Instance("floralchemy")
     public static Floralchemy instance;
-    
+
     @SidedProxy(clientSide = "com.minerarcana.floralchemy.ClientProxy", serverSide = "com.minerarcana.floralchemy.CommonProxy")
     public static CommonProxy proxy;
 

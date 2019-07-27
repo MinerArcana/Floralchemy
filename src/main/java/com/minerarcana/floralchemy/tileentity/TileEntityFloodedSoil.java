@@ -27,12 +27,12 @@ public class TileEntityFloodedSoil extends TileEntityBase {
     protected NBTTagCompound writeToDisk(NBTTagCompound data) {
         return tank.writeToNBT(data);
     }
-    
+
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
     }
-    
+
     @Override
     @Nonnull
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
