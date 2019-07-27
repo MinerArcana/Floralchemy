@@ -2,7 +2,6 @@ package com.minerarcana.floralchemy.block;
 
 import java.util.Random;
 
-import com.minerarcana.floralchemy.FloraObjectHolder;
 import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.items.ItemBlockTinted;
 import com.teamacronymcoders.base.blocks.BlockBase;
@@ -168,8 +167,10 @@ public class BlockHedge extends BlockBase implements IHasBlockColor {
             if(ItemStackUtils.doItemsMatch(playerIn.getHeldItem(hand), Items.DYE) && playerIn.getHeldItem(hand).getItemDamage() == EnumDyeColor.WHITE.getDyeDamage()) {
                 BlockPos toGrow = pos.offset(facing);
                 if(worldIn.isAirBlock(toGrow)) {
-                    worldIn.setBlockState(toGrow, FloraObjectHolder.hedge.getDefaultState());
-                    playerIn.getHeldItem(hand).shrink(1);
+                    worldIn.setBlockState(toGrow, state);
+                    if(!playerIn.capabilities.isCreativeMode) {
+                        playerIn.getHeldItem(hand).shrink(1);
+                    }
                     worldIn.playEvent(2005, toGrow, 0);
                     return true;
                 }
