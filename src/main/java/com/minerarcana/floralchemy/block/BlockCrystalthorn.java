@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.annotation.Nullable;
 
-import com.minerarcana.floralchemy.items.ItemBlockTinted;
+import com.minerarcana.floralchemy.item.ItemBlockTinted;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.client.ClientHelper;
