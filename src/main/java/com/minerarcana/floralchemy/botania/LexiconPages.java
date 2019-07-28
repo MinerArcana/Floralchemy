@@ -1,6 +1,5 @@
-package com.minerarcana.floralchemy;
+package com.minerarcana.floralchemy.botania;
 
-import com.minerarcana.floralchemy.block.flower.SubTilePetroPetunia;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.common.lexicon.BasicLexiconEntry;
@@ -12,7 +11,7 @@ public class LexiconPages {
 
     public static void init() {
         petroPetunia = new BasicLexiconEntry(SubTilePetroPetunia.NAME, BotaniaAPI.categoryGenerationFlowers);
-        petroPetunia.setLexiconPages(new PageText("0"), new PageText("1"),
-                new PagePetalRecipe<>("2", BotaniaRecipes.recipePetroPetunia));
+        petroPetunia.setLexiconPages(new PageText("0"), new PagePetalRecipe<>("1", BotaniaRecipes.recipePetroPetunia));
+        petroPetunia.setKnowledgeType(BotaniaAPI.elvenKnowledge);
     }
 }

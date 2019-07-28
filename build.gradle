@@ -44,15 +44,13 @@ repositories {
         name "Baubles"
         url "https://minecraft.curseforge.com/api/maven/"
     }
-    maven {
-        name "botania"
-        url "https://jitpack.io"
-    }
 }
 
 dependencies {
     deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}-SNAPSHOT.+"
     deobfCompile "baubles:Baubles:1.12:1.5.2"
+    deobfCompile "vazkii.botania:Botania:r1.10-361.53"
+    deobfCompile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
 }
 
 processResources {

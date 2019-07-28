@@ -1,11 +1,12 @@
-package com.minerarcana.floralchemy.block.flower;
+package com.minerarcana.floralchemy.botania;
 
-import com.minerarcana.floralchemy.LexiconPages;
+import java.awt.Color;
+import java.util.Optional;
+
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
+
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Tuple;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,9 +18,6 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.subtile.RadiusDescriptor;
 import vazkii.botania.api.subtile.RadiusDescriptor.Square;
 import vazkii.botania.api.subtile.SubTileGenerating;
-
-import java.awt.*;
-import java.util.Optional;
 
 public class SubTilePetroPetunia extends SubTileGenerating {
     public static final String NAME = "petro_petunia";
@@ -36,21 +34,24 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     public void onUpdate() {
         super.onUpdate();
 
-        if (this.coolDown > 0) {
-            --this.coolDown;
+        if(coolDown > 0) {
+            --coolDown;
         }
 
-        if (this.burnTime > 0) {
-            --this.burnTime;
+        if(burnTime > 0) {
+            --burnTime;
         }
 
-        if(this.getWorld().isRemote) {
+        if(getWorld().isRemote) {
             if(burnTime > 0 && supertile.getWorld().rand.nextInt(10) == 0) {
                 Vec3d offset = getWorld().getBlockState(getPos()).getOffset(getWorld(), getPos()).add(0.4, 0.7, 0.4);
-                supertile.getWorld().spawnParticle(EnumParticleTypes.SMOKE_NORMAL, supertile.getPos().getX() + offset.x + Math.random() * 0.2,
-                        supertile.getPos().getY() + offset.y, supertile.getPos().getZ() + offset.z + Math.random() * 0.2, 0.0D, 0.0D, 0.0D);
+                supertile.getWorld().spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
+                        supertile.getPos().getX() + offset.x + Math.random() * 0.2,
+                        supertile.getPos().getY() + offset.y,
+                        supertile.getPos().getZ() + offset.z + Math.random() * 0.2, 0.0D, 0.0D, 0.0D);
             }
-        } else {
+        }
+        else {
             if(linkedCollector != null) {
                 if(burnTime <= 0 && redstoneSignal == 0 && coolDown <= 0) {
                     if(mana < getMaxMana()) {
@@ -58,24 +59,28 @@ public class SubTilePetroPetunia extends SubTileGenerating {
                         boolean foundFluid = false;
 
                         while(tries < 9 && !foundFluid) {
-                            BlockPos checkingPos = this.getPos().add(-1 + tries / 3, -1, -1 + tries % 3);
-                            IFluidHandler fluidHandler = FluidUtil.getFluidHandler(this.getWorld(), checkingPos, EnumFacing.UP);
-                            if (fluidHandler != null) {
+                            BlockPos checkingPos = getPos().add(-1 + tries / 3, -1, -1 + tries % 3);
+                            IFluidHandler fluidHandler = FluidUtil.getFluidHandler(getWorld(), checkingPos,
+                                    EnumFacing.UP);
+                            if(fluidHandler != null) {
                                 FluidStack grabbedFluid = fluidHandler.drain(1000, false);
-                                if (grabbedFluid != null && grabbedFluid.getFluid() != null && grabbedFluid.amount == 1000) {
-                                    Optional<Tuple<Integer, Integer>> fuelInfo = FloralchemyAPI.getFluidFuelRegistry().getFuelInfo(grabbedFluid.getFluid().getName());
-                                    if (fuelInfo.isPresent()) {
+                                if(grabbedFluid != null && grabbedFluid.getFluid() != null
+                                        && grabbedFluid.amount == 1000) {
+                                    Optional<Tuple<Integer, Integer>> fuelInfo = FloralchemyAPI.getFluidFuelRegistry()
+                                            .getFuelInfo(grabbedFluid.getFluid().getName());
+                                    if(fuelInfo.isPresent()) {
                                         foundFluid = true;
-                                        this.burnTime = fuelInfo.get().getFirst();
-                                        this.powerPerTick = fuelInfo.get().getSecond();
+                                        burnTime = fuelInfo.get().getFirst();
+                                        powerPerTick = fuelInfo.get().getSecond();
                                         fluidHandler.drain(1000, true);
+                                        sync();
                                     }
                                 }
                             }
                             tries++;
                         }
 
-                        if (!foundFluid) {
+                        if(!foundFluid) {
                             coolDown = 100;
                         }
                     }
@@ -87,16 +92,17 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     @Override
     public boolean receiveClientEvent(int event, int param) {
         if(event == START_BURN_EVENT) {
-            //TODO particles on burn
+
             return true;
-        } else {
+        }
+        else {
             return super.receiveClientEvent(event, param);
         }
     }
 
     @Override
     public int getMaxMana() {
-        return 900;
+        return 9000;
     }
 
     @Override
@@ -122,7 +128,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     @Override
     @SideOnly(Side.CLIENT)
     public RadiusDescriptor getRadius() {
-        return new Square(this.toBlockPos(), 1);
+        return new Square(toBlockPos(), 1);
     }
 
     @Override
@@ -148,6 +154,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
         powerPerTick = cmp.getInteger(TAG_POWER);
     }
 
+    @Override
     public LexiconEntry getEntry() {
         return LexiconPages.petroPetunia;
     }

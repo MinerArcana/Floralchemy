@@ -1,0 +1,70 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+  	  "model": "grass",
+      "textures": {
+        "top": "floralchemy:blocks/crystalthorn_base",
+        "bottom": "floralchemy:blocks/crystalthorn_base",
+        "side": "floralchemy:blocks/crystalthorn_base",
+        "overlay": "minecraft:items/seeds_melon",
+        "particle": "floralchemy:blocks/crystalthorn_base"
+      }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "age": {
+    	"0": {
+    		"transform": {
+    			"scale": 0.3,
+    			"translation": [0, -0.3, 0]
+    		}
+    	},
+    	"1": {
+    	"transform": {
+    			"scale": 0.4,
+    			"translation": [0, -0.3, 0]
+    		}
+    	},
+    	"2": {
+    	"transform": {
+    			"scale": 0.5,
+    			"translation": [0, -0.3, 0]
+    		}
+    	},
+    	"3": {
+    	"transform": {
+    			"scale": 0.6,
+    			"translation": [0, -0.2, 0]
+    		}
+    	},
+    	"4": {
+    	"transform": {
+    			"scale": 0.7,
+    			"translation": [0, -0.2, 0]
+    		}
+    	},
+    	"5": {
+    	"transform": {
+    			"scale": 0.8,
+    			"translation": [0, -0.1, 0]
+    		}
+    	},
+    	"6": {
+    	"transform": {
+    			"scale": 0.9,
+    			"translation": [0, -0.1, 0]
+    		}
+    	},
+    	"7": {}
+    },
+    "berries": {
+    	"true": { 
+	    	"textures": { 
+	    		"overlay": "floralchemy:blocks/crystalthorn_crystals"
+	    	}
+    	},
+    	"false": {}
+    }
+  }
+}
