@@ -1,6 +1,6 @@
 {
     "name": "Petro Petunia",
-    "icon": "floralchemy:textures/blocks/flower_func_petro_petunia.png",
+    "icon": "floralchemy:textures/items/petro_petunia_icon.png",
     "category": "botania_category",
     "pages": [
         {
