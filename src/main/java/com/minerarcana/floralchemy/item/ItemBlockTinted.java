@@ -1,4 +1,4 @@
-package com.minerarcana.floralchemy.items;
+package com.minerarcana.floralchemy.item;
 
 import java.util.ArrayList;
 import java.util.List;
