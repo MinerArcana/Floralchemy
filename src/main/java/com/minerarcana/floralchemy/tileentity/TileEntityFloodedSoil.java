@@ -59,7 +59,6 @@ public class TileEntityFloodedSoil extends TileEntityBase {
     @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
-        ;
         return writeToDisk(super.getUpdateTag());
     }
 

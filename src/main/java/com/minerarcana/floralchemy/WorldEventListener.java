@@ -64,7 +64,7 @@ public class WorldEventListener implements IWorldEventListener {
     @Override
     public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
         if(type == 1031 && world.getBlockState(blockPosIn.down()).getBlock() == Blocks.CAULDRON) {
-            world.setBlockState(blockPosIn.down(), FloraObjectHolder.leaky_cauldron.getDefaultState());
+            world.setBlockState(blockPosIn.down(), FloraObjectHolder.LEAKY_CAULDRON.getDefaultState());
         }
     }
 

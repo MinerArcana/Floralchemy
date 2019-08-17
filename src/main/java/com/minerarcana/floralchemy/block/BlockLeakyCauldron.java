@@ -2,22 +2,16 @@ package com.minerarcana.floralchemy.block;
 
 import java.util.*;
 
-import javax.annotation.Nullable;
-
+import com.minerarcana.floralchemy.item.ItemBlockLeakyCauldron;
 import com.minerarcana.floralchemy.tileentity.TileEntityLeakyCauldron;
 import com.teamacronymcoders.base.blocks.BlockTEBase;
-import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -32,14 +26,7 @@ public class BlockLeakyCauldron extends BlockTEBase<TileEntityLeakyCauldron> {
     public BlockLeakyCauldron() {
         super(Material.IRON, "leaky_cauldron");
         this.setTickRandomly(true);
-        this.setItemBlock(new ItemBlockModel<BlockLeakyCauldron>(this) {
-            @Override
-            @SideOnly(Side.CLIENT)
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-            {
-                tooltip.add(TextFormatting.GOLD + new TextComponentTranslation("tile.floralchemy.leaky_cauldron.desc").getFormattedText());
-            }
-        });
+        this.setItemBlock(new ItemBlockLeakyCauldron(this));
     }
     
     @Override
