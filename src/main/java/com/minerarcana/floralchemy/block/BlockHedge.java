@@ -3,7 +3,7 @@ package com.minerarcana.floralchemy.block;
 import java.util.Random;
 
 import com.minerarcana.floralchemy.Floralchemy;
-import com.minerarcana.floralchemy.items.ItemBlockTinted;
+import com.minerarcana.floralchemy.item.ItemBlockTinted;
 import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.util.ItemStackUtils;
