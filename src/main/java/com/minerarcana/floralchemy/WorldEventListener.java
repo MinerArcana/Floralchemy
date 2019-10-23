@@ -11,6 +11,7 @@ import net.minecraft.world.*;
 
 public class WorldEventListener implements IWorldEventListener {
 
+    public static final int ANVIL_LAND_EVENT_ID = 1031;
     private WorldServer world;
     
     public WorldEventListener(WorldServer world) {
@@ -63,7 +64,7 @@ public class WorldEventListener implements IWorldEventListener {
     //Bahahaha
     @Override
     public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
-        if(type == 1031 && world.getBlockState(blockPosIn.down()).getBlock() == Blocks.CAULDRON) {
+        if(type == ANVIL_LAND_EVENT_ID && world.getBlockState(blockPosIn.down()).getBlock() == Blocks.CAULDRON) {
             world.setBlockState(blockPosIn.down(), FloraObjectHolder.LEAKY_CAULDRON.getDefaultState());
         }
     }
