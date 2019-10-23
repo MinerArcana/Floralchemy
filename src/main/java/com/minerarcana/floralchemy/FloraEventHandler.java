@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class FloraEventHandler {
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
-        if(!event.getWorld().isRemote) {
+        if(!event.getWorld().isRemote && event.getWorld() instanceof WorldServer) {
             event.getWorld().addEventListener(new WorldEventListener((WorldServer) event.getWorld()));
         }
     }
