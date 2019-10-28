@@ -19,6 +19,7 @@ import net.minecraft.block.properties.*;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -138,17 +140,24 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
             ItemStack cStack = getCrystalStack();
             int tintColor = Minecraft.getMinecraft().getItemColors().colorMultiplier(cStack, 0);
             if(tintColor == -1) {
-                // TODO This is very failure prone, need a better way.
-                IResource resource = ClientHelper.getResource(new ResourceLocation(crystal.getFirst().getNamespace(),
-                        "textures/items/" + crystal.getFirst().getPath() + ".png"));
-                if(resource != null) {
-                    InputStream stream = resource.getInputStream();
-                    tintColor = ColourHelper.getColour(stream);
-                    try {
-                        stream.close();
-                    }
-                    catch(IOException e) {
-                        e.printStackTrace();
+                List<BakedQuad> quads = ClientHelper.getItemModelMesher().getItemModel(new ItemStack(ForgeRegistries.ITEMS.getValue(crystal.getFirst()), 1,
+                                crystal.getSecond()))
+                        .getQuads(null, null, Minecraft.getMinecraft().world.rand.nextLong());
+                if(!quads.isEmpty()) {
+                    String name = quads.get(0).getSprite().getIconName();
+                    FMLLog.bigWarning(name);
+                    ResourceLocation location = new ResourceLocation(name);
+                    IResource resource = ClientHelper
+                            .getResource(new ResourceLocation(location.getNamespace(), "textures/" + location.getPath() + ".png"));
+                    if(resource != null) {
+                        InputStream stream = resource.getInputStream();
+                        tintColor = ColourHelper.getColour(stream);
+                        try {
+                            stream.close();
+                        }
+                        catch(IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
