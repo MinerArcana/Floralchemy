@@ -19,7 +19,7 @@ public class CrystalRegistry {
     public void putCrystal(ResourceLocation registryName, int metadata) {
         if(ForgeRegistries.ITEMS.getValue(registryName) == null) {
             Floralchemy.instance.getLogger()
-                    .warning(registryName.toString() + " not found for crystalthorn registration. Blocking.");
+                    .warning(registryName.toString() + " not found for crystalthorn registration. Discarding.");
             return;
         }
         crystals.add(new Tuple<ResourceLocation, Integer>(registryName, metadata));
