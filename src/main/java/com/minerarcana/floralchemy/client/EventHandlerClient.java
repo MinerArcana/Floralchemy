@@ -19,8 +19,7 @@ public class EventHandlerClient {
     @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
         for(Tuple<ResourceLocation, Integer> crystal : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
-            ResourceLocation crystalthorn = new ResourceLocation(
-                    Floralchemy.MOD_ID + ":" + "crystalthorn_" + crystal.getFirst().getPath());
+            ResourceLocation crystalthorn = Floralchemy.getCrystalthornResourceLocation(crystal);
             Block block = ForgeRegistries.BLOCKS.getValue(crystalthorn);
             if(block != null) {
                 ModelLoader.setCustomStateMapper(block, new StateMapperCrystalthorn());

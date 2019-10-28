@@ -3,10 +3,7 @@ package com.minerarcana.floralchemy;
 import java.io.File;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-import com.minerarcana.floralchemy.block.BlockCrystalthorn;
-import com.minerarcana.floralchemy.block.BlockFloodedSoil;
-import com.minerarcana.floralchemy.block.BlockHedge;
-import com.minerarcana.floralchemy.block.BlockLeakyCauldron;
+import com.minerarcana.floralchemy.block.*;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
 import com.minerarcana.floralchemy.village.VillageHedgeHouse;
 import com.minerarcana.floralchemy.village.VillageHedgedHouseHandler;
@@ -21,13 +18,9 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 @Mod(modid = Floralchemy.MOD_ID, name = Floralchemy.MOD_NAME, version = Floralchemy.VERSION, dependencies = Floralchemy.DEPENDS)
@@ -82,7 +75,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     public void registerBlocks(BlockRegistry registry) {
         for(Tuple<ResourceLocation, Integer> entry : FloralchemyAPI.getCrystalRegistry().getCrystals()) {
             Block block = new BlockCrystalthorn(entry);
-            registry.register(new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath()),
+            registry.register(getCrystalthornResourceLocation(entry),
                     block);
         }
         registry.register(new BlockHedge("hedge", false));
@@ -99,5 +92,9 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
     @Override
     public boolean hasConfig() {
         return false;
+    }
+    
+    public static ResourceLocation getCrystalthornResourceLocation(Tuple<ResourceLocation, Integer> entry) {
+        return new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + entry.getFirst().getPath() + (entry.getSecond() > 0 ? "_" + entry.getSecond() : ""));
     }
 }
