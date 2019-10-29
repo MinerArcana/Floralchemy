@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.annotation.Nullable;
 
-import com.minerarcana.floralchemy.item.ItemBlockTinted;
+import com.minerarcana.floralchemy.item.ItemBlockCrystalthorn;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.client.ClientHelper;
@@ -171,7 +171,7 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 
     @Override
     public ItemBlock getItemBlock() {
-        return itemBlock == null ? new ItemBlockTinted<BlockCrystalthorn>(this) : itemBlock;
+        return itemBlock == null ? new ItemBlockCrystalthorn(this) : itemBlock;
     }
 
     public ItemStack getCrystalStack() {

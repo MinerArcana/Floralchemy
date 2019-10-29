@@ -7,6 +7,7 @@ import com.minerarcana.floralchemy.block.*;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
 import com.minerarcana.floralchemy.village.VillageHedgeHouse;
 import com.minerarcana.floralchemy.village.VillageHedgedHouseHandler;
+import com.minerarcana.floralchemy.worldgen.FloralchemyWorldGenerator;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 @Mod(modid = Floralchemy.MOD_ID, name = Floralchemy.MOD_NAME, version = Floralchemy.VERSION, dependencies = Floralchemy.DEPENDS)
@@ -63,6 +65,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         // Vilages
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedHouseHandler());
         MapGenStructureIO.registerStructureComponent(VillageHedgeHouse.class, "hedge_house");
+        GameRegistry.registerWorldGenerator(new FloralchemyWorldGenerator(), 0);
     }
 
     @Override
@@ -82,6 +85,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         registry.register(new BlockHedge("thorny_hedge", true));
         registry.register(new BlockFloodedSoil());
         registry.register(new BlockLeakyCauldron());
+        registry.register(new BlockCindermoss());
     }
 
     @Override
