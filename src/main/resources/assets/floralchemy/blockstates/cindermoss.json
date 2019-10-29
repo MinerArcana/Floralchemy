@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "variants": {
     "normal": [{
-      "model": "tinted_cross",
+      "model": "cross",
       "textures": {
         "cross": "floralchemy:blocks/cindermoss"
       }

@@ -17,7 +17,7 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.*;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasSubItems;
-import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 
@@ -79,14 +79,12 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean causesSuffocation(@Nonnull IBlockState state) {
         return state.getMaterial().blocksMovement() && state.isFullCube();
     }
 
     @Override
     @Nonnull
-    @SuppressWarnings("deprecation")
     public EnumPushReaction getPushReaction(@Nonnull IBlockState state) {
         return state.getMaterial().getPushReaction();
     }
@@ -97,7 +95,7 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
 
     @Override
     public ItemBlock getItemBlock() {
-        return itemBlock == null ? new ItemBlockGeneric<>(this) : itemBlock;
+        return itemBlock == null ? new ItemBlockModel<>(this) : itemBlock;
     }
 
     @Override
