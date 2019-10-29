@@ -32,7 +32,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -145,7 +144,6 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
                         .getQuads(null, null, Minecraft.getMinecraft().world.rand.nextLong());
                 if(!quads.isEmpty()) {
                     String name = quads.get(0).getSprite().getIconName();
-                    FMLLog.bigWarning(name);
                     ResourceLocation location = new ResourceLocation(name);
                     IResource resource = ClientHelper
                             .getResource(new ResourceLocation(location.getNamespace(), "textures/" + location.getPath() + ".png"));
