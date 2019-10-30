@@ -28,9 +28,8 @@ public class LootFunctionCrystalthorn extends LootFunction {
         Tuple<ResourceLocation, Integer> crystal = FloralchemyAPI.getCrystalRegistry().getCrystals()
                 .get(rand.nextInt(FloralchemyAPI.getCrystalRegistry().getCrystals().size()));
         return new ItemStack(
-                ForgeRegistries.ITEMS.getValue(
-                        new ResourceLocation(Floralchemy.MOD_ID, "crystalthorn_" + crystal.getFirst().getPath())),
-                rand.nextInt(4), crystal.getSecond());
+                ForgeRegistries.ITEMS.getValue(Floralchemy.getCrystalthornResourceLocation(crystal)),
+                rand.nextInt(4));
     }
 
     public static class Serializer extends LootFunction.Serializer<LootFunctionCrystalthorn> {
