@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class FloralchemyWorldGenerator implements IWorldGenerator {
@@ -47,7 +46,6 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
                     if(world.isAirBlock(blockpos) && BlockDirt.DirtType.PODZOL
                             .equals(world.getBlockState(blockpos.down()).getProperties().get(BlockDirt.VARIANT))) {
                         world.setBlockState(blockpos, FloraObjectHolder.DEVILSNARE.getDefaultState(), 2);
-                        FMLLog.warning(blockpos.toString());
                     }
                 }
             }
