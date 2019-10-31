@@ -8,4 +8,5 @@ public class FloraObjectHolder {
     public static final Block LEAKY_CAULDRON = null;
     public static final Block FLOODED_SOIL = null;
     public static final Block CINDERMOSS = null;
+    public static final Block DEVILSNARE = null;
 }

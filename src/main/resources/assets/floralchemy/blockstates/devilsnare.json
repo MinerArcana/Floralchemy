@@ -1,15 +1,22 @@
 {
   "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "floralchemy:blocks/devilsnare"
-    },
-    "model": "cube_all",
-    "uvlock": true,
-    "transform": "forge:default-block"
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
+    "normal": [
+      {
+        "textures": {
+          "cross": "floralchemy:blocks/devilsnare"
+        },
+        "model": "cross"
+      }
+    ],
+    "inventory": [
+      {
+        "model": "builtin/generated",
+        "transform": "forge:default-item",
+        "textures": {
+          "layer0": "floralchemy:blocks/devilsnare"
+        }
+      }
+    ]
   }
 }

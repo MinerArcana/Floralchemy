@@ -3,12 +3,16 @@ package com.minerarcana.floralchemy.worldgen;
 import java.util.Random;
 
 import com.minerarcana.floralchemy.FloraObjectHolder;
+import com.minerarcana.floralchemy.block.BlockBaseBush;
 import com.minerarcana.floralchemy.block.BlockCindermoss;
 
+import net.minecraft.block.BlockDirt;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class FloralchemyWorldGenerator implements IWorldGenerator {
@@ -21,6 +25,7 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
                 generateNether(world, random, chunkX * 16, chunkZ * 16);
                 break;
             case 0:
+                generateSurface(world, random, chunkX * 16, chunkZ * 16);
                 break;
             case 1:
                 break;
@@ -28,23 +33,44 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
 
     }
 
-    private void generateNether(World world, Random random, int chunkX, int chunkZ) {
-        if(random.nextInt(5) == 0) {
-            this.generateCindermoss(world, random, new BlockPos(chunkX + 8, random.nextInt(40), chunkZ + 8));
+    private void generateSurface(World world, Random random, int x, int z) {
+        if(random.nextInt(15) == 0) {
+            BlockPos position = new BlockPos(x + 8, random.nextInt(world.getActualHeight()), z + 8);
+            if(BiomeDictionary.hasType(world.getBiome(position), BiomeDictionary.Type.FOREST)) {
+                while(world.isAirBlock(position) && position.getY() > 0) {
+                    position = position.down();
+                }
+
+                for(int i = 0; i < 3; ++i) {
+                    BlockPos blockpos = position.add(random.nextInt(8) - random.nextInt(8),
+                            random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
+                    if(world.isAirBlock(blockpos) && BlockDirt.DirtType.PODZOL
+                            .equals(world.getBlockState(blockpos.down()).getProperties().get(BlockDirt.VARIANT))) {
+                        world.setBlockState(blockpos, FloraObjectHolder.DEVILSNARE.getDefaultState(), 2);
+                        FMLLog.warning(blockpos.toString());
+                    }
+                }
+            }
         }
     }
 
-    public boolean generateCindermoss(World worldIn, Random rand, BlockPos position) {
-        while(worldIn.isAirBlock(position) && position.getY() > 0) {
+    private void generateNether(World world, Random random, int x, int z) {
+        if(random.nextInt(30) == 0) {
+            this.generateBush(world, random, new BlockPos(x + 8, random.nextInt(40), z + 8),
+                    (BlockCindermoss) FloraObjectHolder.CINDERMOSS);
+        }
+    }
+
+    public <B extends BlockBaseBush> boolean generateBush(World world, Random random, BlockPos position, B bush) {
+        while(world.isAirBlock(position) && position.getY() > 0) {
             position = position.down();
         }
 
-        for(int i = 0; i < 128; ++i) {
-            BlockPos blockpos = position.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4),
-                    rand.nextInt(8) - rand.nextInt(8));
-            if(worldIn.isAirBlock(blockpos) && ((BlockCindermoss) FloraObjectHolder.CINDERMOSS)
-                    .canSustainBush(worldIn.getBlockState(blockpos.down()))) {
-                worldIn.setBlockState(blockpos, FloraObjectHolder.CINDERMOSS.getDefaultState(), 2);
+        for(int i = 0; i < 7; ++i) {
+            BlockPos blockpos = position.add(random.nextInt(8) - random.nextInt(8),
+                    random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
+            if(world.isAirBlock(blockpos) && ((B) bush).canSustainBush(world.getBlockState(blockpos.down()))) {
+                world.setBlockState(blockpos, bush.getDefaultState(), 2);
             }
         }
 

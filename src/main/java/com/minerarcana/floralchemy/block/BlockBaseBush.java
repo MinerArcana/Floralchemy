@@ -45,6 +45,12 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
         this.name = name;
         this.setTranslationKey(name);
     }
+    
+    //Upgrade to public
+    @Override
+    public boolean canSustainBush(IBlockState state) {
+        return super.canSustainBush(state);
+    }
 
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
