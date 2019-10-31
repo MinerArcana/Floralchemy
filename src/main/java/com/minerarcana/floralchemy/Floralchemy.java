@@ -86,6 +86,7 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         registry.register(new BlockFloodedSoil());
         registry.register(new BlockLeakyCauldron());
         registry.register(new BlockCindermoss());
+        registry.register(new BlockDevilsnare());
     }
 
     @Override
