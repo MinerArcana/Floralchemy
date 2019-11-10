@@ -8,7 +8,7 @@ import net.minecraft.init.Blocks;
 public class BlockGlimmerweed extends BlockBaseBush {
 
     public BlockGlimmerweed() {
-        super("glimmerweed");
+        super("glimmerweed", "water");
         this.setLightLevel(0.7F);
     }
 

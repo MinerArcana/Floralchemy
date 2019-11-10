@@ -1,7 +1,5 @@
 package com.minerarcana.floralchemy.block;
 
-import com.minerarcana.floralchemy.FloraObjectHolder;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -12,13 +10,13 @@ import net.minecraft.world.World;
 public class BlockDevilsnare extends BlockBaseBush {
 
     public BlockDevilsnare() {
-        super("devilsnare");
+        super("devilsnare", "water");
     }
     
     @Override
     public boolean canSustainBush(IBlockState state)
     {
-        return state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS || state.getBlock() == FloraObjectHolder.FLOODED_SOIL;
+        return state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS;
     }
 
     @Override

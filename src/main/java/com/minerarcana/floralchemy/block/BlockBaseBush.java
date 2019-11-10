@@ -1,6 +1,9 @@
 package com.minerarcana.floralchemy.block;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -8,13 +11,17 @@ import javax.annotation.Nullable;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.minerarcana.floralchemy.FloraObjectHolder;
+import com.minerarcana.floralchemy.tileentity.TileEntityFloodedSoil;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.blocks.IAmBlock;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.*;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasSubItems;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
@@ -24,32 +31,80 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.EnumPushReaction;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import scala.actors.threadpool.Arrays;
 
 public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubItems, IModAware, IAmBlock, IHasOreDict, IHasModel, IHasGeneratedModel {
     private IBaseMod mod;
     private boolean creativeTabSet = false;
     private ItemBlock itemBlock;
     private String name;
+    public static final PropertyBool PASSIVE_SPREAD = PropertyBool.create("passive_spread");
+    public List<String> cultivatingFluidNames = new ArrayList<>();
 
     public BlockBaseBush(String name) {
         super();
-        this.setHardness(1F);
+        this.setHardness(0.2F);
         this.name = name;
         this.setTranslationKey(name);
+        this.setDefaultState(blockState.getBaseState().withProperty(PASSIVE_SPREAD, false));
+        this.setTickRandomly(true);
     }
     
-    //Upgrade to public
+    public BlockBaseBush(String name, String... cultivatingFluidNames) {
+    	this(name);
+    	this.cultivatingFluidNames.addAll(Arrays.asList(cultivatingFluidNames));
+    }
+    
     @Override
-    public boolean canSustainBush(IBlockState state) {
-        return super.canSustainBush(state);
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+        if(random.nextInt(10) == 0) {
+            BlockPos testPos = pos.down().offset(EnumFacing.byHorizontalIndex(random.nextInt(3)));
+            if(worldIn.isAirBlock(testPos.up()) && worldIn.getBlockState(testPos).getBlock() == FloraObjectHolder.FLOODED_SOIL) {
+            	TileEntity tile = worldIn.getTileEntity(pos.down()); //Use the flooded soil we're spreading *from* not to. 
+            	if(tile instanceof TileEntityFloodedSoil) {
+            		TileEntityFloodedSoil soil = (TileEntityFloodedSoil)tile;
+            		IFluidTank tank = (IFluidTank)soil.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+            		if(tank != null) {
+            			if(tank.getFluidAmount() >= BlockFloodedSoil.CULTIVATION_FLUID_USE_MB && cultivatingFluidNames.contains(FluidRegistry.getFluidName(tank.getFluid().getFluid()))) {
+            				tank.drain(BlockFloodedSoil.CULTIVATION_FLUID_USE_MB, true);
+            				worldIn.setBlockState(testPos.up(), this.getDefaultState());
+            			}
+            		}
+            	}
+            }
+        }
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return meta == 1 ? this.getDefaultState().withProperty(PASSIVE_SPREAD, true) : this.getDefaultState(); 
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(PASSIVE_SPREAD) ? 1 : 0;
+    }
+    
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] { PASSIVE_SPREAD });
     }
 
     @Override
@@ -57,21 +112,10 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
         world.updateComparatorOutputLevel(pos, this);
         super.breakBlock(world, pos, state);
     }
-
+    
     @Override
-    public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
-        this.updateState(world, pos, state);
-        super.onBlockAdded(world, pos, state);
-    }
-
-    @Override
-    public void onNeighborChange(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull BlockPos neighborPos) {
-        this.updateState(world, pos, world.getBlockState(neighborPos));
-        super.onNeighborChange(world, pos, neighborPos);
-    }
-
-    protected void updateState(IBlockAccess world, BlockPos pos, IBlockState state) {
-
+    public boolean canSustainBush(IBlockState state) {
+    	return super.canSustainBush(state);
     }
 
     @Override

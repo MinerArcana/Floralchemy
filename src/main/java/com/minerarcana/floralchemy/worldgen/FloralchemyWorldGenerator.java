@@ -7,6 +7,7 @@ import com.minerarcana.floralchemy.block.BlockBaseBush;
 import com.minerarcana.floralchemy.block.BlockCindermoss;
 
 import net.minecraft.block.BlockDirt;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -67,7 +68,7 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
         for(int i = 0; i < 7; ++i) {
             BlockPos blockpos = position.add(random.nextInt(8) - random.nextInt(8),
                     random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
-            if(world.isAirBlock(blockpos) && ((B) bush).canSustainBush(world.getBlockState(blockpos.down()))) {
+            if(world.isAirBlock(blockpos) && ((B) bush).canSustainPlant(world.getBlockState(blockpos.down()), world, blockpos, EnumFacing.UP, bush)) {
                 world.setBlockState(blockpos, bush.getDefaultState(), 2);
             }
         }
