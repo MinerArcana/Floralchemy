@@ -25,11 +25,15 @@ public class LootFunctionCrystalthorn extends LootFunction {
     @Nonnull
     @Override
     public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, @Nonnull LootContext context) {
-        Tuple<ResourceLocation, Integer> crystal = FloralchemyAPI.getCrystalRegistry().getCrystals()
-                .get(rand.nextInt(FloralchemyAPI.getCrystalRegistry().getCrystals().size()));
-        return new ItemStack(
-                ForgeRegistries.ITEMS.getValue(Floralchemy.getCrystalthornResourceLocation(crystal)),
-                rand.nextInt(4));
+    	int size = FloralchemyAPI.getCrystalRegistry().getCrystals().size();
+    	if(size > 0) {
+	        Tuple<ResourceLocation, Integer> crystal = FloralchemyAPI.getCrystalRegistry().getCrystals()
+	                .get(rand.nextInt(size));
+	        return new ItemStack(
+	                ForgeRegistries.ITEMS.getValue(Floralchemy.getCrystalthornResourceLocation(crystal)),
+	                rand.nextInt(4));
+    	}
+    	return ItemStack.EMPTY;
     }
 
     public static class Serializer extends LootFunction.Serializer<LootFunctionCrystalthorn> {
