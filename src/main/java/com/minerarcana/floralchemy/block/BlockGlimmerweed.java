@@ -16,11 +16,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLLog;
 
 public class BlockGlimmerweed extends BlockBaseBush {
 
 	//Only need one vertical state
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", Predicates.not(facing -> facing == EnumFacing.DOWN));
+	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	
 	protected static final AxisAlignedBB REED_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.125D, 0.875D, 1.0D, 0.875D);
 	protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0625D, 1.0D, 1.0D);
@@ -84,21 +85,19 @@ public class BlockGlimmerweed extends BlockBaseBush {
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
-    	if (!worldIn.isRemote && !canSustainBush(worldIn.getBlockState(pos.offset(state.getValue(FACING).getOpposite()))))
+    	if (!worldIn.isRemote)
         {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
-            worldIn.setBlockToAir(pos);
+    		EnumFacing facing = state.getValue(FACING);
+    		if(!canSustainBush(worldIn.getBlockState(pos.offset(facing)))) {
+    			this.dropBlockAsItem(worldIn, pos, state, 0);
+                worldIn.setBlockToAir(pos);
+    		}
         }
     }
     
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-    	if(facing.getAxis() == Axis.Y) {
-    		return this.getDefaultState().withProperty(FACING, EnumFacing.UP);
-    	}
-    	else {
-    		return this.getDefaultState().withProperty(FACING, facing.getOpposite());
-    	}
+    	return this.getDefaultState().withProperty(FACING, facing.getOpposite());
     }
 }

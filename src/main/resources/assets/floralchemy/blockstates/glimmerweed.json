@@ -8,6 +8,12 @@
 	        "cross": "floralchemy:blocks/glimmerweed"
 	      }
       	},
+      	"down": {
+	      "model": "cross",
+	      "textures": {
+	        "cross": "floralchemy:blocks/glimmerweed"
+	      }
+      	},
       	"south": {
 	      "model": "vine_1",
 	      "textures": {
