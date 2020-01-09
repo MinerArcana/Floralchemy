@@ -2,8 +2,6 @@ package com.minerarcana.floralchemy.block;
 
 import java.util.Random;
 
-import com.minerarcana.floralchemy.FloraObjectHolder;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
