@@ -7,6 +7,21 @@
                 {
                     "type": "item",
                     "name": "floralchemy:thorny_hedge",
+                    "weight": 50
+                },
+                {
+                    "type": "item",
+                    "name": "floralchemy:cindermoss",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "floralchemy:devilsnare",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "floralchemy:glimmerweed",
                     "weight": 1
                 }
             ]
