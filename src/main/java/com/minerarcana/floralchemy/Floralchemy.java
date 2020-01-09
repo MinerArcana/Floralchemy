@@ -72,6 +72,10 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
         // Loot
         LootFunctionManager.registerFunction(new LootFunctionCrystalthorn.Serializer());
         LootTableList.register(new ResourceLocation(MOD_ID, "inject/end_city_treasure"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_corridor"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_crossing"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_library"));
+        LootTableList.register(new ResourceLocation(MOD_ID, "inject/witch"));
         LootTableList.register(new ResourceLocation(MOD_ID, "block/hedge"));
         LootTableList.register(new ResourceLocation(MOD_ID, "block/thorny_hedge"));
         // Vilages

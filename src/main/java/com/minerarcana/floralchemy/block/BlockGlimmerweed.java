@@ -1,6 +1,5 @@
 package com.minerarcana.floralchemy.block;
 
-import com.google.common.base.Predicates;
 import com.minerarcana.floralchemy.FloraObjectHolder;
 
 import net.minecraft.block.Block;
@@ -16,7 +15,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 
 public class BlockGlimmerweed extends BlockBaseBush {
 
@@ -66,7 +64,7 @@ public class BlockGlimmerweed extends BlockBaseBush {
     @Override
     public boolean canSustainBush(IBlockState state)
     {
-        return state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS || state.getBlock() == this || state.getBlock() == FloraObjectHolder.FLOODED_SOIL;
+        return state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.STONE || state.getBlock() == this || state.getBlock() == FloraObjectHolder.FLOODED_SOIL;
     }
     
     @Override

@@ -13,15 +13,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class LootEventHandler {
     @SubscribeEvent
     public static void lootLoad(LootTableLoadEvent event) {
-        String prefix = "minecraft:chests/";
+        String prefix = "minecraft:";
         String name = event.getName().toString();
         if(name.startsWith(prefix)) {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
             switch(file) {
-                case "end_city_treasure":
-                case "stronghold_library":
-                case "stronghold_crossing":
-                case "stronghold_corridor":
+                case "chests/end_city_treasure":
+                case "chests/stronghold_library":
+                case "chests/stronghold_crossing":
+                case "chests/stronghold_corridor":
+                case "entities/witch":
                     event.getTable().addPool(getInjectPool(file));
                     break;
                 default:
