@@ -3,7 +3,13 @@ package com.minerarcana.floralchemy;
 import java.io.File;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-import com.minerarcana.floralchemy.block.*;
+import com.minerarcana.floralchemy.block.BlockCindermoss;
+import com.minerarcana.floralchemy.block.BlockCrystalthorn;
+import com.minerarcana.floralchemy.block.BlockDevilsnare;
+import com.minerarcana.floralchemy.block.BlockFloodedSoil;
+import com.minerarcana.floralchemy.block.BlockGlimmerweed;
+import com.minerarcana.floralchemy.block.BlockHedge;
+import com.minerarcana.floralchemy.block.BlockLeakyCauldron;
 import com.minerarcana.floralchemy.loot.LootFunctionCrystalthorn;
 import com.minerarcana.floralchemy.village.VillageHedgeHouse;
 import com.minerarcana.floralchemy.village.VillageHedgedHouseHandler;
@@ -19,9 +25,13 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.*;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
@@ -39,9 +49,11 @@ public class Floralchemy extends BaseModFoundation<Floralchemy> {
 
     @SidedProxy(clientSide = "com.minerarcana.floralchemy.ClientProxy", serverSide = "com.minerarcana.floralchemy.CommonProxy")
     public static CommonProxy proxy;
+    
+    public static CreativeTabs tab = new FloraCreativeTab();
 
     public Floralchemy() {
-        super(MOD_ID, MOD_NAME, VERSION, CreativeTabs.MISC);
+        super(MOD_ID, MOD_NAME, VERSION, tab);
     }
 
     @Override
