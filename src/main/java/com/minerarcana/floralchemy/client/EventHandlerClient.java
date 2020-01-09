@@ -1,13 +1,10 @@
 package com.minerarcana.floralchemy.client;
 
-import com.minerarcana.floralchemy.FloraObjectHolder;
 import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-import com.minerarcana.floralchemy.block.BlockBaseBush;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -35,7 +32,7 @@ public class EventHandlerClient {
                         .warning("Failed to load model for crystalthorn " + crystalthorn.getPath());
             }
         }
-        ModelLoader.setCustomStateMapper(FloraObjectHolder.CINDERMOSS, new StateMap.Builder().ignore(BlockBaseBush.PASSIVE_SPREAD).build());
-        ModelLoader.setCustomStateMapper(FloraObjectHolder.DEVILSNARE, new StateMap.Builder().ignore(BlockBaseBush.PASSIVE_SPREAD).build());
+        //ModelLoader.setCustomStateMapper(FloraObjectHolder.CINDERMOSS, new StateMap.Builder().ignore(BlockBaseBush.PASSIVE_SPREAD).build());
+        //ModelLoader.setCustomStateMapper(FloraObjectHolder.DEVILSNARE, new StateMap.Builder().ignore(BlockBaseBush.PASSIVE_SPREAD).build());
     }
 }

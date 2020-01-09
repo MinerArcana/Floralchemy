@@ -31,9 +31,6 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.EnumPushReaction;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -48,14 +45,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import scala.actors.threadpool.Arrays;
 
 public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubItems, IModAware, IAmBlock, IHasOreDict, IHasModel, IHasGeneratedModel {
-    private IBaseMod mod;
+    private IBaseMod<?> mod;
     private boolean creativeTabSet = false;
     private ItemBlock itemBlock;
     private String name;
-    public static final PropertyBool PASSIVE_SPREAD = PropertyBool.create("passive_spread");
+    //public static final PropertyBool PASSIVE_SPREAD = PropertyBool.create("passive_spread");
     public List<String> cultivatingFluidNames = new ArrayList<>();
 
     public BlockBaseBush(String name) {
@@ -63,13 +59,14 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
         this.setHardness(0.2F);
         this.name = name;
         this.setTranslationKey(name);
-        this.setDefaultState(blockState.getBaseState().withProperty(PASSIVE_SPREAD, false));
         this.setTickRandomly(true);
     }
     
     public BlockBaseBush(String name, String... cultivatingFluidNames) {
     	this(name);
-    	this.cultivatingFluidNames.addAll(Arrays.asList(cultivatingFluidNames));
+    	for(String fluidName : cultivatingFluidNames) {
+    		this.cultivatingFluidNames.add(fluidName);
+    	}
     }
     
     @Override
@@ -90,21 +87,6 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
             	}
             }
         }
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return meta == 1 ? this.getDefaultState().withProperty(PASSIVE_SPREAD, true) : this.getDefaultState(); 
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(PASSIVE_SPREAD) ? 1 : 0;
-    }
-    
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] { PASSIVE_SPREAD });
     }
 
     @Override
@@ -149,7 +131,7 @@ public class BlockBaseBush extends BlockBush implements IHasItemBlock, IHasSubIt
     }
 
     @Override
-    public IBaseMod getMod() {
+    public IBaseMod<?> getMod() {
         return mod;
     }
 
