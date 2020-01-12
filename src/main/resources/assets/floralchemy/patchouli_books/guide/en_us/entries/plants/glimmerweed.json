@@ -1,0 +1,11 @@
+{
+    "name": "Glimmerweed",
+    "icon": "floralchemy:textures/blocks/glimmerweed.png",
+    "category": "plants_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Glimmerweed is a plant which can be placed on walls or grow freely like sugarcane. It generates in caves in hilly biomes. It may also be dropped by witches."
+        }
+    ]
+}
