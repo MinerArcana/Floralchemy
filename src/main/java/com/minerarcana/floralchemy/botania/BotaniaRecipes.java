@@ -1,4 +1,4 @@
-package com.minerarcana.floralchemy.botania;
+/*package com.minerarcana.floralchemy.botania;
 
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePetals;
@@ -12,4 +12,4 @@ public class BotaniaRecipes {
                 "redstoneRoot", "runeWaterB", "runeFireB", "petalOrange", "petalBlack", "petalBrown",
                 "elvenDragonstone");
     }
-}
+}*/

@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/MinerArcana/Floralchemy/issues"
+
+[[mods]]
+    modId="floralchemy"
+    version="${file.jarVersion}"
+    displayName="Floralchemy"
+    credits="BrassGoggledCoders Artists"
+    authors="SkySom, FreneticScribbler, DivineAspect"
+    description='''
+        Flower Power!
+    '''
+
+[[dependencies.workshop]]
+    modId="titanium"
+    mandatory=true
+    versionRange="[2.3.7,)"
+    ordering="NONE"
+    side="BOTH"
+

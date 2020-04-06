@@ -1,11 +1,10 @@
 package com.minerarcana.floralchemy.api;
 
+import com.google.common.collect.Maps;
+import net.minecraft.util.Tuple;
+
 import java.util.Map;
 import java.util.Optional;
-
-import com.google.common.collect.Maps;
-
-import net.minecraft.util.Tuple;
 
 public class FluidFuelRegistry {
     private Map<String, Tuple<Integer, Integer>> fluidInfo;

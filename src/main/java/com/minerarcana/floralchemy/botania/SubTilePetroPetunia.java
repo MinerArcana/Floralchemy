@@ -1,12 +1,8 @@
-package com.minerarcana.floralchemy.botania;
-
-import java.awt.Color;
-import java.util.Optional;
+/*package com.minerarcana.floralchemy.botania;
 
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fluids.FluidStack;
@@ -18,6 +14,9 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.subtile.RadiusDescriptor;
 import vazkii.botania.api.subtile.RadiusDescriptor.Square;
 import vazkii.botania.api.subtile.SubTileGenerating;
+
+import java.awt.*;
+import java.util.Optional;
 
 public class SubTilePetroPetunia extends SubTileGenerating {
     public static final String NAME = "petro_petunia";
@@ -61,7 +60,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
                         while(tries < 9 && !foundFluid) {
                             BlockPos checkingPos = getPos().add(-1 + tries / 3, -1, -1 + tries % 3);
                             IFluidHandler fluidHandler = FluidUtil.getFluidHandler(getWorld(), checkingPos,
-                                    EnumFacing.UP);
+                                    Direction.UP);
                             if(fluidHandler != null) {
                                 FluidStack grabbedFluid = fluidHandler.drain(1000, false);
                                 if(grabbedFluid != null && grabbedFluid.getFluid() != null
@@ -137,7 +136,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     }
 
     @Override
-    public void writeToPacketNBT(NBTTagCompound cmp) {
+    public void writeToPacketNBT(CompoundNBT cmp) {
         super.writeToPacketNBT(cmp);
 
         cmp.setInteger(TAG_BURN_TIME, burnTime);
@@ -146,7 +145,7 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     }
 
     @Override
-    public void readFromPacketNBT(NBTTagCompound cmp) {
+    public void readFromPacketNBT(CompoundNBT cmp) {
         super.readFromPacketNBT(cmp);
 
         burnTime = cmp.getInteger(TAG_BURN_TIME);
@@ -158,4 +157,4 @@ public class SubTilePetroPetunia extends SubTileGenerating {
     public LexiconEntry getEntry() {
         return LexiconPages.petroPetunia;
     }
-}
+}*/

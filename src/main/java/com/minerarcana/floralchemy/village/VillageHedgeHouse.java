@@ -1,19 +1,17 @@
-package com.minerarcana.floralchemy.village;
-
-import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nullable;
+/*package com.minerarcana.floralchemy.village;
 
 import com.minerarcana.floralchemy.Floralchemy;
-
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.*;
 import net.minecraft.world.gen.structure.template.*;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 //TODO Biome based wood type
 public class VillageHedgeHouse extends StructureVillagePieces.Village {
@@ -23,7 +21,7 @@ public class VillageHedgeHouse extends StructureVillagePieces.Village {
     }
 
     public VillageHedgeHouse(StructureVillagePieces.Start start, int type, StructureBoundingBox boundingBox,
-            EnumFacing facing) {
+            Direction facing) {
         super(start, type);
         this.boundingBox = boundingBox;
         setCoordBaseMode(facing);
@@ -51,7 +49,7 @@ public class VillageHedgeHouse extends StructureVillagePieces.Village {
     @Nullable
     public static StructureVillagePieces.Village buildComponent(StructureVillagePieces.PieceWeight villagePiece,
             StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random, int x, int y,
-            int z, EnumFacing facing, int type) {
+            int z, Direction facing, int type) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 7, 6, 7,
                 facing);
         if(canVillageGoDeeper(boundingBox) && findIntersecting(pieces, boundingBox) == null) {
@@ -59,4 +57,4 @@ public class VillageHedgeHouse extends StructureVillagePieces.Village {
         }
         return null;
     }
-}
+}*/

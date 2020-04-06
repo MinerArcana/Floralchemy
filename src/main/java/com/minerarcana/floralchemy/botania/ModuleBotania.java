@@ -1,16 +1,15 @@
-package com.minerarcana.floralchemy.botania;
-
-import java.util.List;
+/*package com.minerarcana.floralchemy.botania;
 
 import com.minerarcana.floralchemy.Floralchemy;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
-
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import vazkii.botania.api.BotaniaAPI;
+
+import java.util.List;
 
 @Module(value = Floralchemy.MOD_ID)
 public class ModuleBotania extends ModuleBase {
@@ -45,4 +44,4 @@ public class ModuleBotania extends ModuleBase {
         return "Botania";
     }
 
-}
+}*/

@@ -1,70 +1,43 @@
 package com.minerarcana.floralchemy.tileentity;
 
+import com.minerarcana.floralchemy.content.FloralchemyBlocks;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.teamacronymcoders.base.tileentities.TileEntityBase;
+public class TileEntityFloodedSoil extends TileEntity {
+    public FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME);
+    private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class TileEntityFloodedSoil extends TileEntityBase {
-    public FluidTank tank = new FluidTank(Fluid.BUCKET_VOLUME);
+    public TileEntityFloodedSoil() {
+        super(FloralchemyBlocks.FLOODED_SOIL.getTileEntityType());
+    }
 
     @Override
-    protected void readFromDisk(NBTTagCompound data) {
+    public void read(CompoundNBT data) {
         tank.readFromNBT(data);
     }
 
     @Override
-    protected NBTTagCompound writeToDisk(NBTTagCompound data) {
+    public CompoundNBT write(CompoundNBT data) {
         return tank.writeToNBT(data);
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
-    }
-
-    @Override
     @Nonnull
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(tank);
-        }
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return holder.cast();
         return super.getCapability(capability, facing);
-    }
-
-    // Handles sync on update
-    @Override
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(getPos(), -1, writeToDisk(new NBTTagCompound()));
-    }
-
-    @Override
-    public void onDataPacket(net.minecraft.network.NetworkManager net,
-            net.minecraft.network.play.server.SPacketUpdateTileEntity pkt) {
-        readFromDisk(pkt.getNbtCompound());
-    }
-
-    // Handles sync on world load
-    @Nonnull
-    @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToDisk(super.getUpdateTag());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void handleUpdateTag(NBTTagCompound tag) {
-        readFromDisk(tag);
     }
 }

@@ -1,13 +1,10 @@
-package com.minerarcana.floralchemy.loot;
+/*package com.minerarcana.floralchemy.loot;
 
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
 import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.api.FloralchemyAPI;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -15,6 +12,9 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class LootFunctionCrystalthorn extends LootFunction {
 
@@ -54,4 +54,4 @@ public class LootFunctionCrystalthorn extends LootFunction {
         }
     }
 
-}
+}*/

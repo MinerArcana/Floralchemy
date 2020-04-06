@@ -1,15 +1,15 @@
 package com.minerarcana.floralchemy.loot;
 
 import com.minerarcana.floralchemy.Floralchemy;
-
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.TableLootEntry;
 import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber(modid = Floralchemy.MOD_ID)
+@Mod.EventBusSubscriber(modid = Floralchemy.MOD_ID)
 public class LootEventHandler {
     @SubscribeEvent
     public static void lootLoad(LootTableLoadEvent event) {
@@ -31,14 +31,18 @@ public class LootEventHandler {
         }
     }
 
-    // Ta Botania
-    private static LootPool getInjectPool(String entryName) {
-        return new LootPool(new LootEntry[] { getInjectEntry(entryName, 1) }, new LootCondition[0],
-                new RandomValueRange(1), new RandomValueRange(0, 1), "floralchemy_inject_pool");
+    //Ta Botania
+    public static LootPool getInjectPool(String entryName) {
+        return LootPool.builder()
+                .addEntry(getInjectEntry(entryName, 1))
+                .bonusRolls(0, 1)
+                .name(Floralchemy.MOD_ID + "_inject")
+                .build();
     }
 
-    private static LootEntryTable getInjectEntry(String name, int weight) {
-        return new LootEntryTable(new ResourceLocation(Floralchemy.MOD_ID, "inject/" + name), weight, 0,
-                new LootCondition[0], "floralchemy_inject_entry");
+    private static LootEntry.Builder getInjectEntry(String name, int weight) {
+        ResourceLocation table = new ResourceLocation(Floralchemy.MOD_ID, "inject/" + name);
+        return TableLootEntry.builder(table)
+                .weight(weight);
     }
 }

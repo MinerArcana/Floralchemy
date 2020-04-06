@@ -1,21 +1,20 @@
-package com.minerarcana.floralchemy.worldgen;
-
-import java.util.Random;
+/*package com.minerarcana.floralchemy.worldgen;
 
 import com.minerarcana.floralchemy.FloraObjectHolder;
 import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.block.BlockBaseBush;
 import com.minerarcana.floralchemy.block.BlockCindermoss;
 import com.minerarcana.floralchemy.block.BlockGlimmerweed;
-
 import net.minecraft.block.BlockDirt;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.IWorldGenerator;
+
+import java.util.Random;
 
 public class FloralchemyWorldGenerator implements IWorldGenerator {
 
@@ -61,7 +60,7 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
             	//Limits the maximum generation height to ten block below the surface
             	pos = new BlockPos(pos.getX(), random.nextInt(world.getHeight(pos).getY() - 10), pos.getY());
             		if(world.isAirBlock(pos)) {
-            			for(EnumFacing facing : EnumFacing.VALUES) {
+            			for(Direction facing : Direction.VALUES) {
             				if(((BlockGlimmerweed) FloraObjectHolder.GLIMMERWEED).canSustainBush(world.getBlockState(pos.offset(facing)))) {
             					Floralchemy.instance.getLogger().devInfo(pos.toString());
             					world.setBlockState(pos, FloraObjectHolder.GLIMMERWEED.getDefaultState().withProperty(BlockGlimmerweed.FACING, facing));
@@ -95,4 +94,4 @@ public class FloralchemyWorldGenerator implements IWorldGenerator {
 
         return true;
     }
-}
+}*/

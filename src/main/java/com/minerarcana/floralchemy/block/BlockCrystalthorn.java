@@ -1,17 +1,10 @@
-package com.minerarcana.floralchemy.block;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-
-import javax.annotation.Nullable;
+/*package com.minerarcana.floralchemy.block;
 
 import com.minerarcana.floralchemy.item.ItemBlockCrystalthorn;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.util.ColourHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
@@ -27,7 +20,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -35,6 +30,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHasItemBlock {
 
@@ -68,7 +70,7 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-            EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+            EnumHand hand, Direction facing, float hitX, float hitY, float hitZ) {
         if(state.getValue(AGE) == maxAge && state.getValue(BERRIES)) {
             ItemStack stack = getCrystalStack();
             if(!stack.isEmpty()) {
@@ -181,4 +183,4 @@ public class BlockCrystalthorn extends BlockBush implements IHasBlockColor, IHas
         }
         return cachedCrystalStack;
     }
-}
+}*/
