@@ -1,0 +1,25 @@
+{
+  "block.crystalthorn": "Crystalthorn",
+  "block.floralchemy.hedge": "Hedge",
+  "block.floralchemy.thorny_hedge": "Thorny Hedge",
+  "block.floralchemy.flooded_soil": "Flooded Soil",
+  "block.floralchemy.leaky_cauldron": "Leaky Cauldron",
+  "block.floralchemy.leaky_cauldron.desc": "*Butterbeer not included",
+  "block.floralchemy.cindermoss": "Cindermoss",
+  "block.floralchemy.devilsnare": "Devil's Snare",
+  "block.floralchemy.glimmerweed": "Glimmerweed",
+
+  "block.botania:flower.petro_petunia": "Petro Petunia",
+  "block.botania:flower.petro_petunia.reference": "Remember my last, Petunia",
+
+  "botania.entry.petro_petunia": "Petro Petunia",
+  "botania.tagline.petro_petunia": "Mana from Liquid Fuel",
+
+  "botania.page.petro_petunia0": "The &1Petrol Petunia&0 is an intermediate generating flower. It draws combustible liquid fuels up through it's roots, one block below and all around it,  and burns them to generate mana",
+  "botania.page.petro_petunia1": "Oil that is, black gold, Texas tea.",
+
+  "item.guide.floralchemy": "Hedgemage's Handbook",
+  "guide.floralchemy.landing": "Your guide to flower power",
+
+  "itemGroup.floralchemy": "Floralchemy"
+}

@@ -1,18 +1,10 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "normal": [{
+    "": {
       "model": "cross",
       "textures": {
         "cross": "floralchemy:blocks/cindermoss"
       }
-    }],
-    "inventory": [{
-      "model": "builtin/generated",
-      "transform": "forge:default-item",
-      "textures": {
-        "layer0": "floralchemy:blocks/cindermoss"
-      }
-    }]
+    }
   }
 }
