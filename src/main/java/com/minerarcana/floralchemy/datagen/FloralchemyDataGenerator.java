@@ -18,5 +18,9 @@ public class FloralchemyDataGenerator {
         if (event.includeClient()) {
             dataGenerator.addProvider(new FloralchemyBlockstateProvider(dataGenerator, existingFileHelper));
         }
+
+        if (event.includeServer()) {
+            dataGenerator.addProvider(new FloralchemyLootTableProvider(dataGenerator));
+        }
     }
 }
