@@ -1,5 +1,6 @@
 package com.minerarcana.floralchemy.tileentity;
 
+import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +21,8 @@ public class TileEntityLeakyCauldron extends TileEntity implements ITickableTile
     public FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 4);
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
-    public TileEntityLeakyCauldron(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public TileEntityLeakyCauldron() {
+        super(FloralchemyBlocks.LEAKY_CAULDRON.getTileEntityType());
     }
 
     @Override

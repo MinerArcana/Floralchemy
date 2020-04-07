@@ -2,12 +2,13 @@ package com.minerarcana.floralchemy.content;
 
 import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import com.minerarcana.floralchemy.Floralchemy;
-import com.minerarcana.floralchemy.block.BlockCindermoss;
-import com.minerarcana.floralchemy.block.BlockFloodedSoil;
+import com.minerarcana.floralchemy.block.*;
 import com.minerarcana.floralchemy.tileentity.TileEntityFloodedSoil;
+import com.minerarcana.floralchemy.tileentity.TileEntityLeakyCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,6 +26,26 @@ public class FloralchemyBlocks {
     public static final BlockRegistryObjectGroup<BlockCindermoss, BlockItem, ?> CINDERMOSS =
             new BlockRegistryObjectGroup<>("cindermoss", BlockCindermoss::new, blockItemCreator())
                     .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<BlockDevilsnare, BlockItem, ?> DEVILSNARE = 
+            new BlockRegistryObjectGroup<>("devilsnare", BlockDevilsnare::new, blockItemCreator())
+            .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<BlockGlimmerweed, BlockItem, ?> GLIMMERWEED =
+            new BlockRegistryObjectGroup<>("glimmerweed", BlockGlimmerweed::new, blockItemCreator())
+                    .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> HEDGE =
+            new BlockRegistryObjectGroup<>("hedge", () -> new BlockHedge(false), blockItemCreator())
+                    .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> THORNY_HEDGE =
+            new BlockRegistryObjectGroup<>("thorny_hedge", () -> new BlockHedge(true), blockItemCreator())
+                    .register(BLOCKS, ITEMS);
+
+    public static final BlockRegistryObjectGroup<BlockLeakyCauldron, BlockItem, TileEntityLeakyCauldron> LEAKY_CAULDRON =
+            new BlockRegistryObjectGroup<>("leaky_cauldron", BlockLeakyCauldron::new, blockItemCreator(), TileEntityLeakyCauldron::new)
+                    .register(BLOCKS, ITEMS, TILE_ENTITIES);
 
     public static final BlockRegistryObjectGroup<BlockFloodedSoil, BlockItem, TileEntityFloodedSoil> FLOODED_SOIL =
             new BlockRegistryObjectGroup<>("flooded_soil", BlockFloodedSoil::new, blockItemCreator(), TileEntityFloodedSoil::new)

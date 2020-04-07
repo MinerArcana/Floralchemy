@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.0.159", changing: true
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
     }
 }
 
@@ -34,6 +34,9 @@ repositories {
     maven {
         name = "Titanium"
         url = "https://cdn.hrzn.studio/maven/"
+    }
+    maven {
+        url = "https://maven.theillusivec4.top/"
     }
 }
 
@@ -77,6 +80,8 @@ dependencies {
         })
     }
     compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:${curios_version}:api")
     compile fg.deobf ("vazkii.botania:Botania:${botania_version}")
 }
 
