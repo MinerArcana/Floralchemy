@@ -1,8 +1,11 @@
 {
-  "block.floralchemy.acacia_hedge": "Acacia",
-  "block.floralchemy.birch_hedge": "Birch",
-  "block.floralchemy.dark_oak_hedge": "Dark Oak",
-  "block.floralchemy.jungle_hedge": "Jungle",
-  "block.floralchemy.oak_hedge": "Oak",
-  "block.floralchemy.spruce_hedge": "Spruce"
+  "block.floralchemy.acacia_hedge": "AcaciaHedge",
+  "block.floralchemy.birch_hedge": "BirchHedge",
+  "block.floralchemy.dark_oak_hedge": "Dark OakHedge",
+  "block.floralchemy.jungle_hedge": "JungleHedge",
+  "block.floralchemy.oak_hedge": "OakHedge",
+  "block.floralchemy.spruce_hedge": "SpruceHedge",
+  "guide.floralchemy.name": "Hedgemage's Handbook",
+  "guide.workshop.landing_text": "Your guide to flower power",
+  "itemGroup.floralchemy": "Floralchemy"
 }

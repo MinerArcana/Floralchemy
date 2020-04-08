@@ -24,6 +24,8 @@ public class FloralchemyDataGenerator {
 
         if (event.includeServer()) {
             dataGenerator.addProvider(new FloralchemyLootTableProvider(dataGenerator));
+            dataGenerator.addProvider(new FloralchemyBlockTagsProvider(dataGenerator));
+            dataGenerator.addProvider(new FloralchemyItemTagsProvider(dataGenerator));
         }
     }
 }

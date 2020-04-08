@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "floralchemy:acacia_hedge",
+    "floralchemy:oak_hedge",
+    "floralchemy:dark_oak_hedge",
+    "floralchemy:birch_hedge",
+    "floralchemy:jungle_hedge",
+    "floralchemy:spruce_hedge"
+  ]
+}

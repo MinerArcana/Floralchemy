@@ -22,7 +22,7 @@ public class FloralchemyUSLanguageProvider extends LanguageProvider {
         this.add("guide.workshop.landing_text", "Your guide to flower power");
         //region Blocks
         for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
-            this.addBlock(hedge, StringUtils.capitaliseAllWords(hedge.get().getType().replace("_", " ")) + "Hedge");
+            this.addBlock(hedge, StringUtils.capitaliseAllWords(hedge.get().getType().replace("_", " ")) + " Hedge");
         }
         //endregion
     }
