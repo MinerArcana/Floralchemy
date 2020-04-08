@@ -40,7 +40,8 @@ public class FloralchemyItemModelProvider extends ItemModelProvider {
             }
         }
         for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
-            this.wallInventory(hedge.getName(), mcLoc("block/" + hedge.getName().replace("_hedge", "") + "_leaves"));
+            this.singleTexture(hedge.getName(), modLoc(ITEM_FOLDER + "/tinted_wall_inventory"),
+                    "wall", mcLoc("block/" + hedge.getName().replace("_hedge", "") + "_leaves"));
         }
     }
 

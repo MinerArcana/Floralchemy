@@ -9,6 +9,7 @@ import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import com.minerarcana.floralchemy.datagen.FloralchemyLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -18,7 +19,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.FoliageColors;
+import net.minecraft.world.ILightReader;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.api.distmarker.Dist;
@@ -55,13 +58,26 @@ public class Floralchemy {
 
         FloralchemyBlocks.register(modBus);
 
-        SidedHandler.runOn(Dist.CLIENT, () -> () -> EventManager.mod(ColorHandlerEvent.Block.class).process((event) -> {
+        SidedHandler.runOn(Dist.CLIENT, () -> () -> EventManager.mod(ColorHandlerEvent.Item.class).process((event) -> {
             for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
-                //TODO Overrides for birch and spruce
-                event.getBlockColors().register((state, lightReader, pos, tintIndex) -> lightReader != null && pos != null ?
-                        BiomeColors.getFoliageColor(lightReader, pos) : FoliageColors.getDefault(), hedge.getBlock());
+                event.getBlockColors().register((state, lightReader, pos, tintIndex) -> getFoliageColor(hedge.getBlock().getType(), lightReader, pos), hedge.getBlock());
+                event.getItemColors().register((itemStack, tintIndex) -> {
+                    BlockState blockstate = ((BlockItem)itemStack.getItem()).getBlock().getDefaultState();
+                    return event.getBlockColors().getColor(blockstate, (ILightReader)null, (BlockPos)null, tintIndex);
+                }, hedge.getItem());
             }
         }).subscribe());
+    }
+
+    public static int getFoliageColor(String type, ILightReader lightReader, BlockPos pos) {
+        //MC Overrides biome colours for spruce and birch.
+        if("birch".equals(type)) {
+            return FoliageColors.getBirch();
+        }
+        else if("spruce".equals(type)) {
+            return FoliageColors.getSpruce();
+        }
+        return lightReader != null && pos != null ? BiomeColors.getFoliageColor(lightReader, pos) : FoliageColors.getDefault();
     }
 
         /*

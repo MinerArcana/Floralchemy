@@ -7,10 +7,13 @@ import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SixWayBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -47,7 +50,7 @@ public class FloralchemyBlockstateProvider extends BlockStateProvider {
             }
         }
         for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
-            this.wallBlock(hedge.getBlock(), mcLoc("block/" + hedge.getName().replace("_hedge", "") + "_leaves"));
+            this.tintedWallBlock(hedge.getBlock(), hedge.getName(), mcLoc("block/" + hedge.getBlock().getType() + "_leaves"));
         }
     }
 
@@ -66,5 +69,17 @@ public class FloralchemyBlockstateProvider extends BlockStateProvider {
     private ResourceLocation blockTexture(Supplier<? extends Block> block) {
         ResourceLocation base = block.get().getRegistryName();
         return modLoc("block/" + base.getPath());
+    }
+
+    private void tintedWallBlock(WallBlock block, String baseName, ResourceLocation texture) {
+        wallBlock(block, tintedWallPost(baseName + "_post", texture), tintedWallSide(baseName + "_side", texture));
+    }
+
+    public BlockModelBuilder tintedWallPost(String name, ResourceLocation wall) {
+        return this.models().singleTexture(name, modLoc(ModelProvider.BLOCK_FOLDER + "/tinted_wall_post"), "wall", wall);
+    }
+
+    public BlockModelBuilder tintedWallSide(String name, ResourceLocation wall) {
+        return this.models().singleTexture(name, modLoc(ModelProvider.BLOCK_FOLDER + "/tinted_wall_side"), "wall", wall);
     }
 }

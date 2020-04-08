@@ -1,5 +1,5 @@
 {
-  "parent": "block/wall_inventory",
+  "parent": "floralchemy:item/tinted_wall_inventory",
   "textures": {
     "wall": "block/spruce_leaves"
   }

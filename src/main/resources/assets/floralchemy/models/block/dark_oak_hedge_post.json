@@ -1,5 +1,5 @@
 {
-  "parent": "block/template_wall_post",
+  "parent": "floralchemy:block/tinted_wall_post",
   "textures": {
     "wall": "block/dark_oak_leaves"
   }
