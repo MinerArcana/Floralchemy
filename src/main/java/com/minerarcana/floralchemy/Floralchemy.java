@@ -1,7 +1,11 @@
 package com.minerarcana.floralchemy;
 
 import com.hrznstudio.titanium.tab.TitaniumTab;
+import com.minerarcana.floralchemy.block.BlockBaseBush;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +15,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Mod(Floralchemy.MOD_ID)
 @EventBusSubscriber
@@ -44,7 +53,15 @@ public class Floralchemy {
         GameRegistry.registerWorldGenerator(new FloralchemyWorldGenerator(), 0);*/
 
     private void clientSetup(final FMLClientSetupEvent event) {
-
+        List<Block> ourBlocks = ForgeRegistries.BLOCKS.getValues().stream()
+                .filter(block -> Optional.ofNullable(block.getRegistryName())
+                        .filter(registryName -> registryName.getNamespace().equals(Floralchemy.MOD_ID))
+                        .isPresent()).collect(Collectors.toList());
+        for (Block block : ourBlocks) {
+            if (block instanceof BlockBaseBush) {
+                RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+            }
+        }
     }
 
     public static ResourceLocation getCrystalthornResourceLocation(Tuple<ResourceLocation, Integer> entry) {

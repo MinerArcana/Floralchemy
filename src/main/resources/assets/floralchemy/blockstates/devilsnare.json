@@ -1,10 +1,7 @@
 {
   "variants": {
     "": {
-        "textures": {
-          "cross": "floralchemy:blocks/devilsnare"
-        },
-        "model": "cross"
+      "model": "floralchemy:block/devilsnare"
     }
   }
 }

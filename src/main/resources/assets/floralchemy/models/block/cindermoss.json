@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "particle": "floralchemy:block/cindermoss",
+    "cross": "floralchemy:block/cindermoss"
+  }
+}

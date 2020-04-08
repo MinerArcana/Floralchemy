@@ -1,53 +1,7 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "facing": {
-    	"up": {
-	      "model": "cross",
-	      "textures": {
-	        "cross": "floralchemy:blocks/glimmerweed"
-	      }
-      	},
-      	"down": {
-	      "model": "cross",
-	      "textures": {
-	        "cross": "floralchemy:blocks/glimmerweed"
-	      }
-      	},
-      	"south": {
-	      "model": "vine_1",
-	      "textures": {
-	        "vine": "floralchemy:blocks/glimmerweed"
-	      }
-      	},
-      	"north": {
-	      "model": "vine_1",
-	      "textures": {
-	        "vine": "floralchemy:blocks/glimmerweed"
-	      },
-	      "y": 180
-      	},
-      	"east": {
-	      "model": "vine_1",
-	      "textures": {
-	        "vine": "floralchemy:blocks/glimmerweed"
-	      },
-	      "y": -90
-      	},
-      	"west": {
-	      "model": "vine_1",
-	      "textures": {
-	        "vine": "floralchemy:blocks/glimmerweed"
-	      },
-	      "y": 90
-      	}
-    },
-    "inventory": [{
-      "model": "builtin/generated",
-      "transform": "forge:default-item",
-      "textures": {
-        "layer0": "floralchemy:blocks/glimmerweed"
-      }
-    }]
+    "": {
+      "model": "floralchemy:block/glimmerweed"
+    }
   }
 }

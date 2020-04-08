@@ -16,7 +16,9 @@ public class FloralchemyDataGenerator {
         final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         if (event.includeClient()) {
-            dataGenerator.addProvider(new FloralchemyBlockstateProvider(dataGenerator, existingFileHelper));
+            FloralchemyBlockstateProvider blockstateProvider = new FloralchemyBlockstateProvider(dataGenerator, existingFileHelper);
+            dataGenerator.addProvider(blockstateProvider);
+            dataGenerator.addProvider(new FloralchemyItemModelProvider(dataGenerator, blockstateProvider.getExistingFileHelper()));
         }
 
         if (event.includeServer()) {

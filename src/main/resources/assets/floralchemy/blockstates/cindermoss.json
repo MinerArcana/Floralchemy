@@ -1,10 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "cross",
-      "textures": {
-        "cross": "floralchemy:blocks/cindermoss"
-      }
+      "model": "floralchemy:block/cindermoss"
     }
   }
 }
