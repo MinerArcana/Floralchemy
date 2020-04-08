@@ -1,0 +1,11 @@
+{
+    "name": "Devil's Snare",
+    "icon": "floralchemy:textures/blocks/devilsnare.png",
+    "category": "plants_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Devil's Snare generates on Podzol in forest-type biomes. It slows you a bit to walk through it, and if the light level is below seven will also deal a heart of damage."
+        }
+    ]
+}

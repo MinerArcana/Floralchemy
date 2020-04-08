@@ -1,0 +1,15 @@
+{
+    "name": "Flooded Soil",
+    "icon": "floralchemy:flooded_soil",
+    "category": "blocks_category",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Farmland like you've never seen it before - flooded soil is hydrated soil on steroids. Flooded soil may hold up to a bucket of any fluid. If it contains more than 200mB, will occasionally attempt to spread some of its fluid to adjacent flooded soil, propogating the flood."
+        },
+        {
+            "type": "crafting",
+            "recipe": "floralchemy:flooded_soil"
+        }
+    ]
+}
