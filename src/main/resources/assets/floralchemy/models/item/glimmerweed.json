@@ -1,3 +1,6 @@
 {
-  "parent": "floralchemy:block/glimmerweed"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "floralchemy:block/glimmerweed"
+  }
 }

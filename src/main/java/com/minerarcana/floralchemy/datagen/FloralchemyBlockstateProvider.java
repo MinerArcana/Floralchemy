@@ -1,11 +1,14 @@
 package com.minerarcana.floralchemy.datagen;
 
+import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.block.BlockBaseBush;
+import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.BlockItem;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
@@ -42,6 +45,9 @@ public class FloralchemyBlockstateProvider extends BlockStateProvider {
             if (block instanceof BlockBaseBush) {
                 this.getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(bush(block, state)).build());
             }
+        }
+        for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
+            this.wallBlock(hedge.getBlock(), mcLoc("block/" + hedge.getName().replace("_hedge", "") + "_leaves"));
         }
     }
 

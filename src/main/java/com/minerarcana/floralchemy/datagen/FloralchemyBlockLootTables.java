@@ -34,11 +34,11 @@ public class FloralchemyBlockLootTables extends BlockLootTables {
         //Will get overridden by any other entries
         this.getKnownBlocks().forEach(this::registerDropSelfLootTable);
         LootTable.Builder hedgeLoot = LootTable.builder().addLootPool(LootPool.builder()
-                .addEntry(ItemLootEntry.builder(FloralchemyBlocks.HEDGE.getItem()).weight(50))
+                //.addEntry(ItemLootEntry.builder(FloralchemyBlocks.HEDGE.getItem()).weight(50))
                 .addEntry(ItemLootEntry.builder(FloralchemyBlocks.CINDERMOSS.getItem()))
                 .addEntry(ItemLootEntry.builder(FloralchemyBlocks.GLIMMERWEED.getItem()))
                 .addEntry(ItemLootEntry.builder(FloralchemyBlocks.DEVILSNARE.getItem())));
-        this.registerLootTable(FloralchemyBlocks.HEDGE.getBlock(), withExplosionDecay(FloralchemyBlocks.HEDGE.getBlock(), hedgeLoot));
+        //this.registerLootTable(FloralchemyBlocks.HEDGE.getBlock(), withExplosionDecay(FloralchemyBlocks.HEDGE.getBlock(), hedgeLoot));
         this.registerLootTable(FloralchemyBlocks.THORNY_HEDGE.getBlock(), withExplosionDecay(FloralchemyBlocks.THORNY_HEDGE.getBlock(), hedgeLoot));
     }
 }

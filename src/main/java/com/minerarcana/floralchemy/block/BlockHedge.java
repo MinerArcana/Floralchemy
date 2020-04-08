@@ -18,6 +18,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
+//TODO Hedge should know whether it was player placed and if so
 public class BlockHedge extends WallBlock {
 
     private final boolean isThorny;

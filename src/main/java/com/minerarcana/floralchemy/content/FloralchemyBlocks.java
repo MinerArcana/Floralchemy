@@ -6,6 +6,7 @@ import com.minerarcana.floralchemy.block.*;
 import com.minerarcana.floralchemy.tileentity.TileEntityFloodedSoil;
 import com.minerarcana.floralchemy.tileentity.TileEntityLeakyCauldron;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +15,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FloralchemyBlocks {
 
@@ -35,9 +40,10 @@ public class FloralchemyBlocks {
             new BlockRegistryObjectGroup<>("glimmerweed", BlockGlimmerweed::new, blockItemCreator())
                     .register(BLOCKS, ITEMS);
 
-    public static final BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> HEDGE =
-            new BlockRegistryObjectGroup<>("hedge", () -> new BlockHedge(false), blockItemCreator())
-                    .register(BLOCKS, ITEMS);
+    public static final List<BlockRegistryObjectGroup<BlockHedge, BlockItem, ?>> HEDGES =
+            Stream.of(Blocks.ACACIA_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES)
+                    .map(leafBlock -> new BlockRegistryObjectGroup<>(leafBlock.getRegistryName().getPath().replace("_leaves", "_hedge"), () -> new BlockHedge(false), blockItemCreator()).register(BLOCKS, ITEMS))
+                    .collect(Collectors.toList());
 
     public static final BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> THORNY_HEDGE =
             new BlockRegistryObjectGroup<>("thorny_hedge", () -> new BlockHedge(true), blockItemCreator())
