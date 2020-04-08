@@ -6,11 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "floralchemy:hedge"
-        },
-        {
-          "type": "minecraft:item",
           "name": "floralchemy:cindermoss"
         },
         {
@@ -25,9 +20,6 @@
     }
   ],
   "functions": [
-    {
-      "function": "minecraft:explosion_decay"
-    },
     {
       "function": "minecraft:explosion_decay"
     }

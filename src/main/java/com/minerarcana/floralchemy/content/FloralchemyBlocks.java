@@ -42,11 +42,13 @@ public class FloralchemyBlocks {
 
     public static final List<BlockRegistryObjectGroup<BlockHedge, BlockItem, ?>> HEDGES =
             Stream.of(Blocks.ACACIA_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES)
-                    .map(leafBlock -> new BlockRegistryObjectGroup<>(leafBlock.getRegistryName().getPath().replace("_leaves", "_hedge"), () -> new BlockHedge(false), blockItemCreator()).register(BLOCKS, ITEMS))
+                    .map(leafBlock -> new BlockRegistryObjectGroup<>(leafBlock.getRegistryName().getPath().replace("_leaves", "_hedge"), () ->
+                            new BlockHedge(leafBlock.getRegistryName().getPath().replace("_leaves", ""), false), blockItemCreator()).register(BLOCKS, ITEMS))
+                    //.peek(group -> FloralchemyBlocks.HEDGES.add(FloralchemyBlocks.THORNY_HEDGE))
                     .collect(Collectors.toList());
 
     public static final BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> THORNY_HEDGE =
-            new BlockRegistryObjectGroup<>("thorny_hedge", () -> new BlockHedge(true), blockItemCreator())
+            new BlockRegistryObjectGroup<>("thorny_hedge", () -> new BlockHedge("thorny",true), blockItemCreator())
                     .register(BLOCKS, ITEMS);
 
     public static final BlockRegistryObjectGroup<BlockLeakyCauldron, BlockItem, TileEntityLeakyCauldron> LEAKY_CAULDRON =

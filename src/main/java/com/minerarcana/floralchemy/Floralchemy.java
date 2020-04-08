@@ -1,21 +1,38 @@
 package com.minerarcana.floralchemy;
 
+import com.hrznstudio.titanium.event.handler.EventManager;
+import com.hrznstudio.titanium.registry.BlockRegistryObjectGroup;
 import com.hrznstudio.titanium.tab.TitaniumTab;
+import com.hrznstudio.titanium.util.SidedHandler;
 import com.minerarcana.floralchemy.block.BlockBaseBush;
+import com.minerarcana.floralchemy.block.BlockHedge;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
+import com.minerarcana.floralchemy.datagen.FloralchemyLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.FoliageColors;
+import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +44,8 @@ public class Floralchemy {
 
     public static final String MOD_ID = "floralchemy";
 
+    public static Logger LOGGER = LogManager.getLogger();
+
     public static ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(net.minecraft.block.Blocks.ANVIL));
 
@@ -35,18 +54,19 @@ public class Floralchemy {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         FloralchemyBlocks.register(modBus);
+
+        SidedHandler.runOn(Dist.CLIENT, () -> () -> EventManager.mod(ColorHandlerEvent.Block.class).process((event) -> {
+            for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
+                //TODO Overrides for birch and spruce
+                event.getBlockColors().register((state, lightReader, pos, tintIndex) -> lightReader != null && pos != null ?
+                        BiomeColors.getFoliageColor(lightReader, pos) : FoliageColors.getDefault(), hedge.getBlock());
+            }
+        }).subscribe());
     }
 
         /*
         // Loot
         LootFunctionManager.registerFunction(new LootFunctionCrystalthorn.Serializer());
-        LootTableList.register(new ResourceLocation(MOD_ID, "inject/end_city_treasure"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_corridor"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_crossing"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "inject/stronghold_library"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "inject/witch"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "block/hedge"));
-        LootTableList.register(new ResourceLocation(MOD_ID, "block/thorny_hedge"));
         // Vilages
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHedgedHouseHandler());
         MapGenStructureIO.registerStructureComponent(VillageHedgeHouse.class, "hedge_house");
@@ -59,6 +79,9 @@ public class Floralchemy {
                         .isPresent()).collect(Collectors.toList());
         for (Block block : ourBlocks) {
             if (block instanceof BlockBaseBush) {
+                RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+            }
+            if(block instanceof BlockHedge) {
                 RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
             }
         }

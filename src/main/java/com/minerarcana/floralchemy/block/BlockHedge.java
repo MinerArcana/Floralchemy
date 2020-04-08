@@ -1,9 +1,7 @@
 package com.minerarcana.floralchemy.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.WallBlock;
+import com.hrznstudio.titanium.api.material.IHasColor;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,14 +16,16 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-//TODO Hedge should know whether it was player placed and if so
+//TODO Hedge should know whether it was player placed and if so not drop flora plants
 public class BlockHedge extends WallBlock {
 
     private final boolean isThorny;
+    private final String type;
 
-    public BlockHedge(boolean isThorns) {
+    public BlockHedge(String type, boolean isThorns) {
         super(Block.Properties.from(Blocks.OAK_LEAVES).tickRandomly());
-        isThorny = isThorns;
+        this.isThorny = isThorns;
+        this.type = type;
     }
 
     @Override
@@ -70,5 +70,9 @@ public class BlockHedge extends WallBlock {
             }*/
         }
         return ActionResultType.PASS;
+    }
+
+    public String getType() {
+        return type;
     }
 }

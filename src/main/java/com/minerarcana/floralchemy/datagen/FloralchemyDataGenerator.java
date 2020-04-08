@@ -19,6 +19,7 @@ public class FloralchemyDataGenerator {
             FloralchemyBlockstateProvider blockstateProvider = new FloralchemyBlockstateProvider(dataGenerator, existingFileHelper);
             dataGenerator.addProvider(blockstateProvider);
             dataGenerator.addProvider(new FloralchemyItemModelProvider(dataGenerator, blockstateProvider.getExistingFileHelper()));
+            dataGenerator.addProvider(new FloralchemyUSLanguageProvider(dataGenerator));
         }
 
         if (event.includeServer()) {
