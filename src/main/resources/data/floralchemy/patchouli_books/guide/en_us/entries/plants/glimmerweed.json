@@ -1,6 +1,6 @@
 {
     "name": "Glimmerweed",
-    "icon": "floralchemy:textures/blocks/glimmerweed.png",
+    "icon": "floralchemy:textures/block/glimmerweed.png",
     "category": "plants_category",
     "pages": [
         {

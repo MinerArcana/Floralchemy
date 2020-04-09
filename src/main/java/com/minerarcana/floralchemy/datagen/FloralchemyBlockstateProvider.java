@@ -52,6 +52,13 @@ public class FloralchemyBlockstateProvider extends BlockStateProvider {
         for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
             this.tintedWallBlock(hedge.getBlock(), hedge.getName(), mcLoc("block/" + hedge.getBlock().getType() + "_leaves"));
         }
+        this.simpleBlock(FloralchemyBlocks.LEAKY_CAULDRON.getBlock(),
+                models().withExistingParent(FloralchemyBlocks.LEAKY_CAULDRON.getName(), "cauldron")
+                        .texture("particle", "minecraft:block/cauldron_side")
+                        .texture("top", "minecraft:block/cauldron_top")
+                        .texture("bottom", modLoc("block/leaky_cauldron").toString())
+                        .texture("inside", "minecraft:block/cauldron_inner")
+        );
     }
 
     private ModelFile bush(Block block, BlockState state) {

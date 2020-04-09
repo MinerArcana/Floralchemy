@@ -1,6 +1,6 @@
 {
     "name": "Crystalthorns",
-    "icon": "floralchemy:textures/blocks/crystalthorn_base.png",
+    "icon": "floralchemy:textures/block/crystalthorn_base.png",
     "category": "plants_category",
     "pages": [
         {

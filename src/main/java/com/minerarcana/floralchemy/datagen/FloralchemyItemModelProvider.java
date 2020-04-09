@@ -43,6 +43,7 @@ public class FloralchemyItemModelProvider extends ItemModelProvider {
             this.singleTexture(hedge.getName(), modLoc(ITEM_FOLDER + "/tinted_wall_inventory"),
                     "wall", mcLoc("block/" + hedge.getName().replace("_hedge", "") + "_leaves"));
         }
+        this.blockItem(FloralchemyBlocks.LEAKY_CAULDRON);
     }
 
     private String name(Supplier<? extends IItemProvider> item) {

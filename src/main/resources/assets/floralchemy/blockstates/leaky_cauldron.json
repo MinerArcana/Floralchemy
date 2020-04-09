@@ -1,9 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "floralchemy:leaky_cauldron",
-      "uvlock": true,
-      "transform": "forge:default-block"
+      "model": "floralchemy:block/leaky_cauldron"
     }
   }
 }

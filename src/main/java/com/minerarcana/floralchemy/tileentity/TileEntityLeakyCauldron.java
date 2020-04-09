@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -18,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityLeakyCauldron extends TileEntity implements ITickableTileEntity {
+    public static final int FLUID_TRANSFER_AMOUNT_MB = 100;
     public FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 4);
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
@@ -49,23 +52,23 @@ public class TileEntityLeakyCauldron extends TileEntity implements ITickableTile
             BlockPos down = this.getPos().down();
             if (tank.getFluidAmount() > 0) {
                 //Leak to world
-                /*if (tank.getFluidAmount() == 1000 && tank.getFluid().getFluid().getFluid().get != null && this.getWorld().isAirBlock(down)) {
-                    worldIn.setBlockState(down, tile.tank.getFluid().getFluid().getBlock().getDefaultState());
+                if (tank.getFluidAmount() >= 1000 && this.getWorld().isAirBlock(down)) {
+                    this.getWorld().setBlockState(down, tank.getFluid().getFluid().getDefaultState().getBlockState());
                 }
                 //Leak to fluid handlers
-                else if (this.getWorld().getTileEntity(down) != null && worldIn.getTileEntity(down).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP)) {
-                    IBlockState old = worldIn.getBlockState(down);
-                    IFluidHandler otherTank = worldIn.getTileEntity(down)
-                            .getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP);
-                    FluidStack test = FluidUtil.tryFluidTransfer(otherTank, tile.tank, 500, false);
-                    if (test != null && test.amount == 500) {
-                        FluidUtil.tryFluidTransfer(otherTank, tile.tank, 100, true);
-                        worldIn.markAndNotifyBlock(down, worldIn.getChunk(down), old,
-                                worldIn.getBlockState(down), 3);
-                        worldIn.getTileEntity(down).markDirty();
-                        tile.markDirty();
+                else {
+                    if (tank.getFluidAmount() >= FLUID_TRANSFER_AMOUNT_MB && this.getWorld().getTileEntity(down) != null) {
+                        this.getWorld().getTileEntity(down).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP).ifPresent(cap -> {
+                            FluidStack test = FluidUtil.tryFluidTransfer(cap, tank, FLUID_TRANSFER_AMOUNT_MB, false);
+                            if (test.getAmount() == FLUID_TRANSFER_AMOUNT_MB) {
+                                FluidUtil.tryFluidTransfer(cap, tank, FLUID_TRANSFER_AMOUNT_MB, true);
+                                //this.getWorld().notifyBlockUpdate(this.getPos(), );
+                                this.getWorld().getTileEntity(down).markDirty();
+                                this.markDirty();
+                            }
+                        });
                     }
-                }*/
+                }
             }
         }
     }

@@ -11,13 +11,13 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class BlockFloodedSoil extends Block {
+public class BlockFloodedSoil extends TileBlock<TileEntityFloodedSoil> {
 
 	public static final int FLUID_TRANSFER_AMOUNT_MB = 100;
 	public static final int CULTIVATION_FLUID_USE_MB = 100;
 	
     public BlockFloodedSoil() {
-        super(Properties.from(Blocks.DIRT).tickRandomly());
+        super(Properties.from(Blocks.DIRT).tickRandomly(), TileEntityFloodedSoil::new);
     }
     
     @Override
@@ -28,7 +28,7 @@ public class BlockFloodedSoil extends Block {
         	if(tile instanceof TileEntityFloodedSoil) {
         		TileEntityFloodedSoil soil = (TileEntityFloodedSoil)tile;
         		IFluidTank tank = (IFluidTank)soil.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP);
-        		if(tank != null && tank.getFluidAmount() > 0) {
+        		if(tank.getFluidAmount() > 0) {
         			if(((BlockBaseBush)plant.getBlock()).cultivatingFluids.contains(tank.getFluid().getFluid())) {
         				return true;
         			}

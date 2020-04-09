@@ -1,6 +1,6 @@
 {
     "name": "Devil's Snare",
-    "icon": "floralchemy:textures/blocks/devilsnare.png",
+    "icon": "floralchemy:textures/block/devilsnare.png",
     "category": "plants_category",
     "pages": [
         {

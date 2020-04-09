@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.tab.TitaniumTab;
 import com.hrznstudio.titanium.util.SidedHandler;
 import com.minerarcana.floralchemy.block.BlockBaseBush;
 import com.minerarcana.floralchemy.block.BlockHedge;
+import com.minerarcana.floralchemy.client.TileEntityLeakyCauldronRenderer;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import com.minerarcana.floralchemy.datagen.FloralchemyLootTableProvider;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -101,6 +103,7 @@ public class Floralchemy {
                 RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
             }
         }
+        ClientRegistry.bindTileEntityRenderer(FloralchemyBlocks.LEAKY_CAULDRON.getTileEntityType(), TileEntityLeakyCauldronRenderer::new);
     }
 
     public static ResourceLocation getCrystalthornResourceLocation(Tuple<ResourceLocation, Integer> entry) {

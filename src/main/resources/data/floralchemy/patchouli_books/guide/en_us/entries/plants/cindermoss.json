@@ -1,6 +1,6 @@
 {
     "name": "Cindermoss",
-    "icon": "floralchemy:textures/blocks/cindermoss.png",
+    "icon": "floralchemy:textures/block/cindermoss.png",
     "category": "plants_category",
     "pages": [
         {

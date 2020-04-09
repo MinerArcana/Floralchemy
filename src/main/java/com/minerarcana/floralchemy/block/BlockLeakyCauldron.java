@@ -1,25 +1,13 @@
 package com.minerarcana.floralchemy.block;
 
+import com.minerarcana.floralchemy.tileentity.TileEntityLeakyCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 
-public class BlockLeakyCauldron extends Block {
+public class BlockLeakyCauldron extends TileBlock<TileEntityLeakyCauldron> {
 
     public BlockLeakyCauldron() {
-        super(Block.Properties.from(Blocks.CAULDRON));
+        super(Block.Properties.from(Blocks.CAULDRON), TileEntityLeakyCauldron::new);
     }
 
-    /*@Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
-        if(player.getHeldItem(handIn).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
-            Optional<TileEntityLeakyCauldron> te = getTileEntity(worldIn, pos);
-            if(te.isPresent()) {
-                if(FluidUtil.interactWithFluidHandler(playerIn, hand, worldIn, pos, facing)) {
-                    te.get().sendBlockUpdate();
-                    return true;
-                }
-            }
-        }
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-    }*/
 }

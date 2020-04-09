@@ -19,11 +19,12 @@ public class FloralchemyUSLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("itemGroup.floralchemy", "Floralchemy");
         this.add("guide.floralchemy.name", "Hedgemage's Handbook");
-        this.add("guide.workshop.landing_text", "Your guide to flower power");
+        this.add("guide.floralchemy.landing_text", "Your guide to flower power");
         //region Blocks
         for(BlockRegistryObjectGroup<BlockHedge, BlockItem, ?> hedge : FloralchemyBlocks.HEDGES) {
             this.addBlock(hedge, StringUtils.capitaliseAllWords(hedge.get().getType().replace("_", " ")) + " Hedge");
         }
+        this.addBlock(FloralchemyBlocks.LEAKY_CAULDRON, "Leaky Cauldron");
         //endregion
     }
 }
