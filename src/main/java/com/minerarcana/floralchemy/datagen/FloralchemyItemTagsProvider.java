@@ -2,10 +2,8 @@ package com.minerarcana.floralchemy.datagen;
 
 
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
-import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 
 import javax.annotation.Nonnull;

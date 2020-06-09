@@ -1,7 +1,9 @@
 package com.minerarcana.floralchemy.block;
 
-import com.hrznstudio.titanium.api.material.IHasColor;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -3,7 +3,6 @@ package com.minerarcana.floralchemy.tileentity;
 import com.minerarcana.floralchemy.content.FloralchemyBlocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
