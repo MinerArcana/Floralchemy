@@ -24,6 +24,10 @@ public class FloralchemyUSLanguageProvider extends LanguageProvider {
             this.addBlock(hedge, StringUtils.capitaliseAllWords(hedge.get().getType().replace("_", " ")) + " Hedge");
         }
         this.addBlock(FloralchemyBlocks.LEAKY_CAULDRON, "Leaky Cauldron");
+        this.addBlock(FloralchemyBlocks.CINDERMOSS, "Cindermooss");
+        this.addBlock(FloralchemyBlocks.DEVILSNARE, "Devil's Snare");
+        this.addBlock(FloralchemyBlocks.FLOODED_SOIL, "Flooded Soil");
+        this.addBlock(FloralchemyBlocks.GLIMMERWEED, "Glimmerweed");
         //endregion
     }
 }

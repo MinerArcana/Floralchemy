@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -28,16 +29,12 @@ public class BlockBaseBush extends BushBlock {
     
     public BlockBaseBush(Fluid... cultivatingFluidNames) {
     	this();
-    	for(Fluid fluid : cultivatingFluidNames) {
-    		this.cultivatingFluids.add(fluid);
-    	}
+        this.cultivatingFluids.addAll(Arrays.asList(cultivatingFluidNames));
     }
 
     public BlockBaseBush(Properties properties, Fluid... cultivatingFluids) {
         super(properties);
-        for(Fluid fluid : this.cultivatingFluids) {
-            this.cultivatingFluids.add(fluid);
-        }
+        this.cultivatingFluids.addAll(Arrays.asList(cultivatingFluids));
     }
     
     @Override

@@ -7,13 +7,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
+import java.util.Collections;
+
 @Mod.EventBusSubscriber(modid = Floralchemy.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FloralchemyDataGenerator {
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         final DataGenerator dataGenerator = event.getGenerator();
-        final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        final ExistingFileHelper existingFileHelper = new ExistingFileHelper(Collections.emptyList(), false);
 
         if (event.includeClient()) {
             FloralchemyBlockstateProvider blockstateProvider = new FloralchemyBlockstateProvider(dataGenerator, existingFileHelper);
