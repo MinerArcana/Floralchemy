@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/MinerArcana/Floralchemy/issues"
 
 [[mods]]
@@ -12,10 +12,9 @@ issueTrackerURL="https://github.com/MinerArcana/Floralchemy/issues"
         Flower Power!
     '''
 
-[[dependencies.workshop]]
-    modId="titanium"
+[[dependencies.floralchemy]]
+    modId="forge"
     mandatory=true
-    versionRange="[2.3.7,)"
+    versionRange="[40.1.0,)"
     ordering="NONE"
     side="BOTH"
-
