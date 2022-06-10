@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="[40,)"
 issueTrackerURL="https://github.com/MinerArcana/Floralchemy/issues"
+license="MIT"
 
 [[mods]]
     modId="floralchemy"
