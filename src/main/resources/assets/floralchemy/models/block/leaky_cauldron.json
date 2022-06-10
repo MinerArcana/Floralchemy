@@ -1,9 +1,0 @@
-{
-  "parent": "block/cauldron",
-  "textures": {
-    "particle": "block/cauldron_side",
-    "top": "block/cauldron_top",
-    "bottom": "floralchemy:block/leaky_cauldron",
-    "inside": "block/cauldron_inner"
-  }
-}
