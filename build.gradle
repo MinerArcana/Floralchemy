@@ -163,6 +163,13 @@ repositories {
             includeGroup "mezz.jei"
         }
     }
+    maven {
+        name = "Curios"
+        url = "https://maven.theillusivec4.top/"
+        content {
+            includeGroup "top.theillusivec4.curios"
+        }
+    }
 }
 
 dependencies {
@@ -179,11 +186,13 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-1.18.2-forge:10.0.0.184")
 
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-69")
-    implementation fg.deobf("vazkii.botania:Botania-xplat:1.18.2-433")
+    implementation fg.deobf("vazkii.botania:Botania:1.18.2-433")
+
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.7.0")
 }
 
 jar {
-    classifier = "nodep"
+    classifier("nodep")
     manifest {
         attributes([
                 "Specification-Title"     : "${modId}",
