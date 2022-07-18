@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import com.minerarcana.floralchemy.compat.botania.FloralchemyBotaniaContent;
 import com.minerarcana.floralchemy.content.FloralchemyRecipes;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
@@ -29,5 +30,9 @@ public class Floralchemy {
     }
     public static Registrate getRegistrate() {
         return REGISTRATE.get();
+    }
+
+    public static ResourceLocation rl(String path) {
+        return new ResourceLocation(ID, path);
     }
 }

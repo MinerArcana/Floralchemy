@@ -1,0 +1,42 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "modid": "botania",
+          "type": "forge:mod_loaded"
+        }
+      ],
+      "recipe": {
+        "type": "botania:petal_apothecary",
+        "output": {
+          "item": "floralchemy:petro_petunia"
+        },
+        "ingredients": [
+          {
+            "tag": "botania:petals/black"
+          },
+          {
+            "tag": "botania:petals/orange"
+          },
+          {
+            "tag": "botania:petals/brown"
+          },
+          {
+            "item": "botania:rune_water"
+          },
+          {
+            "item": "botania:rune_fire"
+          },
+          {
+            "item": "botania:redstone_root"
+          },
+          {
+            "tag": "botania:dragonstone_gems"
+          }
+        ]
+      }
+    }
+  ]
+}

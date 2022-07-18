@@ -5,3 +5,4 @@ d6d090b1be89fd9fd269e1ce09415cb62d8873da assets/floralchemy/models/block/petro_p
 62f9c723f847dddd652993fe73f3b66b36db6be4 assets/floralchemy/models/block/petro_petunia_powered.json
 ec4bada3006f26aa2b7a2c32e8c6abb53340b0c0 assets/floralchemy/models/item/petro_petunia.json
 390a2ea9fa1d1c1d2ada3d2de807da36614deef2 data/floralchemy/loot_tables/blocks/petro_petunia.json
+5bc97071ec0d9260af79b4da55f58a61bdc3c94f data/floralchemy/recipes/petal_apothecary/petro_petunia.json
