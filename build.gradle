@@ -112,7 +112,8 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-            args '--mod', "${modId}", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', "${modId}", '--all', '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/'), '--existing-mod', 'botania'
 
             mods {
                 transport {

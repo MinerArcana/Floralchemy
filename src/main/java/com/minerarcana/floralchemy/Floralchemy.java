@@ -1,11 +1,10 @@
 package com.minerarcana.floralchemy;
 
 import com.google.common.base.Suppliers;
-import com.minerarcana.floralchemy.compat.botania.BotaniaContent;
+import com.minerarcana.floralchemy.compat.botania.FloralchemyBotaniaContent;
 import com.minerarcana.floralchemy.content.FloralchemyRecipes;
 import com.tterrag.registrate.Registrate;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.function.Supplier;
@@ -20,7 +19,7 @@ public class Floralchemy {
 
         FloralchemyRecipes.setup();
 
-        setupCompat("botania", () -> BotaniaContent::setup);
+        setupCompat("botania", () -> FloralchemyBotaniaContent::setup);
     }
 
     public void setupCompat(String id, Supplier<Runnable> modSetup) {

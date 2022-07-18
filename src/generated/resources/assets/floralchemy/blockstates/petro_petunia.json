@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "floralchemy:block/petro_petunia"
+    },
+    "powered=true": {
+      "model": "floralchemy:block/petro_petunia_powered"
+    }
+  }
+}

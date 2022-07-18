@@ -1,0 +1,6 @@
+{
+  "parent": "botania:block/shapes/cross",
+  "textures": {
+    "cross": "floralchemy:block/petro_petunia"
+  }
+}

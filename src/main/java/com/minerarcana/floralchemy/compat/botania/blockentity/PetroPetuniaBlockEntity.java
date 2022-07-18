@@ -1,5 +1,7 @@
 package com.minerarcana.floralchemy.compat.botania.blockentity;
 
+import com.minerarcana.floralchemy.compat.botania.FloralchemyBotaniaClient;
+import com.minerarcana.floralchemy.compat.botania.block.PetroPetuniaBlock;
 import com.minerarcana.floralchemy.content.FloralchemyRecipes;
 import com.minerarcana.floralchemy.recipe.FuelInventory;
 import net.minecraft.core.BlockPos;
@@ -7,18 +9,29 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.wrappers.BucketPickupHandlerWrapper;
+import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.subtile.RadiusDescriptor;
 import vazkii.botania.api.subtile.TileEntityGeneratingFlower;
 
 import java.awt.*;
+import java.util.Objects;
+import java.util.Optional;
 
 public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
     private static final int START_BURN_EVENT = 0;
@@ -28,6 +41,8 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
     private int burnTime;
     private int powerPerTick;
     private int coolDown;
+
+    private ICapabilityProvider capabilityProvider;
 
     public PetroPetuniaBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -73,11 +88,33 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
                         while (tries < 9 && !foundFluid) {
                             BlockPos checkingPos = this.getBlockPos()
                                     .offset(-1 + tries / 3, -1, -1 + tries % 3);
-                            LazyOptional<IFluidHandler> fluidHandlerOpt = FluidUtil.getFluidHandler(
-                                    this.getLevel(),
-                                    checkingPos,
-                                    Direction.UP
-                            );
+                            Optional<IFluidHandler> fluidHandlerOpt = FluidUtil.getFluidHandler(
+                                            this.getLevel(),
+                                            checkingPos,
+                                            Direction.UP
+                                    )
+                                    .resolve()
+                                    .or(() -> {
+                                        Block block = this.getLevel()
+                                                .getBlockState(checkingPos)
+                                                .getBlock();
+                                        if (block instanceof IFluidBlock fluidBlock) {
+                                            return Optional.of(new FluidBlockWrapper(
+                                                    fluidBlock,
+                                                    level,
+                                                    checkingPos
+                                            ));
+                                        } else if (block instanceof BucketPickup bucketPickup) {
+                                            return Optional.of(new BucketPickupHandlerWrapper(
+                                                    bucketPickup,
+                                                    level,
+                                                    checkingPos
+                                            ));
+                                        } else {
+                                            return Optional.empty();
+                                        }
+                                    });
+
                             if (fluidHandlerOpt.isPresent()) {
                                 IFluidHandler fluidHandler = fluidHandlerOpt.orElseThrow(IllegalStateException::new);
                                 FluidStack grabbedFluid = fluidHandler.drain(1000, FluidAction.SIMULATE);
@@ -98,6 +135,14 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
                                             .orElse(false);
                                     if (foundFluid) {
                                         fluidHandler.drain(1000, FluidAction.EXECUTE);
+                                        if (!this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
+                                            this.getLevel().setBlock(
+                                                    this.getBlockPos(),
+                                                    this.getBlockState()
+                                                            .setValue(PetroPetuniaBlock.POWERED, true),
+                                                    Block.UPDATE_ALL
+                                            );
+                                        }
                                         sync();
                                     }
                                 }
@@ -107,8 +152,18 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
 
                         if (!foundFluid) {
                             coolDown = 100;
+                            if (this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
+                                this.getLevel().setBlock(
+                                        this.getBlockPos(),
+                                        this.getBlockState()
+                                                .setValue(PetroPetuniaBlock.POWERED, false),
+                                        Block.UPDATE_ALL
+                                );
+                            }
                         }
                     }
+                } else {
+                    addMana(this.powerPerTick);
                 }
             }
         }
@@ -138,12 +193,12 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
 
     @Override
     public RadiusDescriptor getRadius() {
-        return RadiusDescriptor.Rectangle.square(this.getBlockPos(), 1);
+        return RadiusDescriptor.Rectangle.square(this.getBlockPos().below(), 3);
     }
 
     @Override
     public int getColor() {
-        return Color.BLACK.getRGB();
+        return Color.GREEN.getRGB();
     }
 
     @Override
@@ -162,5 +217,20 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
         burnTime = tag.getInt(TAG_BURN_TIME);
         coolDown = tag.getInt(TAG_COOL_DOWN);
         powerPerTick = tag.getInt(TAG_POWER);
+    }
+
+    @NotNull
+    @Override
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (Objects.requireNonNull(this.getLevel()).isClientSide()) {
+            if (this.capabilityProvider == null) {
+                this.capabilityProvider = FloralchemyBotaniaClient.createCapabilities(this);
+            }
+            LazyOptional<T> lazyOptional = this.capabilityProvider.getCapability(cap);
+            if (lazyOptional.isPresent()) {
+                return lazyOptional;
+            }
+        }
+        return super.getCapability(cap, side);
     }
 }
