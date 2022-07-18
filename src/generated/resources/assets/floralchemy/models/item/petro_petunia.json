@@ -1,3 +1,6 @@
 {
-  "parent": "floralchemy:block/petro_petunia"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "floralchemy:block/petro_petunia"
+  }
 }

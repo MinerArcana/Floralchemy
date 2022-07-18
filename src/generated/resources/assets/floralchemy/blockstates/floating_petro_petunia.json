@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "powered=false,waterlogged=false": {
+      "model": "floralchemy:block/floating_petro_petunia"
+    },
+    "powered=true,waterlogged=false": {
+      "model": "floralchemy:block/floating_petro_petunia_powered"
+    },
+    "powered=false,waterlogged=true": {
+      "model": "floralchemy:block/floating_petro_petunia"
+    },
+    "powered=true,waterlogged=true": {
+      "model": "floralchemy:block/floating_petro_petunia_powered"
+    }
+  }
+}
