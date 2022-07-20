@@ -1,0 +1,20 @@
+{
+  "name": "block.floralchemy.petro_petunia",
+  "category": "botania:generating_flowers",
+  "icon": "floralchemy:petro_petunia",
+  "entry_color": "aa00",
+  "advancement": "botania:main/elf_lexicon_pickup",
+  "pages": [
+    {
+      "type": "text",
+      "text": "floralchemy.page.petro_petunia0"
+    },
+    {
+      "type": "botania:petal_apothecary",
+      "recipe": "floralchemy:petal_apothecary/petro_petunia"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "floralchemy:floating_petro_petunia": 1
+  }
+}
