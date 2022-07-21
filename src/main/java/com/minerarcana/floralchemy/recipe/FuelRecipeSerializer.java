@@ -5,7 +5,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +18,7 @@ public class FuelRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>
     public FuelRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
         return new FuelRecipe(
                 pRecipeId,
-                ForgeRegistries.FLUIDS.getValue(new ResourceLocation(GsonHelper.getAsString(pSerializedRecipe, "fluid"))),
+                FluidIngredient.fromJson(pSerializedRecipe.get("ingredient")),
                 GsonHelper.getAsInt(pSerializedRecipe, "burnTime", 100),
                 GsonHelper.getAsInt(pSerializedRecipe, "manaPerTick", 50)
         );
@@ -31,7 +30,7 @@ public class FuelRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>
     public FuelRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
         return new FuelRecipe(
                 pRecipeId,
-                pBuffer.readRegistryId(),
+                FluidIngredient.fromNetwork(pBuffer),
                 pBuffer.readInt(),
                 pBuffer.readInt()
         );
@@ -40,7 +39,7 @@ public class FuelRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>
     @Override
     @ParametersAreNonnullByDefault
     public void toNetwork(FriendlyByteBuf pBuffer, FuelRecipe pRecipe) {
-        pBuffer.writeRegistryId(pRecipe.matches());
+        pRecipe.ingredient().toNetwork(pBuffer);
         pBuffer.writeInt(pRecipe.burnTime());
         pBuffer.writeInt(pRecipe.getManaPerTick());
     }

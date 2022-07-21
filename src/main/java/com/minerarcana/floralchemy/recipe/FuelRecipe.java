@@ -1,22 +1,19 @@
 package com.minerarcana.floralchemy.recipe;
 
-import com.minerarcana.floralchemy.Floralchemy;
 import com.minerarcana.floralchemy.content.FloralchemyRecipes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.function.Predicate;
 
 public record FuelRecipe(
         ResourceLocation id,
-        Fluid matches,
+        FluidIngredient ingredient,
         int burnTime,
         int manaPerTick
 ) implements IFuelRecipe {
@@ -34,7 +31,7 @@ public record FuelRecipe(
     @Override
     @ParametersAreNonnullByDefault
     public boolean matches(FuelInventory pContainer, Level pLevel) {
-        return matches == pContainer.getFluidStack().getFluid();
+        return ingredient.test(pContainer.getFluidStack());
     }
 
     @Override

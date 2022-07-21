@@ -1,0 +1,17 @@
+{
+  "type": "floralchemy:fuel",
+  "ingredient": {
+    "tag": "forge:crude_oil"
+  },
+  "manaPerTick": 50,
+  "burnTime": 100,
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:crude_oil",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ]
+}

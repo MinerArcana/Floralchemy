@@ -1,0 +1,17 @@
+{
+  "type": "floralchemy:fuel",
+  "ingredient": {
+    "tag": "forge:kerosene"
+  },
+  "manaPerTick": 50,
+  "burnTime": 500,
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:kerosene",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ]
+}

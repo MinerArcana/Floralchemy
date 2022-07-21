@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import com.minerarcana.floralchemy.compat.botania.FloralchemyBotaniaContent;
 import com.minerarcana.floralchemy.content.FloralchemyRecipes;
 import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +18,9 @@ public class Floralchemy {
     public static final String ID = "floralchemy";
     public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 
-    private static final Supplier<Registrate> REGISTRATE = Suppliers.memoize(() -> Registrate.create(ID));
+    private static final Supplier<Registrate> REGISTRATE = Suppliers.memoize(() -> Registrate.create(ID)
+            .addDataGenerator(ProviderType.RECIPE, FloralchemyRecipes::fuelRecipeData)
+    );
 
     public Floralchemy() {
 
@@ -36,6 +39,7 @@ public class Floralchemy {
 
         }
     }
+
     public static Registrate getRegistrate() {
         return REGISTRATE.get();
     }
