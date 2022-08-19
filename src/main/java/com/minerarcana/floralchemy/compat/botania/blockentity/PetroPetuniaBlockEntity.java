@@ -60,110 +60,112 @@ public class PetroPetuniaBlockEntity extends TileEntityGeneratingFlower {
             --burnTime;
         }
 
-        if (this.getLevel() != null && this.getLevel().isClientSide()) {
-            Level level = this.getLevel();
-            BlockPos blockPos = this.getBlockPos();
-            if (burnTime > 0 && level.random.nextInt(10) == 0) {
-                Vec3 offset = level.getBlockState(blockPos)
-                        .getOffset(level, blockPos)
-                        .add(0.4, 0.7, 0.4);
-                this.getLevel()
-                        .addParticle(
-                                ParticleTypes.SMOKE,
-                                blockPos.getX() + offset.x + Math.random() * 0.2,
-                                blockPos.getY() + offset.y,
-                                blockPos.getZ() + offset.z + Math.random() * 0.2,
-                                0.0D,
-                                0.0D,
-                                0.0D
-                        );
+        if (this.getLevel() != null) {
+            if (this.getLevel().isClientSide()) {
+                Level level = this.getLevel();
+                BlockPos blockPos = this.getBlockPos();
+                if (burnTime > 0 && level.random.nextInt(10) == 0) {
+                    Vec3 offset = level.getBlockState(blockPos)
+                            .getOffset(level, blockPos)
+                            .add(0.4, 0.7, 0.4);
+                    this.getLevel()
+                            .addParticle(
+                                    ParticleTypes.SMOKE,
+                                    blockPos.getX() + offset.x + Math.random() * 0.2,
+                                    blockPos.getY() + offset.y,
+                                    blockPos.getZ() + offset.z + Math.random() * 0.2,
+                                    0.0D,
+                                    0.0D,
+                                    0.0D
+                            );
+                }
+            } else if (this.burnTime > 0 && this.powerPerTick > 0) {
+                this.addMana(this.powerPerTick);
             }
-        } else {
-            if (this.isValidBinding()) {
-                if (burnTime <= 0 && coolDown <= 0) {
-                    if (this.getMana() < this.getMaxMana()) {
-                        int tries = 0;
-                        boolean foundFluid = false;
+        }
+        if (this.isValidBinding()) {
+            if (burnTime <= 0 && coolDown <= 0) {
+                if (this.getMana() < this.getMaxMana()) {
+                    int tries = 0;
+                    boolean foundFluid = false;
 
-                        while (tries < 9 && !foundFluid) {
-                            BlockPos checkingPos = this.getBlockPos()
-                                    .offset(-1 + tries / 3, -1, -1 + tries % 3);
-                            Optional<IFluidHandler> fluidHandlerOpt = FluidUtil.getFluidHandler(
-                                            this.getLevel(),
-                                            checkingPos,
-                                            Direction.UP
-                                    )
-                                    .resolve()
-                                    .or(() -> {
-                                        Block block = this.getLevel()
-                                                .getBlockState(checkingPos)
-                                                .getBlock();
-                                        if (block instanceof IFluidBlock fluidBlock) {
-                                            return Optional.of(new FluidBlockWrapper(
-                                                    fluidBlock,
-                                                    level,
-                                                    checkingPos
-                                            ));
-                                        } else if (block instanceof BucketPickup bucketPickup) {
-                                            return Optional.of(new BucketPickupHandlerWrapper(
-                                                    bucketPickup,
-                                                    level,
-                                                    checkingPos
-                                            ));
-                                        } else {
-                                            return Optional.empty();
-                                        }
-                                    });
-
-                            if (fluidHandlerOpt.isPresent()) {
-                                IFluidHandler fluidHandler = fluidHandlerOpt.orElseThrow(IllegalStateException::new);
-                                FluidStack grabbedFluid = fluidHandler.drain(1000, FluidAction.SIMULATE);
-                                if (!grabbedFluid.isEmpty() && grabbedFluid.getAmount() == 1000) {
-                                    foundFluid = this.getLevel()
-                                            .getRecipeManager()
-                                            .getRecipeFor(
-                                                    FloralchemyRecipes.FUEL_RECIPE_TYPE.get(),
-                                                    new FuelInventory(
-                                                            grabbedFluid
-                                                    ),
-                                                    this.getLevel()
-                                            ).map(recipe -> {
-                                                this.setBurnTime(recipe.getBurnTime());
-                                                this.setPowerPerTick(recipe.getManaPerTick());
-                                                return true;
-                                            })
-                                            .orElse(false);
-                                    if (foundFluid) {
-                                        fluidHandler.drain(1000, FluidAction.EXECUTE);
-                                        if (!this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
-                                            this.getLevel().setBlock(
-                                                    this.getBlockPos(),
-                                                    this.getBlockState()
-                                                            .setValue(PetroPetuniaBlock.POWERED, true),
-                                                    Block.UPDATE_ALL
-                                            );
-                                        }
-                                        sync();
+                    while (tries < 9 && !foundFluid) {
+                        BlockPos checkingPos = this.getBlockPos()
+                                .offset(-1 + tries / 3, -1, -1 + tries % 3);
+                        Optional<IFluidHandler> fluidHandlerOpt = FluidUtil.getFluidHandler(
+                                        this.getLevel(),
+                                        checkingPos,
+                                        Direction.UP
+                                )
+                                .resolve()
+                                .or(() -> {
+                                    Block block = this.getLevel()
+                                            .getBlockState(checkingPos)
+                                            .getBlock();
+                                    if (block instanceof IFluidBlock fluidBlock) {
+                                        return Optional.of(new FluidBlockWrapper(
+                                                fluidBlock,
+                                                level,
+                                                checkingPos
+                                        ));
+                                    } else if (block instanceof BucketPickup bucketPickup) {
+                                        return Optional.of(new BucketPickupHandlerWrapper(
+                                                bucketPickup,
+                                                level,
+                                                checkingPos
+                                        ));
+                                    } else {
+                                        return Optional.empty();
                                     }
+                                });
+
+                        if (fluidHandlerOpt.isPresent()) {
+                            IFluidHandler fluidHandler = fluidHandlerOpt.orElseThrow(IllegalStateException::new);
+                            FluidStack grabbedFluid = fluidHandler.drain(1000, FluidAction.SIMULATE);
+                            if (!grabbedFluid.isEmpty() && grabbedFluid.getAmount() == 1000) {
+                                foundFluid = this.getLevel()
+                                        .getRecipeManager()
+                                        .getRecipeFor(
+                                                FloralchemyRecipes.FUEL_RECIPE_TYPE.get(),
+                                                new FuelInventory(
+                                                        grabbedFluid
+                                                ),
+                                                this.getLevel()
+                                        ).map(recipe -> {
+                                            this.setBurnTime(recipe.getBurnTime());
+                                            this.setPowerPerTick(recipe.getManaPerTick());
+                                            return true;
+                                        })
+                                        .orElse(false);
+                                if (foundFluid) {
+                                    fluidHandler.drain(1000, FluidAction.EXECUTE);
+                                    if (!this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
+                                        this.getLevel().setBlock(
+                                                this.getBlockPos(),
+                                                this.getBlockState()
+                                                        .setValue(PetroPetuniaBlock.POWERED, true),
+                                                Block.UPDATE_ALL
+                                        );
+                                    }
+                                    sync();
                                 }
                             }
-                            tries++;
                         }
-
-                        if (!foundFluid) {
-                            coolDown = 100;
-                            if (this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
-                                this.getLevel().setBlock(
-                                        this.getBlockPos(),
-                                        this.getBlockState()
-                                                .setValue(PetroPetuniaBlock.POWERED, false),
-                                        Block.UPDATE_ALL
-                                );
-                            }
-                        }
+                        tries++;
                     }
-                } else {
-                    addMana(this.powerPerTick);
+
+                    if (!foundFluid) {
+                        coolDown = 100;
+                        if (this.getBlockState().getValue(PetroPetuniaBlock.POWERED)) {
+                            this.getLevel().setBlock(
+                                    this.getBlockPos(),
+                                    this.getBlockState()
+                                            .setValue(PetroPetuniaBlock.POWERED, false),
+                                    Block.UPDATE_ALL
+                            );
+                        }
+                        this.setPowerPerTick(0);
+                    }
                 }
             }
         }
