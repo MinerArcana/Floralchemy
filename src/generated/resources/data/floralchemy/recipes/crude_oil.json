@@ -9,7 +9,8 @@
     {
       "value": {
         "tag": "forge:crude_oil",
-        "type": "forge:tag_empty"
+        "registry": "minecraft:fluid",
+        "type": "floralchemy:tag_empty"
       },
       "type": "forge:not"
     }

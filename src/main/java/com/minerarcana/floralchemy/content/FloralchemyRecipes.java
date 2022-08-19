@@ -5,6 +5,7 @@ import com.minerarcana.floralchemy.recipe.FluidIngredient;
 import com.minerarcana.floralchemy.recipe.FuelRecipeBuilder;
 import com.minerarcana.floralchemy.recipe.FuelRecipeSerializer;
 import com.minerarcana.floralchemy.recipe.IFuelRecipe;
+import com.minerarcana.floralchemy.recipe.condition.TagCondition;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.Registry;
@@ -13,7 +14,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -92,6 +92,9 @@ public class FloralchemyRecipes {
     }
 
     private static ICondition tagExist(String path) {
-        return new NotCondition(new TagEmptyCondition(new ResourceLocation("forge", path)));
+        return new NotCondition(new TagCondition<>(
+                new ResourceLocation("forge", path),
+                Registry.FLUID_REGISTRY
+        ));
     }
 }
