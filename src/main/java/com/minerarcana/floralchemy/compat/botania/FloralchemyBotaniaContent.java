@@ -17,6 +17,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -24,6 +25,7 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.registries.ForgeRegistries;
+import vazkii.botania.client.render.tile.RenderTileSpecialFlower;
 import vazkii.botania.common.block.BlockFloatingSpecialFlower;
 
 import java.util.Objects;
@@ -80,10 +82,11 @@ public class FloralchemyBotaniaContent {
     public static final BlockEntry<FloatingPetroPetuniaBlock> FLOATING_PETRO_PETUNIA = Floralchemy.getRegistrate()
             .object("floating_petro_petunia")
             .block(FloatingPetroPetuniaBlock::new)
-            .initialProperties(Material.GRASS)
-            .properties(BlockBehaviour.Properties::dynamicShape)
-            .properties(BlockBehaviour.Properties::noCollission)
-            .properties(BlockBehaviour.Properties::instabreak)
+            .initialProperties(Material.DIRT)
+            .properties(properties -> properties.sound(SoundType.GRAVEL)
+                    .strength(0.5F)
+                    .lightLevel(s -> 15)
+            )
             .addLayer(() -> RenderType::cutout)
             .tag(FLOATING_SPECIAL_FLOWERS.getSecond())
             .blockstate((context, provider) -> provider.getVariantBuilder(context.get())
@@ -121,6 +124,7 @@ public class FloralchemyBotaniaContent {
                             PETRO_PETUNIA,
                             FLOATING_PETRO_PETUNIA
                     )
+                    .renderer(() -> RenderTileSpecialFlower::new)
                     .register();
 
     public static void setup() {
