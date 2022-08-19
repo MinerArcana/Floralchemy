@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:kerosene"
   },
-  "manaPerTick": 50,
-  "burnTime": 500,
+  "manaPerTick": 30,
+  "burnTime": 240,
   "conditions": [
     {
       "value": {

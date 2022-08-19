@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:oil"
   },
-  "manaPerTick": 50,
-  "burnTime": 100,
+  "manaPerTick": 20,
+  "burnTime": 80,
   "conditions": [
     {
       "value": {

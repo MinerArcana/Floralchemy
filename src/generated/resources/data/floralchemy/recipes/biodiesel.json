@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:biodiesel"
   },
-  "manaPerTick": 50,
-  "burnTime": 200,
+  "manaPerTick": 25,
+  "burnTime": 160,
   "conditions": [
     {
       "value": {
