@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:diesel"
   },
-  "manaPerTick": 25,
-  "burnTime": 200,
+  "manaPerTick": 7,
+  "burnTime": 800,
   "conditions": [
     {
       "value": {

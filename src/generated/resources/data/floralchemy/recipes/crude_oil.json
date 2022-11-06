@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:crude_oil"
   },
-  "manaPerTick": 20,
-  "burnTime": 80,
+  "manaPerTick": 5,
+  "burnTime": 320,
   "conditions": [
     {
       "value": {

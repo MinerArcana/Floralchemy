@@ -48,38 +48,38 @@ public class FloralchemyRecipes {
 
     public static void fuelRecipeData(RegistrateRecipeProvider provider) {
         FuelRecipeBuilder.of(tag("oil"))
-                .withBurnTime(80)
-                .withManaPerTick(20)
+                .withBurnTime(320)
+                .withManaPerTick(5)
                 .withCondition(tagExist("oil"))
                 .build(Floralchemy.rl("oil"), provider);
 
         FuelRecipeBuilder.of(tag("crude_oil"))
-                .withBurnTime(80)
-                .withManaPerTick(20)
+                .withBurnTime(320)
+                .withManaPerTick(5)
                 .withCondition(tagExist("crude_oil"))
                 .build(Floralchemy.rl("crude_oil"), provider);
 
         FuelRecipeBuilder.of(tag("diesel"))
-                .withBurnTime(200)
-                .withManaPerTick(25)
+                .withBurnTime(800)
+                .withManaPerTick(7)
                 .withCondition(tagExist("diesel"))
                 .build(Floralchemy.rl("diesel"), provider);
 
         FuelRecipeBuilder.of(tag("biodiesel"))
-                .withBurnTime(160)
-                .withManaPerTick(25)
+                .withBurnTime(640)
+                .withManaPerTick(7)
                 .withCondition(tagExist("biodiesel"))
                 .build(Floralchemy.rl("biodiesel"), provider);
 
         FuelRecipeBuilder.of(tag("ethanol"))
-                .withBurnTime(160)
-                .withManaPerTick(25)
+                .withBurnTime(640)
+                .withManaPerTick(7)
                 .withCondition(tagExist("ethanol"))
                 .build(Floralchemy.rl("ethanol"), provider);
 
         FuelRecipeBuilder.of(tag("kerosene"))
-                .withBurnTime(240)
-                .withManaPerTick(30)
+                .withBurnTime(960)
+                .withManaPerTick(8)
                 .withCondition(tagExist("kerosene"))
                 .build(Floralchemy.rl("kerosene"), provider);
     }

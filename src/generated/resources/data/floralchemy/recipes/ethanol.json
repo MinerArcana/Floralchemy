@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:ethanol"
   },
-  "manaPerTick": 25,
-  "burnTime": 160,
+  "manaPerTick": 7,
+  "burnTime": 640,
   "conditions": [
     {
       "value": {
